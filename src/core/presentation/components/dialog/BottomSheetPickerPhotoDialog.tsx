@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { CustomText } from '../text/CustomText';
 import BottomSheet, {
   BottomSheetView,
-  useBottomSheetDynamicSnapPoints,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
 import { ButtonPrimary } from '../button/ButtonPrimary';
@@ -43,27 +42,19 @@ export const BottomSheetPickerPhotoDialog = ({
     [],
   );
 
-  const {
-    animatedHandleHeight,
-    animatedSnapPoints,
-    animatedContentHeight,
-    handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
-
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
 
   return (
     <BottomSheet
       ref={bottomSheetRef}
-      snapPoints={animatedSnapPoints}
-      handleHeight={animatedHandleHeight}
-      contentHeight={animatedContentHeight}
+      snapPoints={snapPoints}
       enablePanDownToClose={false}
       index={-1}
       handleStyle={{ borderRadius: 24 }}
       backdropComponent={renderBackdrop}
       style={{ borderRadius: 32, overflow: 'hidden' }}
       animateOnMount={true}>
-      <BottomSheetView onLayout={handleContentLayout}>
+      <BottomSheetView>
         <View style={style.contentBottomSheetContainer}>
           <CustomText text={translation.file.select_how_to_choose_image} marginTop={20} fontFamily={Fonts.PoppinsMedium} textSize={FontsSize._16_SIZE} />
 

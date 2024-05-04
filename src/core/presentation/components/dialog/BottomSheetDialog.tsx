@@ -1,20 +1,19 @@
 import React, { useCallback, useMemo } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import close_ico_black_content from '../../../../../assets/svg/xml/close_ico_black_content';
 import { SvgXml } from 'react-native-svg';
 import { CustomText } from '../text/CustomText';
 import Fonts from '../../../constants/Fonts';
 import FontsSize from '../../../constants/FontsSize';
 import BottomSheet, {
   BottomSheetView,
-  useBottomSheetDynamicSnapPoints,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
 import { ButtonPrimary } from '../button/ButtonPrimary';
 import { ButtonSecondary } from '../button/ButtonSeconday';
-import info_circle_blue_ico_content from '../../../../../assets/svg/xml/info_circle_blue_ico_content';
 import { BackdropPressBehavior } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
-import { CustomTextBold } from '../text/CustomTextBold';
+import close_ico_black_content from '../../../../../assets/svg/close_ico_black_content';
+import { CustomTextEndBold } from '../text/CustomTextBoldEnd';
+import info_circle_blue_ico_content from '../../../../../assets/svg/info_circle_blue_ico_content';
 
 interface Props {
   title: string;
@@ -64,25 +63,17 @@ export const BottomSheetDialog = ({
     [],
   );
 
-  const {
-    animatedHandleHeight,
-    animatedSnapPoints,
-    animatedContentHeight,
-    handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
-
   const handleAnimateEnd = (toIndex: any) => {
     if (toIndex === -1 && onClosePress != undefined) {
       onClosePress();
     }
   };
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
 
   return (
     <BottomSheet
       ref={bottomSheetRef}
-      snapPoints={animatedSnapPoints}
-      handleHeight={animatedHandleHeight}
-      contentHeight={animatedContentHeight}
+      snapPoints={snapPoints}
       enablePanDownToClose={false}
       index={-1}
       onChange={handleAnimateEnd}
@@ -90,7 +81,7 @@ export const BottomSheetDialog = ({
       backdropComponent={renderBackdrop}
       style={{ borderRadius: 32, overflow: 'hidden' }}
       animateOnMount={true}>
-      <BottomSheetView onLayout={handleContentLayout}>
+      <BottomSheetView>
         <View style={style.contentBottomSheetContainer}>
 
           <View style={{ marginTop: 30 }}>

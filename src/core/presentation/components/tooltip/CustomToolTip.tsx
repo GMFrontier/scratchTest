@@ -3,8 +3,8 @@ import { TouchableOpacity, View } from 'react-native';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import { SvgXml } from 'react-native-svg';
-import ic_tooltip_gray from '../../../../../assets/svg/xml/ic_tooltip_gray';
 import { CustomText } from '../text/CustomText';
+import ic_tooltip_gray from '../../../../../assets/svg/ic_tooltip_gray';
 
 interface Props {
   text: string;

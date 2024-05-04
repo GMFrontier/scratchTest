@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { ModalContext } from './ModalContext';
 import { ModalStateContext } from './ModalContext';
 
 

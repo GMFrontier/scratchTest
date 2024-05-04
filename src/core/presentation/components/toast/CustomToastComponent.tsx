@@ -1,22 +1,16 @@
 import React, { useContext } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import alert_ico_black_content from '../../../../../assets/svg/xml/alert_ico_black_content';
-import close_ico_black_toast_content from '../../../../../assets/svg/xml/close_ico_black_toast_content';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import FontsSize from '../../../constants/FontsSize';
 import Fonts from '../../../constants/Fonts';
-import alert_ico_blue_content from '../../../../../assets/svg/xml/alert_ico_blue_content';
-import close_ico_gray_toast_content from '../../../../../assets/svg/xml/close_ico_gray_toast_content';
-import { color } from 'react-native-reanimated';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import { ToastStyleType } from '../../contexts/messages/ToastContext';
-import check_ico_content from '../../../../../assets/svg/xml/check_ico_content';
-import alert_ico_yellow_content from '../../../../../assets/svg/xml/alert_ico_yellow_content';
-import warning_ico_yellow_content from '../../../../../assets/svg/xml/warning_ico_yellow_content';
-import close_ico_red_content from '../../../../../assets/svg/xml/close_ico_red_content';
-import close_ico_toast_red_content from '../../../../../assets/svg/xml/close_ico_toast_red_content';
-
+import alert_ico_blue_content from '../../../../../assets/svg/alert_ico_blue_content';
+import check_ico_content from '../../../../../assets/svg/check_ico_content';
+import warning_ico_yellow_content from '../../../../../assets/svg/warning_ico_yellow_content';
+import close_ico_toast_red_content from '../../../../../assets/svg/close_ico_toast_red_content';
+import close_ico_gray_toast_content from '../../../../../assets/svg/close_ico_gray_toast_content';
 interface Props {
   label: string;
   labelClick?: string;

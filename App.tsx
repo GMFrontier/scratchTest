@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import ContextProvider from './src/core/presentation/contexts/ContextProvider';
 import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StackNavigator } from './src/scratch/presentation/navigation/StackNavigator';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const AppState = ({ children }: any) => {
   return <ContextProvider>{children}</ContextProvider>;

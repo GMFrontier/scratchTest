@@ -2,27 +2,23 @@ import React, { useContext, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Image, Dimensions, LayoutChangeEvent, Platform, StatusBar } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SvgXml } from 'react-native-svg';
-import home_ico_content from '../../../../../assets/svg/xml/home_ico_content';
-import home_ico_active_content from '../../../../../assets/svg/xml/home_ico_active_content';
 import { CustomText } from '../text/CustomText';
 import Fonts from '../../../constants/Fonts';
 import { ROUTES } from '../../../../scratch/presentation/navigation/routes';
-import qr_bottom_ico_content from '../../../../../assets/svg/xml/qr_bottom_ico_content';
-import card_ico_content from '../../../../../assets/svg/xml/crypto_ico_content';
-import card_ico_active_content from '../../../../../assets/svg/xml/card_ico_active_content';
-import activity_ico_content from '../../../../../assets/svg/xml/card_ico_content';
-import settings_ico_content from '../../../../../assets/svg/xml/settings_ico_content';
-import settings_ico_active_content from '../../../../../assets/svg/xml/settings_ico_active_content';
-import activity_ico_active_content from '../../../../../assets/svg/xml/crypto_ico_active_content';
-import subtractbottom1 from '../../../../../assets/svg/xml/subtractbottom1';
 import FontsSize from '../../../constants/FontsSize';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import { useTranslation } from '../../contexts/translations/LanguageProvider';
-import { TransactionsScreen } from '../../../../paguelo_facil/presentation/modules/logged_in/home/TransactionsScreen';
-import home_ico_activity_active_content from '../../../../../assets/svg/xml/home_ico_activity_active_content';
-import home_ico_activity_content from '../../../../../assets/svg/xml/home_ico_activity_content';
-import home_ico_card_content from '../../../../../assets/svg/xml/home_ico_card_content';
-import home_ico_card_active_content from '../../../../../assets/svg/xml/home_ico_card_active_content';
+import qr_bottom_ico_content from '../../../../../assets/svg/qr_bottom_ico_content';
+import subtractbottom1 from '../../../../../assets/svg/subtractbottom1';
+import home_ico_active_content from '../../../../../assets/svg/home_ico_active_content';
+import home_ico_content from '../../../../../assets/svg/home_ico_content';
+import home_ico_card_active_content from '../../../../../assets/svg/home_ico_card_active_content';
+import home_ico_card_content from '../../../../../assets/svg/home_ico_card_content';
+import home_ico_activity_active_content from '../../../../../assets/svg/home_ico_activity_active_content';
+import home_ico_activity_content from '../../../../../assets/svg/home_ico_activity_content';
+import settings_ico_active_content from '../../../../../assets/svg/settings_ico_active_content';
+import settings_ico_content from '../../../../../assets/svg/settings_ico_content';
+import { HomeScreen } from '../../../../scratch/presentation/modules/logged_in/HomeScreen';
 
 
 const BottomTabNavigator = () => {
@@ -130,7 +126,7 @@ const BottomTabNavigator = () => {
 
         <Tab.Screen
           name="CardScreen"
-          component={ROUTES.Card.CardScreen.screen}
+          component={ROUTES.Cards.CardsScreen.screen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={{ alignContent: 'center', alignItems: 'center' }}>
@@ -149,18 +145,8 @@ const BottomTabNavigator = () => {
         />
 
         <Tab.Screen
-          name="QRScanScreen"
-          component={ROUTES.QR.QRScanScreen.screen}
-          options={{
-            tabBarButton: props => {
-              return <CustomTabBarButton {...props} />;
-            },
-          }}
-        />
-
-        <Tab.Screen
-          name={ROUTES.Home.TransactionsScreen.name}
-          component={TransactionsScreen}
+          name={ROUTES.Home.HomeScreen.name}
+          component={HomeScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={{ alignContent: 'center', alignItems: 'center' }}>
@@ -184,7 +170,7 @@ const BottomTabNavigator = () => {
 
         <Tab.Screen
           name="SettingScreen"
-          component={ROUTES.Setting.SettingScreen.screen}
+          component={ROUTES.Settings.SettingsScreen.screen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={{ alignContent: 'center', alignItems: 'center' }}>

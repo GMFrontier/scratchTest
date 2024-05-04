@@ -4,9 +4,9 @@ import { ThemeProvider } from './theme/ThemeContext';
 import { LanguageProvider } from './translations/LanguageProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBarProvider } from './statusBar/StatusBarContext';
-import { KeyboardProvider } from "react-native-keyboard-controller";
 import { NewModalContextProvider } from './messages/ModalContext';
 import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 
 const ContextProvider = ({ children }: any) => {
   return (

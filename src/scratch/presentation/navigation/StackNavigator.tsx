@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import {
 
   StackScreenProps,
@@ -6,20 +6,13 @@ import {
 } from '@react-navigation/stack';
 
 import { ROUTES } from './routes';
-import { PanResponder, View } from 'react-native';
-import { setAuthorizationTokenDefault } from '../../../core/data/sources/remote/ApiPagueloFacil';
-import { StackActions, useNavigation } from '@react-navigation/native';
-import { useToastContext } from '../../../core/presentation/contexts/messages/useToastContext';
-import { delay } from '../../../core/data/utils/Utils';
-import { useTranslation } from '../../../core/presentation/contexts/translations/LanguageProvider';
+import { View } from 'react-native';
 
 const Stack = createStackNavigator();
 
 const handlers = {
-  BottomTabNavigator: () => <ROUTES.Navigator.BottomTabNavigator.screen />
-  // SplashScreen: () => <ROUTES.Login.SplashScreen.screen />,
-  // OnBoardingScreen: () => <ROUTES.Login.OnBoardingScreen.screen />,
-  // LoginScreen: (params: any) => <ROUTES.Login.LoginScreen.screen {...params} />,
+  HomeScreen: () => <ROUTES.Home.HomeScreen.screen />,
+  BottomTabNavigator: () => <ROUTES.Navigator.BottomTabNavigator.screen />,
 };
 
 export type RootParamList = {

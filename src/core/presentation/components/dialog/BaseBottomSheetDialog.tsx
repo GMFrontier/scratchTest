@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import BottomSheet, { BottomSheetView, useBottomSheetDynamicSnapPoints, BottomSheetBackdrop, } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetView, BottomSheetBackdrop, } from '@gorhom/bottom-sheet';
 
 
 type ComponentePadreProps = {
@@ -11,9 +11,8 @@ type ComponentePadreProps = {
 
 export const BaseBottomSheetDialog: React.FC<ComponentePadreProps> = ({ children, bottomSheetRef, onClosePress, enableOverlayTap = 'close' }) => {
 
-  const initialSnapPoints = useMemo(() => ['CONTENT_HEIGHT'], []);
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
 
-  console.log("enableOverlayTa " + enableOverlayTap);
   const renderBackdrop = useCallback(
     (props: any) => (
       <BottomSheetBackdrop
@@ -39,29 +38,20 @@ export const BaseBottomSheetDialog: React.FC<ComponentePadreProps> = ({ children
     }
   };
 
-  const {
-    animatedHandleHeight,
-    animatedSnapPoints,
-    animatedContentHeight,
-    handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
 
   return (
 
     <BottomSheet
       ref={bottomSheetRef}
-      snapPoints={animatedSnapPoints}
-      handleHeight={animatedHandleHeight}
-      contentHeight={animatedContentHeight}
+      snapPoints={snapPoints}
       enablePanDownToClose={false}
-      enableOverlayTap={false}
       index={-1}
       onChange={handleAnimateEnd}
       handleStyle={{}}
       backdropComponent={renderBackdrop}
       style={{ borderRadius: 0, overflow: 'hidden' }}
       animateOnMount={true}>
-      <BottomSheetView onLayout={handleContentLayout}>
+      <BottomSheetView>
         {children}
       </BottomSheetView>
     </BottomSheet>

@@ -2,9 +2,9 @@ import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, TextInput } from 'react-native';
 import Fonts from '../../../constants/Fonts';
 import { SvgXml } from 'react-native-svg';
-import arrow_back_ico_content from '../../../../../assets/svg/xml/arrow_back_ico_content';
-import close_ico_black_content from '../../../../../assets/svg/xml/close_ico_black_content';
 import { useNavigation } from '@react-navigation/native';
+import close_ico_black_content from '../../../../../assets/svg/close_ico_black_content';
+import arrow_back_ico_content from '../../../../../assets/svg/arrow_back_ico_content';
 
 
 interface Props {

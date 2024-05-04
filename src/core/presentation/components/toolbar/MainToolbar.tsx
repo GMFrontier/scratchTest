@@ -3,8 +3,6 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Fonts from '../../../constants/Fonts';
 import { SvgXml } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
-import arrow_back_white_ico_content from '../../../../../assets/svg/xml/arrow_back_white_ico_content';
-import arrow_back_chevron_ico_content from '../../../../../assets/svg/xml/arrow_back_chevron_ico_content';
 
 interface Props {
   title: string;
@@ -54,7 +52,7 @@ const Toolbar = ({ title, showArrowBack = true, elevation = 4, onPress, setIconE
     <View style={{ ...styleBar, elevation, backgroundColor: backgroundColor }}>
       {showArrowBack && (
         <TouchableOpacity onPress={handleBackPress} style={style.backButton}>
-          <SvgXml xml={darkTheme ? arrow_back_chevron_ico_content : arrow_back_white_ico_content} />
+          {/* <SvgXml xml={darkTheme ? arrow_back_chevron_ico_content : arrow_back_white_ico_content} /> */}
         </TouchableOpacity>
       )}
       <Text style={{ ...style.title, color: darkTheme ? "black" : "white" }}>{title}</Text>

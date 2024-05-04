@@ -3,7 +3,6 @@ import { ErrorAPI, ResponseAPI } from '../../models/ResponseApi';
 import ResponseUtils from '../../utils/ResponseUtils';
 import { ROUTES } from '../../../../scratch/presentation/navigation/routes';
 import { useLoadingContext } from '../../../presentation/contexts/loading/useLoadingContext';
-import NavigationService from '../../../../paguelo_facil/presentation/navigator/NavigatorService';
 import { setAuthorizationTokenDefault } from './ApiPagueloFacil';
 
 class ApiService {
@@ -21,7 +20,7 @@ class ApiService {
       throw ResponseUtils.handleBackendErrorResponses(responseError, () => {
         this.delay(1500).then(() => {
           setAuthorizationTokenDefault()
-          NavigationService.navigate(ROUTES.Login.LoginScreen.screen as never);
+          //NavigationService.navigate(ROUTES.Login.LoginScreen.screen as never);
         });
       });
     }

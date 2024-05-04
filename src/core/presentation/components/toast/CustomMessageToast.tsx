@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import alert_ico_black_content from '../../../../../assets/svg/xml/alert_ico_black_content';
-import close_ico_black_toast_content from '../../../../../assets/svg/xml/close_ico_black_toast_content';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import FontsSize from '../../../constants/FontsSize';
 import Fonts from '../../../constants/Fonts';
+import alert_ico_black_content from '../../../../../assets/svg/alert_ico_black_content';
+import close_ico_black_toast_content from '../../../../../assets/svg/close_ico_black_toast_content';
 
 interface Props {
   label: string;
