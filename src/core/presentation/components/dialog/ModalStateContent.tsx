@@ -34,9 +34,11 @@ export const ModalContent = ({ title, subtitle, labelButtonPrimary, icoModal, ac
       </View> : null}
       <Sizebox height={34}></Sizebox>
 
-      <View style={{ alignItems: 'center', marginTop: 24 }}>
-        <SvgXml xml={icoModal}></SvgXml>
-      </View>
+      {icoModal &&
+        <View style={{ alignItems: 'center', marginTop: 24 }}>
+          <SvgXml xml={icoModal}></SvgXml>
+        </View>
+      }
 
       <Sizebox height={24}></Sizebox>
       <CustomText textAlign='center' fontFamily={Fonts.PoppinsMedium} textSize={FontsSize._20_SIZE} text={title}></CustomText>
