@@ -110,7 +110,7 @@ export const BottomSheetDialog = ({
               alignItems: "center"
             }}>
             <CustomTextEndBold
-              fontFamilyEnd={Fonts.encodesansSemibold}
+              fontFamilyEnd={Fonts.DMSansBold}
               fontFamily={Fonts.PoppinsRegular}
               textSize={FontsSize._16_SIZE}
               text={body}

@@ -23,7 +23,7 @@ const CustomInfoToast = ({ label }: Props) => {
         <CustomText
           text={label}
           textColor="white"
-          fontFamily={Fonts.encodesansRegular}
+          fontFamily={Fonts.DMSansRegular}
           textSize={FontsSize._12_SIZE}
         />
       </View>

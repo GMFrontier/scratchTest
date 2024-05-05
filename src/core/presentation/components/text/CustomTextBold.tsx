@@ -18,7 +18,7 @@ interface Props {
 export const CustomTextBold = ({
   text,
   textSize = FontsSize._16_SIZE,
-  fontFamily = Fonts.encodesansRegular,
+  fontFamily = Fonts.DMSansRegular,
   textColor = '#3D444F',
   underline = false,
   marginTop = 0,
@@ -45,7 +45,7 @@ export const CustomTextBold = ({
           if (index % 2 === 0) {
             return <Text key={index} style={textStyle}>{part}</Text>;
           } else {
-            return <Text key={index} style={[textStyle, { fontFamily: Fonts.encodesansMedium }]}>{part}</Text>;
+            return <Text key={index} style={[textStyle, { fontFamily: Fonts.DMSansMedium }]}>{part}</Text>;
           }
         })}
       </Text>
