@@ -8,7 +8,17 @@ export interface ThemeState extends Theme {
   snackbarYellow: string;
   errorColor: string;
   colors: {
+    title: string;
+    primaryText: string;
+    captionText: string;
+    disableText: string;
+    whiteText: string;
     primary: string;
+    secondary: string;
+    tertiary: string;
+    accent: string;
+    accentSecondary: string;
+    //viejos
     alertColor: string;
     background: string;
     textColor01: string;
@@ -67,7 +77,18 @@ export const lightTheme: ThemeState = {
   errorColor: '#E11900',
   dark: false,
   colors: {
-    primary: '#4CA80B',
+
+    title: "#17233D",
+    primaryText: "#515A6E",
+    captionText: "#808695",
+    disableText: "#C4C4C4",
+    whiteText: "#FFFFFF",
+    primary: "#121212",
+    secondary: "#181818",
+    tertiary: "#404040",
+    accent: "#282828",
+    accentSecondary: "#2C2C2E",
+    //viejos
     alertColor: '#E11900',
     background: 'white',
     textColor01: '#1E2227',
