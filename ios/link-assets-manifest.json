@@ -1,0 +1,41 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/DMSans-Bold.ttf",
+      "sha1": "e2465f11006633e4e4ac7652b543adfa6f0c26cd"
+    },
+    {
+      "path": "assets/fonts/DMSans-Medium.ttf",
+      "sha1": "65cb79753017741ff95b1ecd1689d56e96e2edbd"
+    },
+    {
+      "path": "assets/fonts/DMSans-Regular.ttf",
+      "sha1": "8599ebf95f6cd0694dfc3af43522b535fcbfba6d"
+    },
+    {
+      "path": "assets/fonts/EncodeSans-Bold.ttf",
+      "sha1": "01eeba01a710c6484daf98819717628f7a016af6"
+    },
+    {
+      "path": "assets/fonts/EncodeSans-Medium.ttf",
+      "sha1": "cd10d9931e69d875a7301938ac37b0796b96cd77"
+    },
+    {
+      "path": "assets/fonts/EncodeSans-Regular.ttf",
+      "sha1": "bc78e9e1972422a7475cf335219d024b681c2b36"
+    },
+    {
+      "path": "assets/fonts/EncodeSans-SemiBold.ttf",
+      "sha1": "aaba68acffe99b1f745a452c6a91086ac6196345"
+    },
+    {
+      "path": "assets/fonts/Poppins-Medium.ttf",
+      "sha1": "283f21b44efbdbf276ba802be2d949a36bbc4233"
+    },
+    {
+      "path": "assets/fonts/Poppins-Regular.ttf",
+      "sha1": "440dc8992517a306d66e55cb0afed0cfe9b971b5"
+    }
+  ]
+}

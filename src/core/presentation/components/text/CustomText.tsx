@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Text, TextStyle } from 'react-native';
+import { useContext } from 'react';
+import { StyleProp, Text, TextStyle } from 'react-native';
 import Fonts from '../../../constants/Fonts';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 
@@ -20,7 +20,7 @@ interface Props {
 export const CustomText = ({
   text,
   textSize = 14,
-  fontFamily = Fonts.PoppinsRegular,
+  fontFamily = Fonts.DMSansRegular,
   textColor,
   underline = false,
   marginTop = 0,
@@ -36,9 +36,11 @@ export const CustomText = ({
 
   if (text == undefined) text = '';
 
+  const parts = text.split('<b>');
+
   const textStyle: TextStyle = {
     fontSize: textSize,
-    color: textColor ?? colors.textColor02,
+    color: textColor ?? colors.primaryText,
     fontFamily,
     textDecorationLine: underline ? 'underline' : 'none',
     textDecorationColor: textColor,
@@ -49,5 +51,23 @@ export const CustomText = ({
     lineHeight: lineHeight ?? 1.2 * textSize
   };
 
-  return (numberOfLines) ? <Text ellipsizeMode='tail' numberOfLines={numberOfLines} style={textStyle}>{text}</Text> : <Text style={textStyle}>{text}</Text>;
+  const renderTextParts = (parts: string[], textStyle: StyleProp<TextStyle>, numberOfLines?: number) => {
+    const textParts = parts.map((part, index) => (
+      <Text key={index} style={[textStyle, index % 2 !== 0 && { fontFamily: Fonts.DMSansMedium }]}>
+        {part}
+      </Text>
+    ));
+
+    return numberOfLines ? (
+      <Text ellipsizeMode='tail' numberOfLines={numberOfLines} style={textStyle}>
+        {textParts}
+      </Text>
+    ) : (
+      <Text style={textStyle}>
+        {textParts}
+      </Text>
+    );
+  };
+
+  return renderTextParts(parts, textStyle, numberOfLines);
 };

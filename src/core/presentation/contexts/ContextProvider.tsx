@@ -7,28 +7,32 @@ import { StatusBarProvider } from './statusBar/StatusBarContext';
 import { NewModalContextProvider } from './messages/ModalContext';
 import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const ContextProvider = ({ children }: any) => {
   return (
-    <KeyboardProvider>
-      <ThemeProvider>
-        <LoadingStateProvider>
-          <LanguageProvider>
-            <AutocompleteDropdownContextProvider>
-              <ToastContextProvider>
-                <NewModalContextProvider>
-                  <SafeAreaProvider>
-                    <StatusBarProvider>
-                      {children}
-                    </StatusBarProvider>
-                  </SafeAreaProvider>
-                </NewModalContextProvider>
-              </ToastContextProvider>
-            </AutocompleteDropdownContextProvider>
-          </LanguageProvider>
-        </LoadingStateProvider>
-      </ThemeProvider>
-    </KeyboardProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <KeyboardProvider>
+        <ThemeProvider>
+          <LoadingStateProvider>
+            <LanguageProvider>
+              <AutocompleteDropdownContextProvider>
+                <ToastContextProvider>
+                  <NewModalContextProvider>
+                    <SafeAreaProvider>
+                      <StatusBarProvider>
+                        {children}
+                      </StatusBarProvider>
+                    </SafeAreaProvider>
+                  </NewModalContextProvider>
+                </ToastContextProvider>
+              </AutocompleteDropdownContextProvider>
+            </LanguageProvider>
+          </LoadingStateProvider>
+        </ThemeProvider>
+      </KeyboardProvider>
+    </GestureHandlerRootView>
+
   );
 };
 

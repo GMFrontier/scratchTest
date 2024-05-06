@@ -13,6 +13,8 @@ export interface ThemeState extends Theme {
     captionText: string;
     disableText: string;
     whiteText: string;
+    onboardingText: string;
+    onboardingTitle: string;
     primary: string;
     secondary: string;
     tertiary: string;
@@ -77,12 +79,13 @@ export const lightTheme: ThemeState = {
   errorColor: '#E11900',
   dark: false,
   colors: {
-
     title: "#17233D",
     primaryText: "#515A6E",
     captionText: "#808695",
     disableText: "#C4C4C4",
     whiteText: "#FFFFFF",
+    onboardingText: "#EBECF0",
+    onboardingTitle: "#7A9CFF",
     primary: "#121212",
     secondary: "#181818",
     tertiary: "#404040",
