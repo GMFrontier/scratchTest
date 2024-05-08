@@ -4,16 +4,18 @@ import PageView, { PagerViewOnPageScrollEventData } from 'react-native-pager-vie
 import { SvgXml } from "react-native-svg";
 import { CommonActions, useFocusEffect, useNavigation } from "@react-navigation/native";
 import SplashScreen from 'react-native-splash-screen'
-import { useStatusBar } from "../../../../core/presentation/contexts/statusBar/StatusBarContext";
-import { useTranslation } from "../../../../core/presentation/contexts/translations/LanguageProvider";
-import { ThemeContext } from "../../../../core/presentation/contexts/theme/ThemeContext";
-import { ROUTES } from "../../navigation/routes";
-import close_ico_black_toast_content from "../../../../../assets/svg/close_ico_black_toast_content";
-import { ButtonPrimary } from "../../../../core/presentation/components/button/ButtonPrimary";
+import { useStatusBar } from "../../core/presentation/contexts/statusBar/StatusBarContext";
+import { useTranslation } from "../../core/presentation/contexts/translations/LanguageProvider";
+import { ThemeContext } from "../../core/presentation/contexts/theme/ThemeContext";
+import { ROUTES } from "../navigation/routes";
+import close_ico_black_toast_content from "../../../assets/svg/close_ico_black_toast_content";
+import { ButtonPrimary } from "../../core/presentation/components/button/ButtonPrimary";
 import OnboardingSlide from "./OnboardingSlide";
-import { ButtonLink } from "../../../../core/presentation/components/button/ButtonLink";
+import { ButtonLink } from "../../core/presentation/components/button/ButtonLink";
 import { ScalingDot } from "react-native-animated-pagination-dots";
 import React = require("react");
+import { ComponentType } from "../../core/data/enum/ComponentType";
+import { ComponentSize } from "../../core/data/enum/ComponentSize";
 
 export const OnBoardingScreen = () => {
   const statusBar = useStatusBar()
@@ -21,27 +23,29 @@ export const OnBoardingScreen = () => {
   const changeStatusBarColor = () => {
     statusBar.setWhiteStatusBar()
   }
+  const navigation = useNavigation();
 
   const pages = [
     {
       title: translation.file.text_onboarding_1 ?? 'Construye tu crédito\nplanea tu futuro',
       subtitle: 'Obtén tu primera tarjeta e inicia a construir tu historial de crédito con nosotros.',
-      image: require('../../../../../assets/onBoarding_1.png')
+      image: require('../../../assets/onBoarding_1.png')
     },
     {
       title: translation.file.text_onboarding_2 ?? 'Gestiona tus finanzas sin costos ocultos',
       subtitle: 'Te proporcionamos transparencia total para que tengas un control total sobre tus gastos.',
-      image: require('../../../../../assets/onBoarding_2.png')
+      image: require('../../../assets/onBoarding_2.png')
     },
     {
       title: translation.file.text_onboarding_3 ?? 'Acompáñanos en tu crecimiento',
       subtitle: 'Mientras compras suma, puntos para canjear por beneficios.',
-      image: require('../../../../../assets/onBoarding_3.png')
+      image: require('../../../assets/onBoarding_3.png')
     }
   ]
 
   useFocusEffect(() => {
     changeStatusBarColor()
+    SplashScreen.hide();
   })
 
   const {
@@ -49,29 +53,9 @@ export const OnBoardingScreen = () => {
   } = useContext(ThemeContext);
   const [currentSlideNumber, setSlideNumber] = useState(0)
   const pageRef = useRef<PageView>(null);
-  const [second, setSecond] = useState(0)
-  const secondsSlide = 6
-  let timer = 0;
-
-  const nav = useNavigation()
-
-  useEffect(() => {
-    SplashScreen.hide();
-
-    timer = setTimeout(() => {
-      if (second < secondsSlide * 10) {
-        setSecond(second + 1)
-      }
-
-    }, 100);
-    return () => {
-      clearTimeout(timer);
-    };
-  });
 
   useEffect(() => {
     pageRef.current?.setPage(currentSlideNumber)
-    setSecond(0)
   }, [currentSlideNumber]);
 
   const width = Dimensions.get('window').width;
@@ -112,7 +96,7 @@ export const OnBoardingScreen = () => {
         <ButtonLink
           text="Omitir"
           onPress={() => {
-            nav.dispatch(
+            navigation.dispatch(
               CommonActions.reset({
                 index: 0,
                 routes: [
@@ -161,7 +145,7 @@ export const OnBoardingScreen = () => {
           <ButtonPrimary
             text={translation.file.login ?? 'Iniciar sesión'}
             onPress={() =>
-              nav.dispatch(
+              navigation.dispatch(
                 CommonActions.reset({
                   index: 0,
                   routes: [

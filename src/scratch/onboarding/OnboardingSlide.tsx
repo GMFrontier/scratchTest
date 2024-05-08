@@ -1,8 +1,8 @@
 import { Image, StyleSheet, View } from "react-native";
-import { CustomText } from "../../../../core/presentation/components/text/CustomText";
-import FontsSize from "../../../../core/constants/FontsSize";
-import Fonts from "../../../../core/constants/Fonts";
-import { ThemeContext } from "../../../../core/presentation/contexts/theme/ThemeContext";
+import { CustomText } from "../../core/presentation/components/text/CustomText";
+import FontsSize from "../../core/constants/FontsSize";
+import Fonts from "../../core/constants/Fonts";
+import { ThemeContext } from "../../core/presentation/contexts/theme/ThemeContext";
 import { useContext } from "react";
 
 

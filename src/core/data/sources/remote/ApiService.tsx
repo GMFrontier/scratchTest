@@ -1,7 +1,7 @@
 import { AxiosPromise } from 'axios';
 import { ErrorAPI, ResponseAPI } from '../../models/ResponseApi';
 import ResponseUtils from '../../utils/ResponseUtils';
-import { ROUTES } from '../../../../scratch/presentation/navigation/routes';
+import { ROUTES } from '../../../../scratch/navigation/routes';
 import { useLoadingContext } from '../../../presentation/contexts/loading/useLoadingContext';
 import { setAuthorizationTokenDefault } from './ApiPagueloFacil';
 

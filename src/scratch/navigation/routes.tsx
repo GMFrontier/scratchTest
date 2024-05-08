@@ -1,11 +1,15 @@
 
-import BottomTabNavigator from '../../../core/presentation/components/navigation/BottomTabNavigator';
-import { HomeScreen } from '../modules/logged_in/HomeScreen';
-import { OnBoardingScreen } from '../modules/logged_out/OnBoardingScreen';
+import BottomTabNavigator from '../../core/presentation/components/navigation/BottomTabNavigator';
+import { HomeScreen } from '../home/HomeScreen';
+import { OnBoardingScreen } from '../onboarding/OnBoardingScreen';
+import { SplashScreen } from '../splash/presentation/SplashScreen';
 
 export const ROUTES = {
   Navigator: {
     BottomTabNavigator: { screen: BottomTabNavigator, name: 'BottomTabNavigator' },
+  },
+  Splash: {
+    SplashScreen: { screen: SplashScreen, name: 'SplashScreen' },
   },
   // Splash: {
   //   SplashScreen: { screen: SplashScreen, name: 'SplashScreen' },

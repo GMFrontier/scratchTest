@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SvgXml } from 'react-native-svg';
 import { CustomText } from '../text/CustomText';
 import Fonts from '../../../constants/Fonts';
-import { ROUTES } from '../../../../scratch/presentation/navigation/routes';
+import { ROUTES } from '../../../../scratch/navigation/routes';
 import FontsSize from '../../../constants/FontsSize';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import { useTranslation } from '../../contexts/translations/LanguageProvider';
@@ -18,7 +18,7 @@ import home_ico_activity_active_content from '../../../../../assets/svg/home_ico
 import home_ico_activity_content from '../../../../../assets/svg/home_ico_activity_content';
 import settings_ico_active_content from '../../../../../assets/svg/settings_ico_active_content';
 import settings_ico_content from '../../../../../assets/svg/settings_ico_content';
-import { HomeScreen } from '../../../../scratch/presentation/modules/logged_in/HomeScreen';
+import { HomeScreen } from '../../../../scratch/home/HomeScreen';
 
 
 const BottomTabNavigator = () => {

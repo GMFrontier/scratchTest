@@ -5,13 +5,14 @@ import {
 
 import { ROUTES } from './routes';
 import { View } from 'react-native';
-import { ThemeContext } from '../../../core/presentation/contexts/theme/ThemeContext';
+import { ThemeContext } from '../../core/presentation/contexts/theme/ThemeContext';
 import { useContext } from 'react';
 import { DefaultTheme, NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
 const handlers = {
+  SplashScreen: () => <ROUTES.Splash.SplashScreen.screen />,
   OnBoardingScreen: () => <ROUTES.OnBoarding.OnBoardingScreen.screen />,
   HomeScreen: () => <ROUTES.Home.HomeScreen.screen />,
   BottomTabNavigator: () => <ROUTES.Navigator.BottomTabNavigator.screen />,

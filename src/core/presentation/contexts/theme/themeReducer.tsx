@@ -10,6 +10,7 @@ export interface ThemeState extends Theme {
   colors: {
     title: string;
     primaryText: string;
+    defaultTextButton: string;
     captionText: string;
     disableText: string;
     whiteText: string;
@@ -81,13 +82,14 @@ export const lightTheme: ThemeState = {
   colors: {
     title: "#17233D",
     primaryText: "#515A6E",
+    defaultTextButton: "#263137",
     captionText: "#808695",
     disableText: "#C4C4C4",
     whiteText: "#FFFFFF",
     onboardingText: "#EBECF0",
     onboardingTitle: "#7A9CFF",
-    primary: "#121212",
-    secondary: "#181818",
+    primary: "#282828",
+    secondary: "#7A9CFF",
     tertiary: "#404040",
     accent: "#282828",
     accentSecondary: "#2C2C2E",

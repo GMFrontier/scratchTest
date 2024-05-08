@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import Fonts from '../../../constants/Fonts';
@@ -11,10 +11,9 @@ export interface BaseButtonProps {
   text: string;
   imageStart?: any;
   imageEnd?: any;
-  isEnabled?: boolean;
+  disabled?: boolean;
   size?: ComponentSize;
   type?: ComponentType;
-  styles?: any;
   onPress: () => void;
 }
 
@@ -22,65 +21,102 @@ export const BaseButton = ({
   text,
   imageEnd,
   imageStart,
-  isEnabled = true,
+  disabled = false, // Default to false for enabled state
   size = ComponentSize.large,
   onPress,
-  styles = undefined
+  type = ComponentType.default,
 }: BaseButtonProps) => {
   const { theme: { colors } } = useContext(ThemeContext);
 
   var height = 56;
   var textSize = FontsSize._16_SIZE;
 
-  if (!styles) {
-    styles = StyleSheet.create({
-      buttonContainer: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: height,
-        borderRadius: 8,
-        backgroundColor: colors.primary,
-      },
-      textStyle: {
-        fontFamily: Fonts.PoppinsMedium,
-        fontSize: textSize,
-        color: isEnabled ? colors.white : colors.textColor04,
-      },
-      icoLeft: {
-        marginRight: 10,
-      },
-      icoRight: {
-        marginLeft: 10,
-      },
-      disabledButtonContainer: {
-        backgroundColor: colors.disabledBgPrimaryButton,
-      },
-    });
-  }
+  var defaultStyles = StyleSheet.create({
+    buttonContainer: {
+      position: "absolute",
+      bottom: 8,
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: height,
+      borderRadius: 24,
+      backgroundColor: colors.secondary,
+    },
+    textStyle: {
+      fontFamily: Fonts.DMSansMedium,
+      fontSize: textSize,
+      color: colors.white
+    },
+    icoLeft: {
+      marginRight: 10,
+    },
+    icoRight: {
+      marginLeft: 10,
+    },
+  });
+  console.log('Props:', { size, type, disabled });
+  console.log('Styles:', defaultStyles); // Log styles for debugging
 
+  // Adjust styles based on size
   switch (size) {
     case ComponentSize.small:
-      textSize = FontsSize._14_SIZE;
-      styles.buttonContainer.height = 32;
+      defaultStyles = {
+        ...defaultStyles,
+        buttonContainer: { ...defaultStyles.buttonContainer, height: 32 },
+        textStyle: { ...defaultStyles.textStyle, fontSize: FontsSize._14_SIZE },
+      };
       break;
     case ComponentSize.medium:
-      textSize = FontsSize._16_SIZE;
-      styles.buttonContainer.height = 48;
+      defaultStyles = {
+        ...defaultStyles,
+        buttonContainer: { ...defaultStyles.buttonContainer, height: 48 },
+        textStyle: { ...defaultStyles.textStyle, fontSize: FontsSize._16_SIZE },
+      };
       break;
     case ComponentSize.large:
-      textSize = FontsSize._18_SIZE;
-      styles.buttonContainer.height = 56;
+      defaultStyles = {
+        ...defaultStyles,
+        buttonContainer: { ...defaultStyles.buttonContainer, height: 56 },
+        textStyle: { ...defaultStyles.textStyle, fontSize: FontsSize._16_SIZE },
+      };
       break;
   }
 
+  // Adjust styles based on type
+  switch (type) {
+    case ComponentType.default:
+    case ComponentType.hover:
+    case ComponentType.active:
+      // No need to change styles as they remain the same
+      break;
+    case ComponentType.disabled:
+      defaultStyles = {
+        ...defaultStyles,
+        buttonContainer: { ...defaultStyles.buttonContainer, backgroundColor: colors.disableText },
+        textStyle: { ...defaultStyles.textStyle, color: colors.white },
+      };
+      break;
+  }
+
+  // Override styles if disabled
+  if (disabled) {
+    defaultStyles = {
+      ...defaultStyles,
+      buttonContainer: { ...defaultStyles.buttonContainer, backgroundColor: colors.disableText },
+      textStyle: { ...defaultStyles.textStyle, color: colors.white },
+    };
+  }
+  console.log('Props:2222', { size, type, disabled });
+
+  console.log('Styles:2222', defaultStyles); // Log styles for debugging
+
   return (
-    <TouchableOpacity onPress={onPress} disabled={!isEnabled}>
-      <View style={[styles.buttonContainer, !isEnabled && styles.disabledButtonContainer]}>
-        {imageStart && <View style={styles.icoLeft}><SvgXml xml={imageStart} /></View>}
-        <Text style={styles.textStyle}>{text}</Text>
-        {imageEnd && <View style={styles.icoRight}><SvgXml xml={imageEnd} /></View>}
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
+      <View style={defaultStyles.buttonContainer}>
+        {imageStart && <View style={defaultStyles.icoLeft}><SvgXml xml={imageStart} /></View>}
+        <Text style={defaultStyles.textStyle}>{text}</Text>
+        {imageEnd && <View style={defaultStyles.icoRight}><SvgXml xml={imageEnd} /></View>}
       </View>
     </TouchableOpacity>
   );

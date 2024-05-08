@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { reaction } from 'mobx';
-import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
-import { useStatusBar } from '../../../../core/presentation/contexts/statusBar/StatusBarContext';
-import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
-import { useTranslation } from '../../../../core/presentation/contexts/translations/LanguageProvider';
-import { CustomTextBold } from '../../../../core/presentation/components/text/CustomTextBold';
+import { ThemeContext } from '../../core/presentation/contexts/theme/ThemeContext';
+import { useStatusBar } from '../../core/presentation/contexts/statusBar/StatusBarContext';
+import { useNewModalContext } from '../../core/presentation/contexts/messages/useNewModalContext';
+import { useTranslation } from '../../core/presentation/contexts/translations/LanguageProvider';
+import { CustomTextBold } from '../../core/presentation/components/text/CustomTextBold';
+import React = require('react');
 
 export const HomeScreen = observer(({ navigation }: any) => {
 
@@ -31,7 +32,9 @@ export const HomeScreen = observer(({ navigation }: any) => {
   return (
     <View style={style.containerMain}>
       <CustomTextBold
-        text='HOMESCREEEN <b>funcionaaa<b>' />
+        marginTop={100}
+        text='HOMESCREEEN <b>funcionaaa<b>'
+        textColor={colors.whiteText} />
     </View>
   );
 });
