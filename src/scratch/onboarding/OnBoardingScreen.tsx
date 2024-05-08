@@ -21,7 +21,7 @@ export const OnBoardingScreen = () => {
   const statusBar = useStatusBar()
   const { translation } = useTranslation();
   const changeStatusBarColor = () => {
-    statusBar.setWhiteStatusBar()
+    statusBar.setPrimaryStatusBar()
   }
   const navigation = useNavigation();
 
@@ -100,7 +100,7 @@ export const OnBoardingScreen = () => {
               CommonActions.reset({
                 index: 0,
                 routes: [
-                  { name: ROUTES.Home.HomeScreen.name },
+                  { name: ROUTES.Login.LoginScreen.name },
                 ],
               })
             )
@@ -134,7 +134,7 @@ export const OnBoardingScreen = () => {
         data={pages}
         //@ts-ignore
         scrollX={scrollX}
-        activeDotColor={colors.onboardingTitle}
+        activeDotColor={colors.secondary}
         containerStyle={{
           bottom: 130,
         }}
@@ -149,7 +149,7 @@ export const OnBoardingScreen = () => {
                 CommonActions.reset({
                   index: 0,
                   routes: [
-                    { name: ROUTES.Home.HomeScreen.name },
+                    { name: ROUTES.Login.LoginScreen.name },
                   ],
                 })
               )

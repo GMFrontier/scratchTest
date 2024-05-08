@@ -14,6 +14,7 @@ const Stack = createStackNavigator();
 const handlers = {
   SplashScreen: () => <ROUTES.Splash.SplashScreen.screen />,
   OnBoardingScreen: () => <ROUTES.OnBoarding.OnBoardingScreen.screen />,
+  LoginScreen: () => <ROUTES.Login.LoginScreen.screen />,
   HomeScreen: () => <ROUTES.Home.HomeScreen.screen />,
   BottomTabNavigator: () => <ROUTES.Navigator.BottomTabNavigator.screen />,
 };

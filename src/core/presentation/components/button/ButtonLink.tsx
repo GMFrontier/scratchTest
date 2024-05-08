@@ -14,7 +14,7 @@ export const ButtonLink = (props: ButtonLinkProps) => {
 
   var height = 44;
   const backGroundColor = colors.secondaryBlue03
-  const textColor = colors.onboardingTitle
+  const textColor = colors.secondary
   var fontSize = FontsSize._14_SIZE;
 
   const styles = StyleSheet.create({
@@ -48,7 +48,7 @@ export const ButtonLink = (props: ButtonLinkProps) => {
         underline={true}
         textSize={FontsSize._14_SIZE}
         fontFamily={Fonts.DMSansMedium}
-        textColor={colors.onboardingTitle}
+        textColor={colors.secondary}
       />
     </TouchableOpacity>
   );

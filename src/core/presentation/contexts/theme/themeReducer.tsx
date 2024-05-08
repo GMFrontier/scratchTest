@@ -15,7 +15,6 @@ export interface ThemeState extends Theme {
     disableText: string;
     whiteText: string;
     onboardingText: string;
-    onboardingTitle: string;
     primary: string;
     secondary: string;
     tertiary: string;
@@ -87,7 +86,6 @@ export const lightTheme: ThemeState = {
     disableText: "#C4C4C4",
     whiteText: "#FFFFFF",
     onboardingText: "#EBECF0",
-    onboardingTitle: "#7A9CFF",
     primary: "#282828",
     secondary: "#7A9CFF",
     tertiary: "#404040",

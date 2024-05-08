@@ -23,7 +23,7 @@ const OnboardingSlide = ({ title, image, subtitle }: Props) => {
     <View style={{ paddingHorizontal: 16 }} >
       <Image resizeMode="stretch" style={styles.imgStyle} source={image} />
       <View style={{ zIndex: 1, marginTop: 20 }} >
-        <CustomText text={title} textColor={colors.onboardingTitle} fontFamily={Fonts.DMSansBold}
+        <CustomText text={title} textColor={colors.secondary} fontFamily={Fonts.DMSansBold}
           textSize={FontsSize._32_SIZE} />
       </View>
       <View style={{ zIndex: 1, opacity: .8 }} >

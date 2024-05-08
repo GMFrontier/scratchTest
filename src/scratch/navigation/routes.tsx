@@ -1,5 +1,6 @@
 
 import BottomTabNavigator from '../../core/presentation/components/navigation/BottomTabNavigator';
+import { LoginScreen } from '../auth/presentation/LoginScreen';
 import { HomeScreen } from '../home/HomeScreen';
 import { OnBoardingScreen } from '../onboarding/OnBoardingScreen';
 import { SplashScreen } from '../splash/presentation/SplashScreen';
@@ -10,6 +11,9 @@ export const ROUTES = {
   },
   Splash: {
     SplashScreen: { screen: SplashScreen, name: 'SplashScreen' },
+  },
+  Login: {
+    LoginScreen: { screen: LoginScreen, name: 'LoginScreen' },
   },
   // Splash: {
   //   SplashScreen: { screen: SplashScreen, name: 'SplashScreen' },
