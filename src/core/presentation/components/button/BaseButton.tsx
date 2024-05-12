@@ -1,10 +1,8 @@
 import { useContext, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, TouchableHighlight } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import Fonts from '../../../constants/Fonts';
 import FontsSize from '../../../constants/FontsSize';
-import { ComponentSize } from '../../../data/enum/ComponentSize';
-import { ComponentType } from '../../../data/enum/ComponentType';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 
 export interface BaseButtonProps {
@@ -12,8 +10,9 @@ export interface BaseButtonProps {
   imageStart?: any;
   imageEnd?: any;
   disabled?: boolean;
-  size?: ComponentSize;
-  type?: ComponentType;
+  marginHorizontal?: number;
+  size?: "small" | "medium" | "large";
+  type?: "default" | "hover" | "disabled" | "active";
   onPress: () => void;
 }
 
@@ -22,19 +21,27 @@ export const BaseButton = ({
   imageEnd,
   imageStart,
   disabled = false, // Default to false for enabled state
-  size = ComponentSize.large,
+  size = "large",
   onPress,
-  type = ComponentType.default,
+  marginHorizontal,
+  type = "default",
 }: BaseButtonProps) => {
   const { theme: { colors } } = useContext(ThemeContext);
+  const [isPressed, setIsPressed] = useState(false);
 
   var height = 56;
   var textSize = FontsSize._16_SIZE;
 
   var defaultStyles = StyleSheet.create({
-    buttonContainer: {
+    mainContainer: {
       position: "absolute",
-      bottom: 8,
+      bottom: 16,
+      width: "100%",
+      alignSelf: "center",
+      paddingHorizontal: marginHorizontal,
+      backgroundColor: 'rgba(0, 0, 0, 0)', // Transparent background
+    },
+    buttonContainer: {
       width: '100%',
       flexDirection: 'row',
       justifyContent: 'center',
@@ -55,26 +62,24 @@ export const BaseButton = ({
       marginLeft: 10,
     },
   });
-  console.log('Props:', { size, type, disabled });
-  console.log('Styles:', defaultStyles); // Log styles for debugging
 
   // Adjust styles based on size
   switch (size) {
-    case ComponentSize.small:
+    case "small":
       defaultStyles = {
         ...defaultStyles,
         buttonContainer: { ...defaultStyles.buttonContainer, height: 32 },
         textStyle: { ...defaultStyles.textStyle, fontSize: FontsSize._14_SIZE },
       };
       break;
-    case ComponentSize.medium:
+    case "medium":
       defaultStyles = {
         ...defaultStyles,
         buttonContainer: { ...defaultStyles.buttonContainer, height: 48 },
         textStyle: { ...defaultStyles.textStyle, fontSize: FontsSize._16_SIZE },
       };
       break;
-    case ComponentSize.large:
+    case "large":
       defaultStyles = {
         ...defaultStyles,
         buttonContainer: { ...defaultStyles.buttonContainer, height: 56 },
@@ -83,22 +88,14 @@ export const BaseButton = ({
       break;
   }
 
-  // Adjust styles based on type
-  switch (type) {
-    case ComponentType.default:
-    case ComponentType.hover:
-    case ComponentType.active:
-      // No need to change styles as they remain the same
-      break;
-    case ComponentType.disabled:
-      defaultStyles = {
-        ...defaultStyles,
-        buttonContainer: { ...defaultStyles.buttonContainer, backgroundColor: colors.disableText },
-        textStyle: { ...defaultStyles.textStyle, color: colors.white },
-      };
-      break;
+  if (isPressed) {
+    defaultStyles = {
+      ...defaultStyles,
+      mainContainer: { ...defaultStyles.mainContainer, backgroundColor: 'rgba(0, 0, 0, 0)' },
+      buttonContainer: { ...defaultStyles.buttonContainer, backgroundColor: "#B8CAFF" },
+      textStyle: { ...defaultStyles.textStyle, color: "#263137" },
+    };
   }
-
   // Override styles if disabled
   if (disabled) {
     defaultStyles = {
@@ -107,17 +104,20 @@ export const BaseButton = ({
       textStyle: { ...defaultStyles.textStyle, color: colors.white },
     };
   }
-  console.log('Props:2222', { size, type, disabled });
-
-  console.log('Styles:2222', defaultStyles); // Log styles for debugging
 
   return (
-    <TouchableOpacity onPress={onPress} disabled={disabled}>
+    <TouchableHighlight
+      underlayColor='none'
+      style={defaultStyles.mainContainer}
+      onPressIn={() => setIsPressed(true)} // Set isPressed to true when pressed
+      onPressOut={() => setIsPressed(false)} // Set isPressed to false when released
+      onPress={onPress}
+      disabled={disabled}>
       <View style={defaultStyles.buttonContainer}>
         {imageStart && <View style={defaultStyles.icoLeft}><SvgXml xml={imageStart} /></View>}
         <Text style={defaultStyles.textStyle}>{text}</Text>
         {imageEnd && <View style={defaultStyles.icoRight}><SvgXml xml={imageEnd} /></View>}
       </View>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };

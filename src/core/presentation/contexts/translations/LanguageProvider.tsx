@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import { createContext, useContext, useState } from 'react';
 import { Translations } from './Translations';
 
 interface LanguageContextType {
@@ -12,18 +12,32 @@ export const LanguageContext = createContext<LanguageContextType>({
     version: "0",
     file: {},
   },
-  setTranslation: () => {},
+  setTranslation: () => { },
 });
 
-export const LanguageProvider = ({children}: any) => {
+export const LanguageProvider = ({ children }: any) => {
   const [translation, setTranslation] = useState<Translations>({
     lang: '',
     version: "0",
-    file: {},
+    file: {
+      title_onboarding_1: "Construye tu crédito\nplanea tu futuro",
+      subtitle_onboarding_1: "Obtén tu primera tarjeta e inicia a construir tu historial de crédito con nosotros.",
+      title_onboarding_2: "Gestiona tus finanzas sin costos ocultos",
+      subtitle_onboarding_2: "Te proporcionamos transparencia total para que tengas un control total sobre tus gastos.",
+      title_onboarding_3: "Acompáñanos en tu crecimiento",
+      subtitle_onboarding_3: "Mientras compras suma, puntos para canjear por beneficios",
+      access: "Acceder",
+      login: "Iniciar sesión",
+      login_welcome: "Te damos la bienvenida",
+      email: "Correo electrónico",
+      email_placeholder: "correo.user@mail.com",
+      remember_email: "Recordar correo de acceso",
+      continue: "Continuar",
+    },
   });
 
   return (
-    <LanguageContext.Provider value={{setTranslation, translation}}>
+    <LanguageContext.Provider value={{ setTranslation, translation }}>
       {children}
     </LanguageContext.Provider>
   );

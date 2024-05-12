@@ -8,6 +8,7 @@ import { View } from 'react-native';
 import { ThemeContext } from '../../core/presentation/contexts/theme/ThemeContext';
 import { useContext } from 'react';
 import { DefaultTheme, NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
@@ -37,7 +38,7 @@ export const StackNavigator = () => {
     colors: {
       ...DefaultTheme.colors,
       primary: 'rgb(255, 45, 85)',
-      background: colors.accent
+      background: colors.accent,
     },
   };
 
@@ -47,13 +48,13 @@ export const StackNavigator = () => {
       ref={navigationRef}
       theme={MyTheme}
       onReady={() => { }} >
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {Object.entries(handlers).map(([screen, component]) => (
             <Stack.Screen name={screen} key={screen} component={component} />
           ))}
         </Stack.Navigator>
-      </View>
+      </SafeAreaView>
     </NavigationContainer>
 
   );

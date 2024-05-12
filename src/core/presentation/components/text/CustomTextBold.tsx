@@ -11,6 +11,7 @@ interface Props {
   textColor?: string;
   underline?: boolean;
   marginTop?: number;
+  opacity?: number;
   marginBottom?: number;
   textAlign?: 'left' | 'center' | 'right' | 'justify';
 }
@@ -23,6 +24,7 @@ export const CustomTextBold = ({
   underline = false,
   marginTop = 0,
   marginBottom = 0,
+  opacity,
   textAlign,
 }: Props) => {
   const textStyle: TextStyle = {
@@ -39,7 +41,7 @@ export const CustomTextBold = ({
   const parts = text.split('<b>');
 
   return (
-    <View style={{ flexDirection: "row" }}>
+    <View style={{ flexDirection: "row", opacity: opacity }}>
       <Text>
         {parts.map((part, index) => {
           if (index % 2 === 0) {

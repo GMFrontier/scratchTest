@@ -1,21 +1,17 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import { TouchableOpacity, StyleSheet, View, Animated, Dimensions, } from "react-native";
+import { StyleSheet, View, Animated, Dimensions, } from "react-native";
 import PageView, { PagerViewOnPageScrollEventData } from 'react-native-pager-view'
-import { SvgXml } from "react-native-svg";
 import { CommonActions, useFocusEffect, useNavigation } from "@react-navigation/native";
 import SplashScreen from 'react-native-splash-screen'
 import { useStatusBar } from "../../core/presentation/contexts/statusBar/StatusBarContext";
 import { useTranslation } from "../../core/presentation/contexts/translations/LanguageProvider";
 import { ThemeContext } from "../../core/presentation/contexts/theme/ThemeContext";
 import { ROUTES } from "../navigation/routes";
-import close_ico_black_toast_content from "../../../assets/svg/close_ico_black_toast_content";
 import { ButtonPrimary } from "../../core/presentation/components/button/ButtonPrimary";
 import OnboardingSlide from "./OnboardingSlide";
 import { ButtonLink } from "../../core/presentation/components/button/ButtonLink";
 import { ScalingDot } from "react-native-animated-pagination-dots";
 import React = require("react");
-import { ComponentType } from "../../core/data/enum/ComponentType";
-import { ComponentSize } from "../../core/data/enum/ComponentSize";
 
 export const OnBoardingScreen = () => {
   const statusBar = useStatusBar()
@@ -27,18 +23,18 @@ export const OnBoardingScreen = () => {
 
   const pages = [
     {
-      title: translation.file.text_onboarding_1 ?? 'Construye tu crédito\nplanea tu futuro',
-      subtitle: 'Obtén tu primera tarjeta e inicia a construir tu historial de crédito con nosotros.',
+      title: translation.file.title_onboarding_1,
+      subtitle: translation.file.subtitle_onboarding_1,
       image: require('../../../assets/onBoarding_1.png')
     },
     {
-      title: translation.file.text_onboarding_2 ?? 'Gestiona tus finanzas sin costos ocultos',
-      subtitle: 'Te proporcionamos transparencia total para que tengas un control total sobre tus gastos.',
+      title: translation.file.title_onboarding_2,
+      subtitle: translation.file.subtitle_onboarding_2,
       image: require('../../../assets/onBoarding_2.png')
     },
     {
-      title: translation.file.text_onboarding_3 ?? 'Acompáñanos en tu crecimiento',
-      subtitle: 'Mientras compras suma, puntos para canjear por beneficios.',
+      title: translation.file.title_onboarding_3,
+      subtitle: translation.file.subtitle_onboarding_3,
       image: require('../../../assets/onBoarding_3.png')
     }
   ]
@@ -138,24 +134,23 @@ export const OnBoardingScreen = () => {
         containerStyle={{
           bottom: 130,
         }}
+        activeDotScale={1}
       />
 
-      {currentSlideNumber >= 2 && (<View style={{ zIndex: 1, position: 'absolute', width: '100%', bottom: 30, }}>
-        <View style={{ marginHorizontal: 20 }}>
-          <ButtonPrimary
-            text={translation.file.login ?? 'Iniciar sesión'}
-            onPress={() =>
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 0,
-                  routes: [
-                    { name: ROUTES.Login.LoginScreen.name },
-                  ],
-                })
-              )
-            } />
-        </View>
-      </View>)}
+      {currentSlideNumber >= 2 &&
+        <ButtonPrimary
+          text={translation.file.access}
+          marginHorizontal={16}
+          onPress={() =>
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [
+                  { name: ROUTES.Login.LoginScreen.name },
+                ],
+              })
+            )
+          } />}
     </View >
   )
 }
