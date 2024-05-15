@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { StyleSheet } from 'react-native';
+import { useContext, useState } from 'react';
+import { StyleSheet, TouchableHighlight } from 'react-native';
 import Fonts from '../../../constants/Fonts';
 import FontsSize from '../../../constants/FontsSize';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
@@ -11,45 +11,49 @@ interface ButtonLinkProps extends BaseButtonProps { }
 
 export const ButtonLink = (props: ButtonLinkProps) => {
   const { theme: { colors } } = useContext(ThemeContext);
+  const [isPressed, setIsPressed] = useState(false);
 
   var height = 44;
   const backGroundColor = colors.secondaryBlue03
   const textColor = colors.secondary
   var fontSize = FontsSize._14_SIZE;
 
-  const styles = StyleSheet.create({
-    buttonContainer: {
-      borderRadius: 8,
-      width: '100%',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      fontFamily: Fonts.PoppinsMedium,
-      alignItems: 'center',
-      height: height,
-      backgroundColor: backGroundColor,
-    },
+  var defaultStyles = StyleSheet.create({
     textStyle: {
-      color: textColor,
-      fontFamily: Fonts.PoppinsMedium,
-      fontSize: fontSize,
-    },
-    icoRight: {
-      left: 10,
-    },
-    disabledButtonContainer: {
-      backgroundColor: colors.disabledBgPrimaryButton,
+      fontFamily: Fonts.DMSansMedium,
+      fontSize: FontsSize._14_SIZE,
+      color: colors.secondary
     },
   });
 
+  if (isPressed) {
+    defaultStyles = {
+      ...defaultStyles,
+      textStyle: { ...defaultStyles.textStyle, color: "#8FABFF" },
+    };
+  }
+
+  // if (disabled) {
+  //   defaultStyles = {
+  //     ...defaultStyles,
+  //     buttonContainer: { ...defaultStyles.buttonContainer, backgroundColor: colors.disableText },
+  //     textStyle: { ...defaultStyles.textStyle, color: colors.white },
+  //   };
+  // }
+
   return (
-    <TouchableOpacity onPress={props.onPress}>
+    <TouchableHighlight
+      underlayColor='none'
+      onPressIn={() => setIsPressed(true)} // Set isPressed to true when pressed
+      onPressOut={() => setIsPressed(false)} // Set isPressed to false when released
+      onPress={props.onPress}>
       <CustomText
         text={props.text}
         underline={true}
-        textSize={FontsSize._14_SIZE}
-        fontFamily={Fonts.DMSansMedium}
-        textColor={colors.secondary}
+        textSize={defaultStyles.textStyle.fontSize}
+        fontFamily={defaultStyles.textStyle.fontFamily}
+        textColor={defaultStyles.textStyle.color}
       />
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };

@@ -33,6 +33,8 @@ export const LanguageProvider = ({ children }: any) => {
       email_placeholder: "correo.user@mail.com",
       remember_email: "Recordar correo de acceso",
       continue: "Continuar",
+      dont_have_account_yet: "¿No tienes cuenta?",
+      register_here: "Regístrate aqui",
     },
   });
 

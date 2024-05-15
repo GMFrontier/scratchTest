@@ -40,7 +40,8 @@ export const CustomText = ({
 
   const textStyle: TextStyle = {
     fontSize: textSize,
-    color: textColor ?? colors.primaryText,
+    color: textColor ?? colors.secondaryText,
+    opacity: textColor ? 1 : .8,
     fontFamily,
     textDecorationLine: underline ? 'underline' : 'none',
     textDecorationColor: textColor,

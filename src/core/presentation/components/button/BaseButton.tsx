@@ -11,6 +11,7 @@ export interface BaseButtonProps {
   imageEnd?: any;
   disabled?: boolean;
   marginHorizontal?: number;
+  marginBottom?: number;
   size?: "small" | "medium" | "large";
   type?: "default" | "hover" | "disabled" | "active";
   onPress: () => void;
@@ -24,7 +25,7 @@ export const BaseButton = ({
   size = "large",
   onPress,
   marginHorizontal,
-  type = "default",
+  marginBottom = 16,
 }: BaseButtonProps) => {
   const { theme: { colors } } = useContext(ThemeContext);
   const [isPressed, setIsPressed] = useState(false);
@@ -35,11 +36,11 @@ export const BaseButton = ({
   var defaultStyles = StyleSheet.create({
     mainContainer: {
       position: "absolute",
-      bottom: 16,
+      bottom: marginBottom,
       width: "100%",
       alignSelf: "center",
       paddingHorizontal: marginHorizontal,
-      backgroundColor: 'rgba(0, 0, 0, 0)', // Transparent background
+      backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     buttonContainer: {
       width: '100%',
@@ -92,7 +93,7 @@ export const BaseButton = ({
     defaultStyles = {
       ...defaultStyles,
       mainContainer: { ...defaultStyles.mainContainer, backgroundColor: 'rgba(0, 0, 0, 0)' },
-      buttonContainer: { ...defaultStyles.buttonContainer, backgroundColor: "#B8CAFF" },
+      buttonContainer: { ...defaultStyles.buttonContainer, backgroundColor: colors.blue50 },
       textStyle: { ...defaultStyles.textStyle, color: "#263137" },
     };
   }

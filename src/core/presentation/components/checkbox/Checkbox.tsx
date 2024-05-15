@@ -77,7 +77,7 @@ export const Checkbox = ({ label, checked, onToggle, uncheckedImage, checkedImag
               <CustomTextBold
                 text={label}
                 opacity={opacity}
-                textColor={colors.onboardingText}
+                textColor={colors.secondaryText}
                 fontFamily={fontFamily}
                 textSize={textSize} />)
             : null

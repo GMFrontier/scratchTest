@@ -14,12 +14,14 @@ export interface ThemeState extends Theme {
     captionText: string;
     disableText: string;
     whiteText: string;
-    onboardingText: string;
+    secondaryText: string;
     primary: string;
     secondary: string;
     tertiary: string;
     accent: string;
     accentSecondary: string;
+    blue50: string;
+    red500: string;
     //viejos
     alertColor: string;
     background: string;
@@ -85,12 +87,14 @@ export const lightTheme: ThemeState = {
     captionText: "#808695",
     disableText: "#C4C4C4",
     whiteText: "#FFFFFF",
-    onboardingText: "#EBECF0",
+    secondaryText: "#EBECF0",
     primary: "#282828",
     secondary: "#7A9CFF",
     tertiary: "#404040",
     accent: "#282828",
     accentSecondary: "#2C2C2E",
+    blue50: "#B8CAFF",
+    red500: "#F33A00",
     //viejos
     alertColor: '#E11900',
     background: 'white',

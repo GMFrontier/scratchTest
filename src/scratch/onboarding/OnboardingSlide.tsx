@@ -26,14 +26,12 @@ const OnboardingSlide = ({ title, image, subtitle }: Props) => {
         <CustomText text={title} textColor={colors.secondary} fontFamily={Fonts.DMSansBold}
           textSize={FontsSize._32_SIZE} />
       </View>
-      <View style={{ zIndex: 1, opacity: .8 }} >
-        <CustomText
-          text={subtitle}
-          marginTop={16}
-          textColor={colors.onboardingText}
-          fontFamily={Fonts.DMSansRegular}
-          textSize={FontsSize._16_SIZE} />
-      </View>
+      <CustomText
+        text={subtitle}
+        marginTop={16}
+        textColor={colors.secondaryText}
+        fontFamily={Fonts.DMSansRegular}
+        textSize={FontsSize._16_SIZE} />
     </View>
   )
 }

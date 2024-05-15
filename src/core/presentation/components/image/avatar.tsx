@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import { SvgXml } from 'react-native-svg';
@@ -8,14 +8,13 @@ import FastImage from 'react-native-fast-image';
 interface Props {
   uri?: string;
   name?: string
-  width?: number,
-  height?: number,
+  size?: number,
   svg?: any,
   stroke?: number,
   strokeColor?: string
 }
 
-export const AvatarImage = ({ uri, name, width = 80, height = 80, svg, stroke = 0, strokeColor }: Props) => {
+export const AvatarImage = ({ uri, name, size = 80, svg, stroke = 0, strokeColor }: Props) => {
 
   const { theme: { colors } } = useContext(ThemeContext);
 
@@ -33,11 +32,11 @@ export const AvatarImage = ({ uri, name, width = 80, height = 80, svg, stroke = 
     <View
       style={{
         ...styles.container,
-        width: width,
-        height: height,
+        width: size,
+        height: size,
         borderWidth: stroke,
         borderColor: strokeColor,
-        borderRadius: height / 2
+        borderRadius: size / 2
       }}
     >
 

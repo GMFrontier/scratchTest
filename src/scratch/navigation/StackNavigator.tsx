@@ -16,6 +16,7 @@ const handlers = {
   SplashScreen: () => <ROUTES.Splash.SplashScreen.screen />,
   OnBoardingScreen: () => <ROUTES.OnBoarding.OnBoardingScreen.screen />,
   LoginScreen: () => <ROUTES.Login.LoginScreen.screen />,
+  PinScreen: () => <ROUTES.Login.PinScreen.screen />,
   HomeScreen: () => <ROUTES.Home.HomeScreen.screen />,
   BottomTabNavigator: () => <ROUTES.Navigator.BottomTabNavigator.screen />,
 };

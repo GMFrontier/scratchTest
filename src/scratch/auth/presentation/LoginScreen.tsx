@@ -10,8 +10,12 @@ import FontsSize from '../../../core/constants/FontsSize';
 import { TextInputMain } from '../../../core/presentation/components/input/TextInputMain';
 import { Checkbox } from '../../../core/presentation/components/checkbox/Checkbox';
 import { ButtonPrimary } from '../../../core/presentation/components/button/ButtonPrimary';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../navigation/routes';
+import { ButtonLink } from '../../../core/presentation/components/button/ButtonLink';
+import Sizebox from '../../../core/presentation/components/item/Sizebox';
 
-export const LoginScreen = observer(({ navigation }: any) => {
+export const LoginScreen = observer(() => {
 
   const {
     theme: { colors },
@@ -20,6 +24,8 @@ export const LoginScreen = observer(({ navigation }: any) => {
   const [checkbox, setCheckbox] = useState(false);
 
   const { translation } = useTranslation();
+
+  const navigation = useNavigation()
 
   return (
     <View style={style.containerMain}>
@@ -49,7 +55,20 @@ export const LoginScreen = observer(({ navigation }: any) => {
 
       <ButtonPrimary
         text={translation.file.continue}
-        onPress={() => { }} />
+        marginBottom={130}
+        onPress={() => { navigation.navigate(ROUTES.Login.PinScreen.name as never) }} />
+
+      <View style={{ bottom: 70, position: "absolute", alignSelf: "center", flexDirection: "row", }} >
+        <CustomText
+          text={translation.file.dont_have_account_yet}
+        />
+        <Sizebox width={4} />
+        <ButtonLink
+          text={translation.file.register_here}
+          onPress={() => {
+          }}
+        />
+      </View>
 
     </View>
   );
