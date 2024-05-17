@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { View, TouchableOpacity, StyleSheet, Image, Dimensions, LayoutChangeEvent, Platform, StatusBar } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SvgXml } from 'react-native-svg';
@@ -18,7 +18,12 @@ import home_ico_activity_active_content from '../../../../../assets/svg/home_ico
 import home_ico_activity_content from '../../../../../assets/svg/home_ico_activity_content';
 import settings_ico_active_content from '../../../../../assets/svg/settings_ico_active_content';
 import settings_ico_content from '../../../../../assets/svg/settings_ico_content';
-import { HomeScreen } from '../../../../scratch/home/HomeScreen';
+import { HomeScreen } from '../../../../scratch/home/presentation/HomeScreen';
+import { CardsScreen } from '../../../../scratch/settings/presentation/CardsScreen';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import React = require('react');
+import Sizebox from '../item/Sizebox';
+import BottomTabIcon from './BottomTabIcon';
 
 
 const BottomTabNavigator = () => {
@@ -32,6 +37,10 @@ const BottomTabNavigator = () => {
   } else {
     screenHeight *= .06
   }
+
+  React.useEffect(() => {
+    changeNavigationBarColor(colors.accentSecondary);
+  })
 
   const CustomTabBarButton = ({ onPress }: any) => (
 
@@ -66,7 +75,6 @@ const BottomTabNavigator = () => {
     <View
       style={{
         flex: 1,
-        paddingBottom: 30,
         backgroundColor: 'white',
         bottom: 0,
       }}>
@@ -78,48 +86,33 @@ const BottomTabNavigator = () => {
           unmountOnBlur: true,
           lazy: true,
           tabBarStyle: {
-            backgroundColor: 'transparent',
+            backgroundColor: colors.accentSecondary,
             height: barYAxisSpace,
-            width: '100%',
             borderTopWidth: 0,
             position: 'absolute',
-            shadowColor: 'transparent',
-            alignSelf: 'center',
+            paddingHorizontal: 16
           },
           tabBarItemStyle: {
-            alignSelf: 'center',
-            paddingTop: 25,
+            justifyContent: "space-between"
           },
           headerShadowVisible: false,
           tabBarBackground: () => {
             return (
-              <SvgXml
-                xml={subtractbottom1}
-                width={'100%'}
-                preserveAspectRatio="xMinYMin slice"></SvgXml>
+              <View />
             );
           },
         }}>
         <Tab.Screen
-          name="HomeScreen"
+          name={ROUTES.Home.HomeScreen.name}
           component={ROUTES.Home.HomeScreen.screen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View
-                style={{
-                  alignContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <SvgXml
-                  xml={focused ? home_ico_active_content : home_ico_content}
-                />
-                <CustomText
-                  text={translation.file.bottom_tab_home}
-                  fontFamily={Fonts.PoppinsMedium}
-                  textColor={focused ? '#30850F' : '#7D889B'}
-                  textSize={FontsSize._12_SIZE}
-                />
-              </View>
+              <BottomTabIcon
+                text={translation.file.bottom_tab_home}
+                icon={home_ico_content}
+                focusedIcon={home_ico_active_content}
+                focused={focused}
+              />
             ),
           }}
         />
@@ -129,41 +122,27 @@ const BottomTabNavigator = () => {
           component={ROUTES.Cards.CardsScreen.screen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={{ alignContent: 'center', alignItems: 'center' }}>
-                <SvgXml
-                  xml={focused ? home_ico_card_active_content : home_ico_card_content}
-                />
-                <CustomText
-                  text={translation.file.bottom_tab_cards}
-                  fontFamily={Fonts.PoppinsMedium}
-                  textColor={focused ? '#30850F' : '#7D889B'}
-                  textSize={FontsSize._12_SIZE}
-                />
-              </View>
+              <BottomTabIcon
+                text={translation.file.bottom_tab_cards}
+                icon={home_ico_card_content}
+                focusedIcon={home_ico_card_active_content}
+                focused={focused}
+              />
             ),
           }}
         />
 
         <Tab.Screen
-          name={ROUTES.Home.HomeScreen.name}
-          component={HomeScreen}
+          name={ROUTES.Cards.CardsScreen.name}
+          component={CardsScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={{ alignContent: 'center', alignItems: 'center' }}>
-                <View style={{ width: 28, height: 28, marginBottom: 3 }}>
-                  <SvgXml
-                    xml={
-                      focused ? home_ico_activity_active_content : home_ico_activity_content
-                    }
-                  />
-                </View>
-                <CustomText
-                  text={translation.file.activity}
-                  fontFamily={Fonts.PoppinsMedium}
-                  textColor={focused ? '#30850F' : '#7D889B'}
-                  textSize={FontsSize._12_SIZE}
-                />
-              </View>
+              <BottomTabIcon
+                text={translation.file.bottom_tab_points}
+                icon={home_ico_activity_content}
+                focusedIcon={home_ico_card_active_content}
+                focused={focused}
+              />
             ),
           }}
         />
@@ -173,19 +152,12 @@ const BottomTabNavigator = () => {
           component={ROUTES.Settings.SettingsScreen.screen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={{ alignContent: 'center', alignItems: 'center' }}>
-                <SvgXml
-                  xml={
-                    focused ? settings_ico_active_content : settings_ico_content
-                  }
-                />
-                <CustomText
-                  text={translation.file.bottom_tab_settings}
-                  fontFamily={Fonts.PoppinsMedium}
-                  textColor={focused ? '#30850F' : '#7D889B'}
-                  textSize={FontsSize._12_SIZE}
-                />
-              </View>
+              <BottomTabIcon
+                text={translation.file.bottom_tab_settings}
+                icon={settings_ico_content}
+                focusedIcon={home_ico_card_active_content}
+                focused={focused}
+              />
             ),
           }}
         />

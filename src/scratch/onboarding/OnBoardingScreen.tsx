@@ -96,7 +96,7 @@ export const OnBoardingScreen = () => {
               CommonActions.reset({
                 index: 0,
                 routes: [
-                  { name: ROUTES.Login.LoginScreen.name },
+                  { name: ROUTES.Auth.LoginScreen.name },
                 ],
               })
             )
@@ -146,7 +146,7 @@ export const OnBoardingScreen = () => {
               CommonActions.reset({
                 index: 0,
                 routes: [
-                  { name: ROUTES.Login.LoginScreen.name },
+                  { name: ROUTES.Auth.LoginScreen.name },
                 ],
               })
             )

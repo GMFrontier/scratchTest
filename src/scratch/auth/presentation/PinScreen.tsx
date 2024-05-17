@@ -12,30 +12,44 @@ import { SvgXml } from 'react-native-svg';
 import ic_delete_pin from '../../../../assets/svg/ic_delete_pin';
 import ReactNativePinView from 'react-native-pin-view';
 import { AvatarImage } from '../../../core/presentation/components/image/avatar';
+import { CommonActions, StackActions, useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../navigation/routes';
+import ic_biometric_pin from '../../../../assets/svg/ic_biometric_pin';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import { PinView } from '../../../core/presentation/components/input/PinView';
 
 export const PinScreen = observer(() => {
 
   const {
     theme: { colors },
   } = useContext(ThemeContext);
-
+  const PIN_LENGTH = 6
   const { translation } = useTranslation();
+  const nav = useNavigation()
 
-  const [pin, setPin] = useState<string>('');
-
-  const handlePinInput = (input: string) => {
-    if (pin.length < 6) {
-      setPin(pin + input);
-    }
-  };
-
-  const handleClearPin = () => {
-    pinView.current.clearAll()
-  };
-
-  const pinView = React.useRef(null)
-  const [showBiometricButton, setShowBiometricButton] = useState(false)
   const [enteredPin, setEnteredPin] = useState("")
+  const [user, setUser] = useState<boolean>(false);
+
+  React.useEffect(() => {
+    setUser(false)
+  })
+
+  React.useEffect(() => {
+    if (enteredPin.length === PIN_LENGTH) {
+      nav.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            { name: ROUTES.Navigator.BottomTabNavigator.name },
+          ],
+        })
+      );
+    }
+  }, [enteredPin])
+
+  React.useEffect(() => {
+    changeNavigationBarColor(colors.accent);
+  })
 
   return (
     <View style={style.containerMain}>
@@ -43,12 +57,19 @@ export const PinScreen = observer(() => {
         <ButtonLink
           text={"Acceder a otra cuenta"}
           onPress={() => {
+            nav.dispatch(StackActions.replace(ROUTES.Auth.LoginScreen.name))
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                { name: ROUTES.Auth.LoginScreen.name },
+              ],
+            })
           }} />
       </View>
       <View style={{
         marginTop: 140,
         alignSelf: "center",
-        alignItems: "center"
+        alignItems: "center",
       }} >
         <AvatarImage size={56} />
 
@@ -86,91 +107,18 @@ export const PinScreen = observer(() => {
         <ButtonLink
           text={"¿Olvidaste tu PIN?"}
           onPress={() => {
+            nav.navigate(ROUTES.Auth.RecoverPinScreen.name as never)
           }} />
       </View>
 
       <View style={{ marginTop: 24 }} >
-        <ReactNativePinView
-          inputSize={32}
-          ref={pinView}
-          pinLength={6}
-          buttonSize={60}
-          onValueChange={value => setEnteredPin(value)}
-          buttonAreaStyle={{
-            flex: 1,
-            marginBottom: 220
-          }}
-          inputAreaStyle={{
-            marginBottom: 24,
-            justifyContent: 'space-between',
-            width: "100%",
-            paddingHorizontal: 34
-          }}
-          inputViewEmptyStyle={{
-            backgroundColor: colors.disableText,
-          }}
-          inputViewFilledStyle={{
-            backgroundColor: colors.secondary
-          }}
-          buttonViewStyle={{
-            width: "92%",
-            height: 52,
-            marginHorizontal: 4,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 10,
-            backgroundColor: '#282828',
-            shadowColor: 'white',
-            shadowOffset: { width: 0, height: 0 },
-            shadowOpacity: 1,
-            shadowRadius: 55,
-            elevation: 2,
-          }}
-          buttonTextStyle={{
-            color: "#FFF",
-            fontFamily: Fonts.DMSansMedium,
-            fontSize: FontsSize._32_SIZE
-          }}
-          customLeftButton={
-            <TouchableOpacity style={{
-              width: "192%",
-              height: 52,
-              marginHorizontal: 4,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 10,
-              backgroundColor: '#282828',
-              shadowColor: 'white',
-              shadowOffset: { width: 0, height: 0 },
-              shadowOpacity: 1,
-              shadowRadius: 55,
-              elevation: 2,
-            }} >
-            </TouchableOpacity>}
-          customRightButton={
-            <TouchableOpacity
-              onPress={() => {
-                handleClearPin()
-              }}
-              activeOpacity={0.8}
-              style={{
-                width: "192%",
-                height: 52,
-                marginHorizontal: 4,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 10,
-                backgroundColor: '#282828',
-                shadowColor: 'white',
-                shadowOffset: { width: 0, height: 0 },
-                shadowOpacity: 1,
-                shadowRadius: 55,
-                elevation: 2,
-              }} >
-              <SvgXml xml={ic_delete_pin} />
-            </TouchableOpacity>
-          }
+
+        <PinView
+          setValue={setEnteredPin}
+          keyboardBottom={220}
+          showPinInputs={true}
         />
+
       </View>
     </View>
   );

@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../navigation/routes';
 import { ButtonLink } from '../../../core/presentation/components/button/ButtonLink';
 import Sizebox from '../../../core/presentation/components/item/Sizebox';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
 export const LoginScreen = observer(() => {
 
@@ -26,6 +27,10 @@ export const LoginScreen = observer(() => {
   const { translation } = useTranslation();
 
   const navigation = useNavigation()
+
+  React.useEffect(() => {
+    changeNavigationBarColor(colors.accent);
+  })
 
   return (
     <View style={style.containerMain}>
@@ -56,7 +61,7 @@ export const LoginScreen = observer(() => {
       <ButtonPrimary
         text={translation.file.continue}
         marginBottom={130}
-        onPress={() => { navigation.navigate(ROUTES.Login.PinScreen.name as never) }} />
+        onPress={() => { navigation.navigate(ROUTES.Auth.PinScreen.name as never) }} />
 
       <View style={{ bottom: 70, position: "absolute", alignSelf: "center", flexDirection: "row", }} >
         <CustomText

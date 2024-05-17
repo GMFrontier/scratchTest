@@ -1,8 +1,9 @@
-import React, { createContext, useRef, useState } from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { BaseBottomSheetDialog } from '../../components/dialog/BaseBottomSheetDialog';
 import { ModalContent } from '../../components/dialog/ModalStateContent';
 import { TypeModalEnum } from './TypeModalEnum';
+import { ThemeContext } from '../theme/ThemeContext';
 
 export interface ModalProps {
   image: any;
@@ -15,6 +16,7 @@ export interface ModalProps {
   showIcoClose?: boolean
   enableOverlayTap?: 'none' | 'close' | 'collapse',
   typeModal?: TypeModalEnum,
+  actionCloseModal?: () => void,
   content?: any
 }
 
@@ -34,6 +36,7 @@ export const NewModalContextProvider = ({ children }: any) => {
 
   const [actionButtonPrimary, setActionButtonPrimary] = useState<(() => void)>(() => () => { });
   const [actionButtonSecondary, setActionButtonSecondary] = useState<(() => void)>(() => () => { });
+  const [actionCloseModal, setActionCloseModal] = useState<(() => void)>(() => () => { });
 
   const openModal = () => {
     bottomSheetRef.current?.expand();
@@ -71,16 +74,28 @@ export const NewModalContextProvider = ({ children }: any) => {
       }
       closeModal();
     })
+    setActionCloseModal(() => () => {
+      if (propsDefault.actionCloseModal) {
+        propsDefault.actionCloseModal();
+      }
+      closeModal();
+    })
     openModal();
   };
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext);
+
   return (
     <ModalStateContext.Provider
       value={{ showStateModal }}>
       {children}
-      <BaseBottomSheetDialog bottomSheetRef={bottomSheetRef} enableOverlayTap={props.enableOverlayTap}>
+      <BaseBottomSheetDialog
+        bottomSheetRef={bottomSheetRef}
+        enableOverlayTap={props.enableOverlayTap}>
         <ModalContent
           title={props?.title ?? ''}
           subtitle={props?.message ?? ''}
@@ -89,6 +104,7 @@ export const NewModalContextProvider = ({ children }: any) => {
           actionButtonPrimary={actionButtonPrimary}
           labelButtonSecondary={props?.labelButtonSecondary}
           showIconClose={props.showIcoClose}
+          actionCloseModal={actionCloseModal}
           actionButtonSecondary={actionButtonSecondary}>
         </ModalContent>
       </BaseBottomSheetDialog>

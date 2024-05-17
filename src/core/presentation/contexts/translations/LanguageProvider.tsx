@@ -35,6 +35,11 @@ export const LanguageProvider = ({ children }: any) => {
       continue: "Continuar",
       dont_have_account_yet: "¿No tienes cuenta?",
       register_here: "Regístrate aqui",
+      bottom_tab_home: "Home",
+      bottom_tab_cards: "Tarjetas",
+      bottom_tab_points: "Puntos",
+      bottom_tab_settings: "Ajustes",
+      next: "Siguiente",
     },
   });
 

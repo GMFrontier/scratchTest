@@ -5,7 +5,7 @@ import { ThemeContext } from '../theme/ThemeContext';
 
 interface StatusBarContextType {
   setPrimaryStatusBar: () => void;
-  setWhiteStatusBar: () => void;
+  setToolbarStatusBar: () => void;
 }
 
 const StatusBarContext = createContext<StatusBarContextType | undefined>(undefined);
@@ -15,15 +15,15 @@ export const StatusBarProvider = ({ children }: any) => {
     theme: { colors },
   } = useContext(ThemeContext);
 
-  const [statusBarStyle, setStatusBarStyle] = useState<StatusBarStyle>('dark-content');
+  const [statusBarStyle, setStatusBarStyle] = useState<StatusBarStyle>('light-content');
   const [statusBarBackgroundColor, setStatusBarBackgroundColor] = useState<string | undefined>(undefined);
 
-  const setWhiteStatusBar = () => {
-    setStatusBarBackgroundColor(colors.white)
-    setStatusBarStyle("dark-content")
+  const setToolbarStatusBar = () => {
+    setStatusBarBackgroundColor(colors.accentSecondary)
+    setStatusBarStyle("light-content")
   }
 
-  const setGreenStatusBar = () => {
+  const setPrimaryStatusBar = () => {
     setStatusBarBackgroundColor(colors.primary)
     setStatusBarStyle("light-content")
   }
@@ -37,7 +37,7 @@ export const StatusBarProvider = ({ children }: any) => {
   };
 
   return (
-    <StatusBarContext.Provider value={{ setPrimaryStatusBar: setGreenStatusBar, setWhiteStatusBar }}>
+    <StatusBarContext.Provider value={{ setPrimaryStatusBar, setToolbarStatusBar }}>
       <View style={{ height: insets.top, backgroundColor: statusBarBackgroundColor }}>
         <RNStatusBar {...statusBarProps} />
       </View>

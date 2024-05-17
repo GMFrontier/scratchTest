@@ -10,6 +10,7 @@ export interface BaseButtonProps {
   imageStart?: any;
   imageEnd?: any;
   disabled?: boolean;
+  position?: "absolute" | "relative" | "static";
   marginHorizontal?: number;
   marginBottom?: number;
   size?: "small" | "medium" | "large";
@@ -25,6 +26,7 @@ export const BaseButton = ({
   size = "large",
   onPress,
   marginHorizontal,
+  position,
   marginBottom = 16,
 }: BaseButtonProps) => {
   const { theme: { colors } } = useContext(ThemeContext);
@@ -35,8 +37,8 @@ export const BaseButton = ({
 
   var defaultStyles = StyleSheet.create({
     mainContainer: {
-      position: "absolute",
-      bottom: marginBottom,
+      position: position ?? "absolute",
+      bottom: position ? 0 : marginBottom,
       width: "100%",
       alignSelf: "center",
       paddingHorizontal: marginHorizontal,
