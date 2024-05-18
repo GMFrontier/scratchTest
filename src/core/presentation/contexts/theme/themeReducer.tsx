@@ -22,6 +22,7 @@ export interface ThemeState extends Theme {
     accentSecondary: string;
     blue50: string;
     red500: string;
+    blue400: string;
     //viejos
     alertColor: string;
     background: string;
@@ -95,6 +96,7 @@ export const lightTheme: ThemeState = {
     accentSecondary: "#2C2C2E",
     blue50: "#B8CAFF",
     red500: "#F33A00",
+    blue400: "#295FFF",
     //viejos
     alertColor: '#E11900',
     background: 'white',

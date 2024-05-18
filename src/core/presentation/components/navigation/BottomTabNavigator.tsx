@@ -148,8 +148,8 @@ const BottomTabNavigator = () => {
         />
 
         <Tab.Screen
-          name="SettingScreen"
-          component={ROUTES.Settings.SettingsScreen.screen}
+          name={ROUTES.Settings.ProfileScreen.name}
+          component={ROUTES.Settings.ProfileScreen.screen}
           options={{
             tabBarIcon: ({ focused }) => (
               <BottomTabIcon

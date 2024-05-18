@@ -10,6 +10,7 @@ import { SettingsScreen } from '../cards/presentation/SettingsScreen';
 import { RecoverPinScreen } from '../auth/presentation/RecoverPinScreen';
 import { RecoverPinEmailValidationScreen } from '../auth/presentation/RecoverPinEmailValidationScreen';
 import { RecoverPinCreateScreen } from '../auth/presentation/RecoverPinCreateScreen';
+import { ProfileScreen } from '../settings/presentation/ProfileScreen';
 
 interface NavRouteModel {
   [key: string]: {
@@ -40,6 +41,7 @@ export const ROUTES = {
     OnBoardingScreen: { screen: OnBoardingScreen, name: 'OnBoardingScreen' },
   },
   Settings: {
+    ProfileScreen: { screen: ProfileScreen, name: 'ProfileScreen' },
     SettingsScreen: { screen: SettingsScreen, name: 'SettingsScreen' },
   },
   Home: {

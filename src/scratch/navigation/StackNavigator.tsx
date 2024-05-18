@@ -18,6 +18,7 @@ const handlers = {
   RecoverPinCreateScreen: () => <ROUTES.Auth.RecoverPinCreateScreen.screen />,
   BottomTabNavigator: () => <ROUTES.Navigator.BottomTabNavigator.screen />,
   HomeScreen: () => <ROUTES.Home.HomeScreen.screen />,
+  ProfileScreen: () => <ROUTES.Settings.ProfileScreen.screen />,
 };
 
 export type RootParamList = {

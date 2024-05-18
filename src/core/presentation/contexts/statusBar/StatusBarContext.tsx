@@ -6,6 +6,7 @@ import { ThemeContext } from '../theme/ThemeContext';
 interface StatusBarContextType {
   setPrimaryStatusBar: () => void;
   setToolbarStatusBar: () => void;
+  setProfileStatusBar: () => void;
 }
 
 const StatusBarContext = createContext<StatusBarContextType | undefined>(undefined);
@@ -27,6 +28,10 @@ export const StatusBarProvider = ({ children }: any) => {
     setStatusBarBackgroundColor(colors.primary)
     setStatusBarStyle("light-content")
   }
+  const setProfileStatusBar = () => {
+    setStatusBarBackgroundColor(colors.blue400)
+    setStatusBarStyle("dark-content")
+  }
 
   const insets = useSafeAreaInsets();
 
@@ -37,7 +42,7 @@ export const StatusBarProvider = ({ children }: any) => {
   };
 
   return (
-    <StatusBarContext.Provider value={{ setPrimaryStatusBar, setToolbarStatusBar }}>
+    <StatusBarContext.Provider value={{ setPrimaryStatusBar, setToolbarStatusBar, setProfileStatusBar }}>
       <View style={{ height: insets.top, backgroundColor: statusBarBackgroundColor }}>
         <RNStatusBar {...statusBarProps} />
       </View>
