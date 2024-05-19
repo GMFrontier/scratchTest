@@ -11,6 +11,7 @@ import ic_left_arrow_outline_white from '../../../../../assets/svg/ic_left_arrow
 
 interface Props {
   text: string;
+  backgroundColor?: string;
   showArrowBack?: boolean;
   setIconEnd?: any;
   onPress?: () => void;
@@ -28,7 +29,8 @@ const ToolbarView = ({
   onPressIconEnd,
   children,
   textSize,
-  toolbarType
+  toolbarType,
+  backgroundColor
 }: Props
 ) => {
   const navigation = useNavigation();
@@ -117,7 +119,7 @@ const ToolbarView = ({
       arrowBack = ic_left_arrow_outline_white
   }
   return (
-    <View style={{ flex: 1 }} >
+    <View style={{ flex: 1, backgroundColor: backgroundColor }} >
       <View style={style.toolbarContainer}>
         {showArrowBack && (
           <TouchableOpacity onPress={handleBackPress} style={style.backButton}>

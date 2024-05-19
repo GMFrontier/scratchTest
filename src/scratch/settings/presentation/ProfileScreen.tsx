@@ -20,6 +20,10 @@ import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { useToastContext } from '../../../core/presentation/contexts/messages/useToastContext';
 import { CustomText } from '../../../core/presentation/components/text/CustomText';
 import { TextInputMain } from '../../../core/presentation/components/input/TextInputMain';
+import { FlagInput } from '../../../core/presentation/components/input/FlagInput';
+import Sizebox from '../../../core/presentation/components/item/Sizebox';
+import { ButtonPrimary } from '../../../core/presentation/components/button/ButtonPrimary';
+import ic_logout_outline from '../../../../assets/svg/ic_logout_outline';
 
 export const ProfileScreen = observer(() => {
 
@@ -29,6 +33,11 @@ export const ProfileScreen = observer(() => {
 
   const statusBar = useStatusBar()
   const toastMessage = useToastContext().showMessageToast
+  const [phone, setPhone] = React.useState('');
+  const [selectedOption, setSelectedOption] = React.useState(
+    '\ud83c\uddf5\ud83c\udde6*+507*PA',
+  );
+
 
   const { translation } = useTranslation();
 
@@ -72,9 +81,33 @@ export const ProfileScreen = observer(() => {
       textSize={FontsSize._16_SIZE}
       setIconEnd={ic_settings_outline_white}
       onPressIconEnd={() => { }}
+      backgroundColor='#1C1C1E'
       toolbarType='profile'>
       <View
-        style={{ backgroundColor: colors.blue400, height: 76, borderBottomEndRadius: 65, borderBottomStartRadius: 65 }} />
+        style={{
+          backgroundColor: colors.blue400,
+          height: 76,
+          borderBottomEndRadius: 65,
+          borderBottomStartRadius: 65
+        }} />
+
+      <View
+        style={{
+          backgroundColor: colors.white,
+          height: 150,
+          bottom: 0,
+          position: "absolute"
+        }}
+      />
+      <View
+        style={{
+          backgroundColor: colors.white,
+          height: 150,
+          bottom: 0,
+          position: "absolute"
+        }}
+      />
+
       <View
         style={{
           height: size,
@@ -161,14 +194,44 @@ export const ProfileScreen = observer(() => {
           inputValue={translation.file.email_placeholder}
           labelTitle={translation.file.email}
           placeholder={translation.file.email_placeholder} />
+
+        <Sizebox height={16} />
+
+        <FlagInput
+          phone={phone}
+          setPhone={setPhone}
+          isEnabled={false}
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption} />
+
+        <CustomText
+          marginTop={16}
+          textAlign='center'
+          text='Versión 1.1.1' />
+
       </View>
 
+      <ButtonPrimary
+        text={"Cerrar sesión"}
+        imageStart={ic_logout_outline}
+        onPress={() => { }} />
+
+
+      <View
+        style={{
+          backgroundColor: colors.accentSecondary,
+          height: 150,
+          zIndex: -1,
+          marginTop: 189
+        }}
+      />
     </ToolbarView>
   );
 });
 
 const styles = StyleSheet.create({
   container: {
+
   },
   image: {
     width: '100%',
