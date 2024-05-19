@@ -172,8 +172,8 @@ export const TextInputMain = ({
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.accentSecondary,
-      borderRadius: 12,
+      backgroundColor: editable ? colors.accentSecondary : colors.disableText,
+      borderRadius: 8,
       zIndex: -1,
       width: '100%',
       borderColor: colors.captionText,
@@ -219,7 +219,7 @@ export const TextInputMain = ({
       paddingVertical: 5,
       paddingHorizontal: 10,
       fontSize: FontsSize._16_SIZE,
-      color: colors.white,
+      color: editable ? colors.white : colors.primaryText,
     },
   });
 
