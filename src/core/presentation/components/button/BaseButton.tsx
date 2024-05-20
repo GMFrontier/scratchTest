@@ -9,6 +9,7 @@ export interface BaseButtonProps {
   text: string;
   imageStart?: any;
   imageEnd?: any;
+  textColor?: string;
   disabled?: boolean;
   position?: "absolute" | "relative" | "static";
   marginHorizontal?: number;
@@ -28,6 +29,7 @@ export const BaseButton = ({
   marginHorizontal,
   position,
   marginBottom = 16,
+  textColor,
 }: BaseButtonProps) => {
   const { theme: { colors } } = useContext(ThemeContext);
   const [isPressed, setIsPressed] = useState(false);
@@ -56,7 +58,7 @@ export const BaseButton = ({
     textStyle: {
       fontFamily: Fonts.DMSansMedium,
       fontSize: textSize,
-      color: colors.white
+      color: textColor ?? colors.white
     },
     icoLeft: {
       marginRight: 10,

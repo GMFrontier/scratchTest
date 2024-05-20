@@ -10,7 +10,6 @@ import FontsSize from '../../../core/constants/FontsSize';
 import { ButtonLink } from '../../../core/presentation/components/button/ButtonLink';
 import { SvgXml } from 'react-native-svg';
 import ic_delete_pin from '../../../../assets/svg/ic_delete_pin';
-import ReactNativePinView from 'react-native-pin-view';
 import { AvatarImage } from '../../../core/presentation/components/image/avatar';
 import { CommonActions, StackActions, useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../navigation/routes';
@@ -74,7 +73,7 @@ export const PinScreen = observer(() => {
         <AvatarImage size={56} />
 
         <CustomText
-          text={"Hola, Gabriela Carolina"}
+          text={"Hola, Gabriela  Carolina"}
           marginTop={16}
           textSize={FontsSize._16_SIZE}
           fontFamily={Fonts.DMSansMedium}
@@ -95,14 +94,6 @@ export const PinScreen = observer(() => {
         fontFamily={Fonts.DMSansBold}
         textColor={colors.white} />
 
-      <View style={{ position: "absolute", alignSelf: "center", bottom: 406, alignItems: "center" }} >
-        <CustomText
-          text={"PIN invalido inténtalo nuevamente"}
-          textSize={FontsSize._12_SIZE}
-          fontFamily={Fonts.DMSansMedium}
-          textColor={colors.red500} />
-      </View>
-
       <View style={{ position: "absolute", alignSelf: "center", bottom: 325, alignItems: "center" }} >
         <ButtonLink
           text={"¿Olvidaste tu PIN?"}
@@ -111,15 +102,13 @@ export const PinScreen = observer(() => {
           }} />
       </View>
 
-      <View style={{ marginTop: 24 }} >
-
-        <PinView
-          setValue={setEnteredPin}
-          keyboardBottom={220}
-          showPinInputs={true}
-        />
-
-      </View>
+      <PinView
+        setValue={setEnteredPin}
+        marginTop={24}
+        errorText={"PIN invalido inténtalo nuevamente"}
+        showError={true}
+        showPinInputs={true}
+      />
     </View>
   );
 });
@@ -132,9 +121,5 @@ const style = StyleSheet.create({
     alignSelf: "center",
     alignContent: "center",
     alignItems: "center",
-  },
-  keyboardContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
+  }
 });

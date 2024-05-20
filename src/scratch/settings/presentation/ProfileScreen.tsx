@@ -24,6 +24,8 @@ import { FlagInput } from '../../../core/presentation/components/input/FlagInput
 import Sizebox from '../../../core/presentation/components/item/Sizebox';
 import { ButtonPrimary } from '../../../core/presentation/components/button/ButtonPrimary';
 import ic_logout_outline from '../../../../assets/svg/ic_logout_outline';
+import { useNavigation } from '@react-navigation/core';
+import { ROUTES } from '../../navigation/routes';
 
 export const ProfileScreen = observer(() => {
 
@@ -75,12 +77,16 @@ export const ProfileScreen = observer(() => {
   const size = 88
   const uri = "https://img.freepik.com/foto-gratis/colores-arremolinados-interactuan-danza-fluida-sobre-lienzo-que-muestra-tonos-vibrantes-patrones-dinamicos-que-capturan-caos-belleza-arte-abstracto_157027-2892.jpg?w=2000&t=st=1715983346~exp=1715983946~hmac=7dbb319bf1e44315e8c43853f017c5cea35f8a970d66fb232c4213352dccba59"
 
+  const nav = useNavigation()
+
   return (
     <ToolbarView
       text={"Perfil"}
       textSize={FontsSize._16_SIZE}
       setIconEnd={ic_settings_outline_white}
-      onPressIconEnd={() => { }}
+      onPressIconEnd={() => {
+        nav.navigate(ROUTES.Settings.SettingsScreen.name as never)
+      }}
       backgroundColor='#1C1C1E'
       toolbarType='profile'>
       <View
@@ -214,6 +220,7 @@ export const ProfileScreen = observer(() => {
       <ButtonPrimary
         text={"Cerrar sesión"}
         imageStart={ic_logout_outline}
+        textColor={colors.defaultTextButton}
         onPress={() => { }} />
 
 

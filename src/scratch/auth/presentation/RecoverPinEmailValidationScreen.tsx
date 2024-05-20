@@ -16,9 +16,6 @@ import { useStatusBar } from '../../../core/presentation/contexts/statusBar/Stat
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
 import { ButtonLink } from '../../../core/presentation/components/button/ButtonLink';
 import Sizebox from '../../../core/presentation/components/item/Sizebox';
-import ReactNativePinView from 'react-native-pin-view';
-import { SvgXml } from 'react-native-svg';
-import ic_delete_pin from '../../../../assets/svg/ic_delete_pin';
 import { PinView } from '../../../core/presentation/components/input/PinView';
 import { ROUTES } from '../../navigation/routes';
 
