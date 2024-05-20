@@ -31,6 +31,16 @@ export const RecoverPinCreateScreen = observer(() => {
 
   const showModal = useNewModalContext().showStateModal
 
+  const goToHome = () => {
+    nav.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: ROUTES.Navigator.BottomTabNavigator.name },
+        ],
+      })
+    );
+  }
   React.useEffect(() => {
     if (value.length === PIN_LENGTH) {
       showModal({
@@ -38,8 +48,8 @@ export const RecoverPinCreateScreen = observer(() => {
         message: "El PIN ha sido reestablecido con éxito, ya\npuedes acceder a tu cuenta.",
         image: ic_success_check_filled,
         labelButtonPrimary: "Acceder a mi cuenta",
-        actionButtonPrimary() { },
-        actionCloseModal() { },
+        actionButtonPrimary() { goToHome() },
+        actionCloseModal() { goToHome() },
         showIcoClose: true,
         enableOverlayTap: "none"
       })
@@ -70,11 +80,11 @@ export const RecoverPinCreateScreen = observer(() => {
           marginBottom={72}
           fontFamily={Fonts.DMSansRegular}
           textSize={FontsSize._16_SIZE} />
+
         <PinView
           setValue={setValue}
           showPinInputs={true}
           marginTop={72}
-          keyboardBottom={0}
           showInfoText={true}
           errorText={"El PIN ingresado no puede ser igual al anterior"}
         />

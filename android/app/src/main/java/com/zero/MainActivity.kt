@@ -1,4 +1,4 @@
-package com.scratchtest
+package com.zero
 
 import android.os.Bundle
 import com.facebook.react.ReactActivity

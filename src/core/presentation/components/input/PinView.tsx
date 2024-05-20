@@ -4,7 +4,6 @@ import { SvgXml } from 'react-native-svg';
 import FontsSize from '../../../constants/FontsSize';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import Fonts from '../../../constants/Fonts';
-import ReactNativePinView from 'react-native-pin-view';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import React = require('react');
 import { ROUTES } from '../../../../scratch/navigation/routes';
@@ -12,12 +11,12 @@ import ic_delete_pin from '../../../../../assets/svg/ic_delete_pin';
 import ic_info_blue_filled from '../../../../../assets/svg/ic_info_blue_filled';
 import Sizebox from '../item/Sizebox';
 import { CustomText } from '../text/CustomText';
+import ReactNativePinView from "./ReactNativePinView"
 
 interface Props {
   showPinInputs?: boolean;
   setValue: any;
   marginTop?: number;
-  keyboardBottom?: number;
   showError?: boolean
   showInfoText?: boolean
   errorText?: string
@@ -27,7 +26,6 @@ export const PinView = ({
   showPinInputs = false,
   setValue,
   marginTop = 0,
-  keyboardBottom = 270,
   showError = false,
   showInfoText = false,
   errorText
@@ -61,30 +59,20 @@ export const PinView = ({
     }
   }, [enteredPin])
   return (
-    <View style={{ alignSelf: "center", marginTop: marginTop }}>
+    <View style={{ alignSelf: "center", marginTop: marginTop, flex: 1, }}>
 
-      {showInfoText && <View style={{ position: "absolute", flexDirection: "row", bottom: 520 }} >
-        <SvgXml xml={ic_info_blue_filled} />
-        <Sizebox width={8} />
-        <CustomText
-          textSize={FontsSize._16_SIZE}
-          text={"No debe contener números consecutivos \n ni relacionados a tus datos personales."} />
-      </View>}
-      {(errorText && showError) && <View style={{ position: "absolute", bottom: 630, alignSelf: "center" }} >
-        <CustomText
-          textColor={colors.white}
-          textAlign='center'
-          text={errorText} />
-      </View>}
       <ReactNativePinView
         inputSize={32}
         ref={pinView}
         pinLength={6}
         buttonSize={60}
+        errorText={errorText}
+        showError={showError}
+        showInfoText={showInfoText}
         onValueChange={setValue}
         buttonAreaStyle={{
-          flex: 1,
-          marginBottom: keyboardBottom
+          // flex: 1,
+          // marginBottom: keyboardBottom,
         }}
         inputAreaStyle={{
           marginBottom: 24,
@@ -94,7 +82,8 @@ export const PinView = ({
           display: showPinInputs ? undefined : "none"
         }}
         inputViewFilledStyle={{
-          backgroundColor: showError ? colors.red500 : colors.secondary
+          // backgroundColor: showError ? colors.red500 : colors.secondary
+          backgroundColor: colors.secondary
         }}
         buttonViewStyle={{
           width: "92%",
@@ -112,10 +101,11 @@ export const PinView = ({
         }}
         buttonTextStyle={{
           color: "#FFF",
-          fontFamily: Fonts.DMSansMedium,
+          fontFamily: "DMSans-Medium",
           fontSize: FontsSize._32_SIZE
         }}
-
+        customLeftButtonViewStyle={{ marginTop: -4 }}
+        customRightButtonViewStyle={{ marginTop: -4 }}
         customLeftButton={
           <TouchableOpacity
             onPress={() => {

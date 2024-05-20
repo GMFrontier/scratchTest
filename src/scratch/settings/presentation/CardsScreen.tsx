@@ -33,7 +33,7 @@ export const CardsScreen = observer(() => {
     <View style={style.containerMain}>
       <CustomTextBold
         marginTop={100}
-        text='HOMESCREEEN <b>funcionaaa<b>'
+        text='HOMESCREEEN <b>funciona<b>'
         textColor={colors.whiteText} />
     </View>
   );
