@@ -21,6 +21,11 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import AutoCompleteView from '../../../../core/presentation/components/spinner/AutoCompleteView';
 import { countries_es } from '../../../../core/constants/Countries';
 import { Country } from '../../../../core/data/models/Country';
+import { FlagInput } from '../../../../core/presentation/components/input/FlagInput';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import { ScrollView } from 'react-native-gesture-handler';
+import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
+import { SvgXml } from 'react-native-svg';
 
 export const RegisterFormScreen = observer(() => {
 
@@ -77,78 +82,124 @@ export const RegisterFormScreen = observer(() => {
       title: "Sí"
     },
   ]
+  const [selectedOption, setSelectedOption] = React.useState(
+    '\ud83c\uddf5\ud83c\udde6*+507*PA',
+  );
+  const [phone, setPhone] = React.useState('');
 
   return (
     <ToolbarView
       text={"Registro de usuario"} >
 
-      <View style={style.containerMain}>
-        <CustomText
-          text={"Arranquemos con algunos datos"}
-          textColor={colors.secondary}
-          fontFamily={Fonts.DMSansBold}
-          textSize={FontsSize._32_SIZE} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={32}
+        style={style.containerMain}>
+        <ScrollView showsVerticalScrollIndicator={false} >
 
-        <CustomText
-          text='Cuéntanos un poco sobre ti.'
-          textSize={FontsSize._16_SIZE}
-          marginTop={8} />
+          <CustomText
+            text={"Arranquemos con algunos datos"}
+            textColor={colors.secondary}
+            fontFamily={Fonts.DMSansBold}
+            textSize={FontsSize._32_SIZE} />
 
-        <TextInputMain
-          marginTop={16}
-          onChangeText={() => { }}
-          labelTitleRequired={true}
-          labelTitle={"Nombre"}
-          placeholder={"Ej. Diana Carolina"} />
+          <CustomText
+            text='Cuéntanos un poco sobre ti.'
+            textSize={FontsSize._16_SIZE}
+            marginTop={8} />
 
-        <TextInputMain
-          marginTop={16}
-          onChangeText={() => { }}
-          labelTitleRequired={true}
-          labelTitle={"Apellido"}
-          placeholder={"Ej. Rojas Diaz"} />
-
-        <TouchableOpacity onPress={() => showDatePicker(0)}>
           <TextInputMain
             marginTop={16}
-            regularPhrase={/^[a-zA-Z\s]+$/}
-            inputValue={date}
             onChangeText={() => { }}
-            placeholder='dd/mm/aaaa'
-            editable={false}
-            labelTitle={"Fecha de nacimiento"}
             labelTitleRequired={true}
-            showIconEnd={true}
-            rightIcon={ic_calendar_outline}
+            labelTitle={"Nombre"}
+            placeholder={"Ej. Diana Carolina"} />
+
+          <TextInputMain
+            marginTop={16}
+            onChangeText={() => { }}
+            labelTitleRequired={true}
+            labelTitle={"Apellido"}
+            placeholder={"Ej. Rojas Diaz"} />
+
+          <TouchableOpacity onPress={() => showDatePicker(0)}>
+            <TextInputMain
+              marginTop={16}
+              regularPhrase={/^[a-zA-Z\s]+$/}
+              inputValue={date}
+              onChangeText={() => { }}
+              placeholder='dd/mm/aaaa'
+              editable={false}
+              labelTitle={"Fecha de nacimiento"}
+              labelTitleRequired={true}
+              showIconEnd={true}
+              rightIcon={ic_calendar_outline}
+            />
+          </TouchableOpacity>
+
+          <AutoCompleteView
+            setSelectedItem={setCountry}
+            data={livesInPanama}
+            marginTop={16}
+            labelTitle={"¿Vives en Panamá?"}
+            clearOnFocus={true} />
+
+          <AutoCompleteView
+            setSelectedItem={setCountry}
+            data={enhancedCountries}
+            marginTop={16}
+            labelTitle={"Nacionalidad"}
+            clearOnFocus={true} />
+
+          <TextInputMain
+            marginTop={16}
+            onChangeText={() => { }}
+            labelTitleRequired={true}
+            labelTitle={translation.file.email}
+            placeholder={translation.file.email_placeholder} />
+
+          <FlagInput
+            phone={phone}
+            setPhone={setPhone}
+            isEnabled={false}
+            marginTop={16}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption} />
+
+          <TextInputMain
+            regularPhrase={
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
+            }
+            marginTop={16}
+            labelTitleRequired={true}
+            placeholder="Ingresa tu contraseña"
+            showHideButton={true}
+            labelTitle={"Contraseña"}
+            onChangeText={() => { }}
           />
-        </TouchableOpacity>
 
-        <AutoCompleteView
-          setSelectedItem={setCountry}
-          data={livesInPanama}
-          marginTop={16}
-          labelTitle={"¿Vives en Panamá?"}
-          clearOnFocus={true} />
+          <View style={{
+            marginTop: 4,
+            flexDirection: "row",
+            marginBottom: 24
+          }} >
+            {/* <SvgXml xml={ic_success_check_filled} height={16} width={16} />
+            <Sizebox width={8} /> */}
+            <CustomText
+              textSize={FontsSize._12_SIZE}
+              textColor={colors.white}
+              text={"Esta debe contener 8 caracteres alfanuméricos y un carácter especial."} />
+          </View>
 
-        <AutoCompleteView
-          setSelectedItem={setCountry}
-          data={enhancedCountries}
-          marginTop={16}
-          labelTitle={"Nacionalidad"}
-          clearOnFocus={true} />
+          <Sizebox height={32} />
+          <ButtonPrimary
+            text={translation.file.next}
+            position="relative"
+            onPress={() => { navigation.navigate(ROUTES.Auth.PinScreen.name as never) }} />
+        </ScrollView>
 
-        <TextInputMain
-          marginTop={16}
-          onChangeText={() => { }}
-          labelTitleRequired={true}
-          labelTitle={translation.file.email}
-          placeholder={translation.file.email_placeholder} />
 
-        <ButtonPrimary
-          text={translation.file.next}
-          onPress={() => { navigation.navigate(ROUTES.Auth.PinScreen.name as never) }} />
-
-      </View>
+      </KeyboardAvoidingView>
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"

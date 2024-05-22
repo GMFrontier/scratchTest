@@ -6,6 +6,8 @@ import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import { CustomText } from '../text/CustomText';
 import Fonts from '../../../constants/Fonts';
 import Sizebox from '../item/Sizebox';
+import ic_eye_closed_outline from '../../../../../assets/svg/ic_eye_closed_outline';
+import ic_eye_opened_outline from '../../../../../assets/svg/ic_eye_opened_outline';
 
 interface Props {
   placeholder?: string;
@@ -254,7 +256,7 @@ export const TextInputMain = ({
           placeholder={placeholder}
           keyboardType={typeKeyboard}
           returnKeyType={returnKeyType}
-          style={{ ...styles.input, fontFamily: fontFamily, height: heightInput, marginStart: textStart, textAlignVertical: textAlign, }}
+          style={{ ...styles.input, fontFamily: fontFamily, height: heightInput, marginStart: textStart, textAlignVertical: textAlign }}
           value={inputValue}
           maxLength={maxLength}
           editable={editable}
@@ -276,11 +278,11 @@ export const TextInputMain = ({
           {showBottomIco && rightIcon && <SvgXml xml={input_bottom_indicator} />}
         </View> */}
 
-        {/* {showHideButton && (
+        {showHideButton && (
           <TouchableOpacity style={styles.icoBottom} onPress={() => { setSecureTextEntry(!secureText) }}>
-            <SvgXml xml={!secureText ? eye_ico_content : eye_ico_hide_content} />
+            <SvgXml xml={!secureText ? ic_eye_opened_outline : ic_eye_closed_outline} />
           </TouchableOpacity>
-        )} */}
+        )}
 
       </View>
     </View>
