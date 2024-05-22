@@ -2,18 +2,18 @@ import { useContext, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import React = require('react');
-import { ThemeContext } from '../../../core/presentation/contexts/theme/ThemeContext';
-import { useTranslation } from '../../../core/presentation/contexts/translations/LanguageProvider';
-import { CustomText } from '../../../core/presentation/components/text/CustomText';
-import Fonts from '../../../core/constants/Fonts';
-import FontsSize from '../../../core/constants/FontsSize';
-import { TextInputMain } from '../../../core/presentation/components/input/TextInputMain';
-import { Checkbox } from '../../../core/presentation/components/checkbox/Checkbox';
-import { ButtonPrimary } from '../../../core/presentation/components/button/ButtonPrimary';
+import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
+import { useTranslation } from '../../../../core/presentation/contexts/translations/LanguageProvider';
+import { CustomText } from '../../../../core/presentation/components/text/CustomText';
+import Fonts from '../../../../core/constants/Fonts';
+import FontsSize from '../../../../core/constants/FontsSize';
+import { TextInputMain } from '../../../../core/presentation/components/input/TextInputMain';
+import { Checkbox } from '../../../../core/presentation/components/checkbox/Checkbox';
+import { ButtonPrimary } from '../../../../core/presentation/components/button/ButtonPrimary';
 import { useNavigation } from '@react-navigation/native';
-import { ROUTES } from '../../navigation/routes';
-import { ButtonLink } from '../../../core/presentation/components/button/ButtonLink';
-import Sizebox from '../../../core/presentation/components/item/Sizebox';
+import { ROUTES } from '../../../navigation/routes';
+import { ButtonLink } from '../../../../core/presentation/components/button/ButtonLink';
+import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
 export const LoginScreen = observer(() => {
@@ -71,6 +71,7 @@ export const LoginScreen = observer(() => {
         <ButtonLink
           text={translation.file.register_here}
           onPress={() => {
+            navigation.navigate(ROUTES.Auth.RegisterScreen.name as never)
           }}
         />
       </View>

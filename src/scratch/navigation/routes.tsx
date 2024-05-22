@@ -1,15 +1,17 @@
 
 import BottomTabNavigator from '../../core/presentation/components/navigation/BottomTabNavigator';
-import { LoginScreen } from '../auth/presentation/LoginScreen';
-import { PinScreen } from '../auth/presentation/PinScreen';
+import { LoginScreen } from '../auth/presentation/login/LoginScreen';
+import { PinScreen } from '../auth/presentation/login/PinScreen';
 import { HomeScreen } from '../home/presentation/HomeScreen';
 import { OnBoardingScreen } from '../onboarding/OnBoardingScreen';
 import { SplashScreen } from '../splash/presentation/SplashScreen';
 import { CardsScreen } from '../settings/presentation/CardsScreen';
 import { SettingsScreen } from '../cards/presentation/SettingsScreen';
-import { RecoverPinScreen } from '../auth/presentation/RecoverPinScreen';
-import { RecoverPinEmailValidationScreen } from '../auth/presentation/RecoverPinEmailValidationScreen';
-import { RecoverPinCreateScreen } from '../auth/presentation/RecoverPinCreateScreen';
+import { RecoverPinScreen } from '../auth/presentation/recover_pin/RecoverPinScreen';
+import { RecoverPinEmailValidationScreen } from '../auth/presentation/recover_pin/RecoverPinEmailValidationScreen';
+import { RecoverPinCreateScreen } from '../auth/presentation/recover_pin/RecoverPinCreateScreen';
+import { RegisterScreen } from '../auth/presentation/register/RegisterScreen';
+import { RegisterFormScreen } from '../auth/presentation/register/RegisterFormScreen';
 
 interface NavRouteModel {
   [key: string]: {
@@ -35,6 +37,8 @@ export const ROUTES = {
     RecoverPinScreen: { screen: RecoverPinScreen, name: 'RecoverPinScreen' },
     RecoverPinEmailValidationScreen: { screen: RecoverPinEmailValidationScreen, name: 'RecoverPinEmailValidationScreen' },
     RecoverPinCreateScreen: { screen: RecoverPinCreateScreen, name: 'RecoverPinCreateScreen' },
+    RegisterScreen: { screen: RegisterScreen, name: 'RegisterScreen' },
+    RegisterFormScreen: { screen: RegisterFormScreen, name: 'RegisterFormScreen' },
   },
   OnBoarding: {
     OnBoardingScreen: { screen: OnBoardingScreen, name: 'OnBoardingScreen' },

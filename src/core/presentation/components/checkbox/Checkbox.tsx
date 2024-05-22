@@ -35,7 +35,7 @@ export const Checkbox = ({ label, checked, onToggle, uncheckedImage, checkedImag
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop: marginTop
+      marginTop: marginTop,
     },
     checkboxContainer: {
       width: 20,
@@ -70,18 +70,20 @@ export const Checkbox = ({ label, checked, onToggle, uncheckedImage, checkedImag
             <SvgXml xml={ic_checkbox_inactive} width={size} height={size} preserveAspectRatio="xMinYMin slice" />
           )}
         </View>
-        <View style={{ width: 6 }}></View>
-        {
-          label ?
-            (
-              <CustomTextBold
-                text={label}
-                opacity={opacity}
-                textColor={colors.secondaryText}
-                fontFamily={fontFamily}
-                textSize={textSize} />)
-            : null
-        }
+        <View style={{ marginStart: 6, flexWrap: "wrap", flexShrink: 1 }}>
+          {
+            label ?
+              (
+                <CustomTextBold
+                  text={label}
+                  opacity={opacity}
+                  textColor={colors.secondaryText}
+                  fontFamily={fontFamily}
+                  textSize={textSize} />)
+              : null
+          }
+        </View>
+
       </View>
     </TouchableOpacity>
   );

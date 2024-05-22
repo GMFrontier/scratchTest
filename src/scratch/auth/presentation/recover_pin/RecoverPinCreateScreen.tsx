@@ -2,18 +2,18 @@ import { useContext, useState } from 'react';
 import { View, StyleSheet, Platform, Text, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import React = require('react');
-import { ThemeContext } from '../../../core/presentation/contexts/theme/ThemeContext';
-import { useTranslation } from '../../../core/presentation/contexts/translations/LanguageProvider';
-import { CustomText } from '../../../core/presentation/components/text/CustomText';
-import Fonts from '../../../core/constants/Fonts';
-import FontsSize from '../../../core/constants/FontsSize';
+import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
+import { useTranslation } from '../../../../core/presentation/contexts/translations/LanguageProvider';
+import { CustomText } from '../../../../core/presentation/components/text/CustomText';
+import Fonts from '../../../../core/constants/Fonts';
+import FontsSize from '../../../../core/constants/FontsSize';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
-import ToolbarView from '../../../core/presentation/components/toolbar/ToolbarView';
-import { PinView } from '../../../core/presentation/components/input/PinView';
-import { ROUTES } from '../../navigation/routes';
-import { useNewModalContext } from '../../../core/presentation/contexts/messages/useNewModalContext';
-import ic_success_check_filled from '../../../../assets/svg/ic_success_check_filled';
+import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
+import { PinView } from '../../../../core/presentation/components/input/PinView';
+import { ROUTES } from '../../../navigation/routes';
+import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
+import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 
 export const RecoverPinCreateScreen = observer(() => {
 

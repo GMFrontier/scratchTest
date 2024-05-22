@@ -11,11 +11,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const handlers = {
   SplashScreen: () => <ROUTES.Splash.SplashScreen.screen />,
   OnBoardingScreen: () => <ROUTES.OnBoarding.OnBoardingScreen.screen />,
+
   LoginScreen: () => <ROUTES.Auth.LoginScreen.screen />,
   PinScreen: () => <ROUTES.Auth.PinScreen.screen />,
   RecoverPinScreen: () => <ROUTES.Auth.RecoverPinScreen.screen />,
   RecoverPinEmailValidationScreen: () => <ROUTES.Auth.RecoverPinEmailValidationScreen.screen />,
   RecoverPinCreateScreen: () => <ROUTES.Auth.RecoverPinCreateScreen.screen />,
+  RegisterScreen: () => <ROUTES.Auth.RegisterScreen.screen />,
+  RegisterFormScreen: () => <ROUTES.Auth.RegisterFormScreen.screen />,
+
   BottomTabNavigator: () => <ROUTES.Navigator.BottomTabNavigator.screen />,
   HomeScreen: () => <ROUTES.Home.HomeScreen.screen />,
 };
