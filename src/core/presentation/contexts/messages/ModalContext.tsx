@@ -17,7 +17,8 @@ export interface ModalProps {
   enableOverlayTap?: 'none' | 'close' | 'collapse',
   typeModal?: TypeModalEnum,
   actionCloseModal?: () => void,
-  content?: any
+  content?: any,
+  size?: any
 }
 
 interface ModalContextProps {
@@ -32,6 +33,9 @@ export const NewModalContextProvider = ({ children }: any) => {
     image: '',
     title: '',
     message: '',
+    content: undefined,
+    size: undefined,
+
   });
 
   const [actionButtonPrimary, setActionButtonPrimary] = useState<(() => void)>(() => () => { });
@@ -47,6 +51,8 @@ export const NewModalContextProvider = ({ children }: any) => {
       image: '',
       title: '',
       message: '',
+      content: undefined,
+      size: undefined,
     });
   }
 
@@ -93,21 +99,27 @@ export const NewModalContextProvider = ({ children }: any) => {
     <ModalStateContext.Provider
       value={{ showStateModal }}>
       {children}
-      <BaseBottomSheetDialog
-        bottomSheetRef={bottomSheetRef}
-        enableOverlayTap={props.enableOverlayTap}>
-        <ModalContent
-          title={props?.title ?? ''}
-          subtitle={props?.message ?? ''}
-          labelButtonPrimary={props?.labelButtonPrimary ?? ''}
-          icoModal={props?.image}
-          actionButtonPrimary={actionButtonPrimary}
-          labelButtonSecondary={props?.labelButtonSecondary}
-          showIconClose={props.showIcoClose}
-          actionCloseModal={actionCloseModal}
-          actionButtonSecondary={actionButtonSecondary}>
-        </ModalContent>
-      </BaseBottomSheetDialog>
+      {
+        ((props.title.length > 0) || (props.message.length > 0) || (props.content))
+        &&
+        <BaseBottomSheetDialog
+          bottomSheetRef={bottomSheetRef}
+          size={props.size}
+          enableOverlayTap={props.enableOverlayTap}>
+          <ModalContent
+            title={props?.title ?? ''}
+            subtitle={props?.message ?? ''}
+            labelButtonPrimary={props?.labelButtonPrimary ?? ''}
+            icoModal={props?.image}
+            actionButtonPrimary={actionButtonPrimary}
+            labelButtonSecondary={props?.labelButtonSecondary}
+            showIconClose={props.showIcoClose}
+            actionCloseModal={actionCloseModal}
+            content={props.content}
+            actionButtonSecondary={actionButtonSecondary}>
+          </ModalContent>
+        </BaseBottomSheetDialog>
+      }
     </ModalStateContext.Provider>
   );
 };

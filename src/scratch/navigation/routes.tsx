@@ -12,6 +12,12 @@ import { RecoverPinEmailValidationScreen } from '../auth/presentation/recover_pi
 import { RecoverPinCreateScreen } from '../auth/presentation/recover_pin/RecoverPinCreateScreen';
 import { RegisterScreen } from '../auth/presentation/register/RegisterScreen';
 import { RegisterFormScreen } from '../auth/presentation/register/RegisterFormScreen';
+import { RegisterPhoneValidationScreen } from '../auth/presentation/register/RegisterPhoneValidationScreen';
+import { RegisterEmailValidationScreen } from '../auth/presentation/register/RegisterEmailValidationScreen';
+import { RegisterAddressScreen } from '../auth/presentation/register/RegisterAddressScreen';
+import { RegisterFinancialScreen } from '../auth/presentation/register/RegisterFinancialScreen';
+import { RegisterIdValidationScreen } from '../auth/presentation/register/RegisterIdValidationScreen';
+import { RegisterStepsScreen } from '../auth/presentation/register/RegisterStepsScreen';
 
 interface NavRouteModel {
   [key: string]: {
@@ -39,6 +45,12 @@ export const ROUTES = {
     RecoverPinCreateScreen: { screen: RecoverPinCreateScreen, name: 'RecoverPinCreateScreen' },
     RegisterScreen: { screen: RegisterScreen, name: 'RegisterScreen' },
     RegisterFormScreen: { screen: RegisterFormScreen, name: 'RegisterFormScreen' },
+    RegisterPhoneValidationScreen: { screen: RegisterPhoneValidationScreen, name: 'RegisterPhoneValidationScreen' },
+    RegisterEmailValidationScreen: { screen: RegisterEmailValidationScreen, name: 'RegisterEmailValidationScreen' },
+    RegisterAddressScreen: { screen: RegisterAddressScreen, name: 'RegisterAddressScreen' },
+    RegisterFinancialScreen: { screen: RegisterFinancialScreen, name: 'RegisterFinancialScreen' },
+    RegisterIdValidationScreen: { screen: RegisterIdValidationScreen, name: 'RegisterIdValidationScreen' },
+    RegisterStepsScreen: { screen: RegisterStepsScreen, name: 'RegisterStepsScreen' },
   },
   OnBoarding: {
     OnBoardingScreen: { screen: OnBoardingScreen, name: 'OnBoardingScreen' },

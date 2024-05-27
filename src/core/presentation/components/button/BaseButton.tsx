@@ -56,7 +56,7 @@ export const BaseButton = ({
     textStyle: {
       fontFamily: Fonts.DMSansMedium,
       fontSize: textSize,
-      color: colors.white
+      color: colors.defaultTextButton
     },
     icoLeft: {
       marginRight: 10,

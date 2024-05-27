@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Dimensions, View } from 'react-native';
 import { AutocompleteDropdown, AutocompleteDropdownRef } from 'react-native-autocomplete-dropdown';
 import { SvgXml } from 'react-native-svg';
@@ -9,6 +9,8 @@ import { useTranslation } from '../../contexts/translations/LanguageProvider';
 import { CustomText } from '../text/CustomText';
 import FontsSize from '../../../constants/FontsSize';
 import Sizebox from '../item/Sizebox';
+import ic_arrow_down_dropdown from '../../../../../assets/svg/ic_arrow_down_dropdown';
+import ic_arrow_down_dropdown_disabled from '../../../../../assets/svg/ic_arrow_down_dropdown_disabled';
 
 interface Props {
   setSelectedItem: any,
@@ -23,11 +25,14 @@ interface Props {
   dropdownController?: React.MutableRefObject<AutocompleteDropdownRef | undefined>,
   labelTitle?: string,
   marginTop?: number,
+  disabled?: boolean,
+  initialValueId?: string,
 }
 
 const AutoCompleteView = ({
   setSelectedItem,
-  data, rightIcon,
+  data,
+  rightIcon,
   showChevron = true,
   leftIco,
   useFilter = true,
@@ -36,13 +41,16 @@ const AutoCompleteView = ({
   clearOnFocus = false,
   dropdownController,
   labelTitle,
-  marginTop
+  marginTop,
+  disabled = false,
+  initialValueId
 }: Props) => {
 
   const {
     theme: { colors },
   } = useContext(ThemeContext);
 
+  const [dataSet, setDataSet] = useState<any>();
 
   const { translation } = useTranslation();
 
@@ -51,6 +59,10 @@ const AutoCompleteView = ({
   if (dropdownController) {
     controller = dropdownController
   }
+
+  useEffect(() => {
+    setDataSet(data)
+  })
 
   return (
     <View>
@@ -71,7 +83,7 @@ const AutoCompleteView = ({
           controller.current = autoCompleteController
         }}
         inputContainerStyle={{
-          backgroundColor: colors.accentSecondary,
+          backgroundColor: disabled ? colors.disableText : colors.accentSecondary,
           borderRadius: 12,
           borderColor: colors.captionText,
           borderWidth: 1,
@@ -82,13 +94,14 @@ const AutoCompleteView = ({
           placeholder: translation.file.Select ?? 'Seleccionar',
           style: {
             fontFamily: Fonts.DMSansRegular,
-            color: colors.white
+            color: disabled ? colors.title : colors.white
           },
-          placeholderTextColor: colors.textColor04
+          placeholderTextColor: disabled ? colors.title : colors.textColor04
         }}
-        initialValue={"0"}
+
         EmptyResultComponent={< View />}
         showChevron={showChevron}
+        ChevronIconComponent={<SvgXml xml={disabled ? ic_arrow_down_dropdown_disabled : ic_arrow_down_dropdown}></SvgXml>}
         RightIconComponent={rightIcon ? <SvgXml xml={rightIcon}></SvgXml> : undefined}
         showClear={false}
         useFilter={useFilter}
@@ -108,12 +121,17 @@ const AutoCompleteView = ({
 
             setSelectedItem(item);
           } else {
-            dropdownController?.current?.clear()
+            controller?.current?.clear()
           }
         }}
-        dataSet={data}
+        dataSet={dataSet}
+        initialValue={{ id: initialValueId }} // or just '2'
+
         onRightIconComponentPress={() => {
-          dropdownController.current?.toggle()
+          controller.current?.toggle()
+        }}
+        onChevronPress={() => {
+          controller.current?.clear()
         }}
         ItemSeparatorComponent={(
           <View />

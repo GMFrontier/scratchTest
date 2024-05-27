@@ -49,7 +49,7 @@ export const CustomText = ({
     fontWeight: weight,
     marginBottom,
     textAlign: textAlign,
-    lineHeight: lineHeight ?? 1.2 * textSize
+    lineHeight: lineHeight ?? 1.3 * textSize
   };
 
   const renderTextParts = (parts: string[], textStyle: StyleProp<TextStyle>, numberOfLines?: number) => {

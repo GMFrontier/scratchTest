@@ -1,56 +1,61 @@
 import { useContext, useState } from 'react';
-import { View, StyleSheet, Platform, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Platform, Text } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import React = require('react');
 import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
 import { useTranslation } from '../../../../core/presentation/contexts/translations/LanguageProvider';
 import { CustomText } from '../../../../core/presentation/components/text/CustomText';
 import Fonts from '../../../../core/constants/Fonts';
-import FontsSize from '../../../../core/constants/FontsSize';
-import { CommonActions, useNavigation } from '@react-navigation/native';
-import changeNavigationBarColor from 'react-native-navigation-bar-color';
-import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
-import { TextInputMain } from '../../../../core/presentation/components/input/TextInputMain';
-import { ButtonPrimary } from '../../../../core/presentation/components/button/ButtonPrimary';
-import { useStatusBar } from '../../../../core/presentation/contexts/statusBar/StatusBarContext';
-import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
+import { useNavigation } from '@react-navigation/native';
 import { ButtonLink } from '../../../../core/presentation/components/button/ButtonLink';
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
 import { PinView } from '../../../../core/presentation/components/input/PinView';
+import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
+import FontsSize from '../../../../core/constants/FontsSize';
+import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
+import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 import { ROUTES } from '../../../navigation/routes';
 
-export const RecoverPinEmailValidationScreen = observer(() => {
+export const RegisterPhoneValidationScreen = observer(() => {
 
   const {
     theme: { colors },
   } = useContext(ThemeContext);
-  const PIN_LENGTH = 6
   const { translation } = useTranslation();
   const nav = useNavigation()
 
-  const CELL_COUNT = 6;
-
   const [value, setValue] = useState('');
+  const CELL_COUNT = 6;
+  const PIN_LENGTH = 6
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
+  const showModal = useNewModalContext().showStateModal
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
   })
 
+  const handleNavigation = () => {
+    nav.navigate(ROUTES.Auth.RegisterEmailValidationScreen.name as never)
+  }
+
   React.useEffect(() => {
     if (value.length === PIN_LENGTH) {
-      nav.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [
-            { name: ROUTES.Auth.RecoverPinCreateScreen.name },
-          ],
-        })
-      );
+      showModal({
+        title: "Teléfono validado",
+        message: "Se ha validado tu número con éxito, ahora validaremos tu correo.",
+        image: ic_success_check_filled,
+        labelButtonPrimary: "Siguiente",
+        actionButtonPrimary() { handleNavigation() },
+        actionCloseModal() { handleNavigation() },
+        showIcoClose: true,
+        enableOverlayTap: "none"
+      })
     }
   }, [value])
 
@@ -58,10 +63,7 @@ export const RecoverPinEmailValidationScreen = observer(() => {
     containerMain: {
       flex: 1,
       paddingHorizontal: 16,
-    },
-    keyboardContainer: {
-      flex: 1,
-      justifyContent: 'flex-end',
+      paddingTop: 16,
     },
     root: { flex: 1, padding: 20 },
     title: { textAlign: 'center', fontSize: 30 },
@@ -84,9 +86,10 @@ export const RecoverPinEmailValidationScreen = observer(() => {
     },
   });
 
+
   return (
     <ToolbarView
-      text='Restablecimiento de PIN'>
+      text='Validación de teléfono'>
       <View style={styles.containerMain}>
         <CustomText
           marginTop={20}
@@ -96,7 +99,7 @@ export const RecoverPinEmailValidationScreen = observer(() => {
           textSize={FontsSize._32_SIZE} />
 
         <CustomText
-          text={"Ingresa el código de 6 digitos enviado a ********ser@mail.com."}
+          text={"Ingresa el código de 6 dígitos enviado vía SMS al +507 *****0987."}
           marginTop={8}
           marginBottom={72}
           fontFamily={Fonts.DMSansRegular}

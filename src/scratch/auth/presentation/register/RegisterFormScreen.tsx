@@ -32,21 +32,17 @@ export const RegisterFormScreen = observer(() => {
   const {
     theme: { colors },
   } = useContext(ThemeContext);
-
-  const [checkbox, setCheckbox] = useState(false);
-
   const { translation } = useTranslation();
-
   const navigation = useNavigation()
 
+  const [password, setPassword] = useState("");
   const [date, setDate] = useState("");
-
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const maximumSelectableDate = new Date();
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
   })
-
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = (type: number) => {
     setDatePickerVisibility(true);
@@ -56,7 +52,6 @@ export const RegisterFormScreen = observer(() => {
     setDatePickerVisibility(false);
   };
 
-  const maximumSelectableDate = new Date();
 
   const handleConfirm = (date: any) => {
     const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
@@ -93,7 +88,7 @@ export const RegisterFormScreen = observer(() => {
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={32}
+        keyboardVerticalOffset={64}
         style={style.containerMain}>
         <ScrollView showsVerticalScrollIndicator={false} >
 
@@ -170,12 +165,13 @@ export const RegisterFormScreen = observer(() => {
             regularPhrase={
               /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
             }
+            inputValue={password}
             marginTop={16}
             labelTitleRequired={true}
             placeholder="Ingresa tu contraseña"
             showHideButton={true}
             labelTitle={"Contraseña"}
-            onChangeText={() => { }}
+            onChangeText={setPassword}
           />
 
           <View style={{
@@ -183,11 +179,12 @@ export const RegisterFormScreen = observer(() => {
             flexDirection: "row",
             marginBottom: 24
           }} >
-            {/* <SvgXml xml={ic_success_check_filled} height={16} width={16} />
-            <Sizebox width={8} /> */}
+            {(password.length > 0) &&
+              <SvgXml xml={ic_success_check_filled} height={16} width={16} style={{ marginEnd: 8 }} />
+            }
             <CustomText
               textSize={FontsSize._12_SIZE}
-              textColor={colors.white}
+              textColor={password.length > 0 ? colors.green400 : colors.white}
               text={"Esta debe contener 8 caracteres alfanuméricos y un carácter especial."} />
           </View>
 
@@ -195,7 +192,7 @@ export const RegisterFormScreen = observer(() => {
           <ButtonPrimary
             text={translation.file.next}
             position="relative"
-            onPress={() => { navigation.navigate(ROUTES.Auth.PinScreen.name as never) }} />
+            onPress={() => { navigation.navigate(ROUTES.Auth.RegisterPhoneValidationScreen.name as never) }} />
         </ScrollView>
 
 

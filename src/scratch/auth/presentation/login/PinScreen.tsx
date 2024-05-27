@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import React = require('react');
 import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
@@ -8,12 +8,9 @@ import { CustomText } from '../../../../core/presentation/components/text/Custom
 import Fonts from '../../../../core/constants/Fonts';
 import FontsSize from '../../../../core/constants/FontsSize';
 import { ButtonLink } from '../../../../core/presentation/components/button/ButtonLink';
-import { SvgXml } from 'react-native-svg';
-import ic_delete_pin from '../../../../../assets/svg/ic_delete_pin';
 import { AvatarImage } from '../../../../core/presentation/components/image/avatar';
 import { CommonActions, StackActions, useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../../navigation/routes';
-import ic_biometric_pin from '../../../../../assets/svg/ic_biometric_pin';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { PinView } from '../../../../core/presentation/components/input/PinView';
 

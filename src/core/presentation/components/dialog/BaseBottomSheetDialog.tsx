@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import BottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetBackgroundProps, } from '@gorhom/bottom-sheet';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import Animated, {
@@ -9,18 +9,22 @@ import Animated, {
 type ComponentePadreProps = {
   children: React.ReactNode;
   bottomSheetRef: any
+  size: any
   onClosePress?: () => void;
   enableOverlayTap?: 'none' | 'close' | 'collapse'
 };
 
-export const BaseBottomSheetDialog: React.FC<ComponentePadreProps> = ({ children, bottomSheetRef, onClosePress, enableOverlayTap = 'close' }) => {
+export const BaseBottomSheetDialog: React.FC<ComponentePadreProps> = ({ children, bottomSheetRef, onClosePress, enableOverlayTap = 'close', size }) => {
 
   const {
     theme: { colors },
   } = useContext(ThemeContext);
 
-  const snapPoints = useMemo(() => ['40%', '40%'], []);
+  const [snapPoint, setSize] = useState<string | undefined>();
 
+  useEffect(() => {
+    setSize(size)
+  })
   const renderBackdrop = useCallback(
     (props: any) => (
       <BottomSheetBackdrop
@@ -69,9 +73,9 @@ export const BaseBottomSheetDialog: React.FC<ComponentePadreProps> = ({ children
   return (
     <BottomSheet
       ref={bottomSheetRef}
-      snapPoints={snapPoints}
       enablePanDownToClose={false}
       index={-1}
+      snapPoints={[snapPoint ?? "40%"]}
       onChange={handleAnimateEnd}
       backdropComponent={renderBackdrop}
       handleComponent={null}

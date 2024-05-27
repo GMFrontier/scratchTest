@@ -19,6 +19,12 @@ const handlers = {
   RecoverPinCreateScreen: () => <ROUTES.Auth.RecoverPinCreateScreen.screen />,
   RegisterScreen: () => <ROUTES.Auth.RegisterScreen.screen />,
   RegisterFormScreen: () => <ROUTES.Auth.RegisterFormScreen.screen />,
+  RegisterPhoneValidationScreen: () => <ROUTES.Auth.RegisterPhoneValidationScreen.screen />,
+  RegisterEmailValidationScreen: () => <ROUTES.Auth.RegisterEmailValidationScreen.screen />,
+  RegisterAddressScreen: () => <ROUTES.Auth.RegisterAddressScreen.screen />,
+  RegisterFinancialScreen: () => <ROUTES.Auth.RegisterFinancialScreen.screen />,
+  RegisterIdValidationScreen: () => <ROUTES.Auth.RegisterIdValidationScreen.screen />,
+  RegisterStepsScreen: () => <ROUTES.Auth.RegisterStepsScreen.screen />,
 
   BottomTabNavigator: () => <ROUTES.Navigator.BottomTabNavigator.screen />,
   HomeScreen: () => <ROUTES.Home.HomeScreen.screen />,

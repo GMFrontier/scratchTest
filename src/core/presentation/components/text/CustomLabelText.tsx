@@ -3,6 +3,7 @@ import { Text, TextStyle, View } from 'react-native';
 import Fonts from '../../../constants/Fonts';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import CustomToolTip from '../tooltip/CustomToolTip';
+import { useTranslation } from '../../contexts/translations/LanguageProvider';
 
 interface Props {
   text: string;
@@ -18,12 +19,13 @@ interface Props {
   lineHeight?: number,
   showRequiredIcon?: boolean,
   toolTipText?: string,
+  showOptionalTag?: boolean,
 }
 
 export const CustomLabelText = ({
   text,
   textSize = 14,
-  fontFamily = Fonts.PoppinsRegular,
+  fontFamily = Fonts.DMSansRegular,
   textColor,
   underline = false,
   marginTop = 0,
@@ -33,17 +35,20 @@ export const CustomLabelText = ({
   numberOfLines,
   lineHeight,
   showRequiredIcon = false,
+  showOptionalTag = false,
   toolTipText,
 }: Props) => {
   const {
     theme: { colors },
   } = useContext(ThemeContext);
+  const { translation } = useTranslation();
 
   if (text == undefined) text = '';
 
   const textStyle: TextStyle = {
     fontSize: textSize,
-    color: textColor ?? colors.textColor02,
+    color: textColor ?? colors.secondaryText,
+    opacity: textColor ? 1 : .8,
     fontFamily,
     textDecorationLine: underline ? 'underline' : 'none',
     textDecorationColor: textColor,
@@ -69,6 +74,7 @@ export const CustomLabelText = ({
         </Text>
       )}
       {showRequiredIcon && <Text style={{ color: colors.alertColor, marginStart: 4, marginTop: textStyle.marginTop }}>*</Text>}
+      {showOptionalTag && <Text style={{ color: colors.disableText, marginStart: 4, marginTop: textStyle.marginTop, fontFamily: Fonts.DMSansRegular, fontSize: 14 }}> {"(Opcional)"} </Text>}
       {toolTipText &&
         <View style={{ marginTop: textStyle.marginTop }} >
           <CustomToolTip
