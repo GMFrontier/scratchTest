@@ -48,7 +48,7 @@ export const CustomText = ({
     marginTop,
     marginBottom,
     textAlign: textAlign,
-    lineHeight: lineHeight ?? 1.3 * textSize
+    lineHeight: lineHeight ?? 1.3 * textSize,
   };
 
   const renderTextParts = (parts: string[], textStyle: StyleProp<TextStyle>, numberOfLines?: number) => {

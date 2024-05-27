@@ -23,6 +23,7 @@ export interface ThemeState extends Theme {
     blue50: string;
     blu100: string;
     blue200: string;
+    blue400: string;
     red500: string;
     green400: string;
     //viejos
@@ -99,6 +100,7 @@ export const lightTheme: ThemeState = {
     blue50: "#B8CAFF",
     blu100: "#A3BAFF",
     blue200: "#7A9CFF",
+    blue400: "#295FFF",
     red500: "#F33A00",
     green400: "#6ABD67",
     //viejos
