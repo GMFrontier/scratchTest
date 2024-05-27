@@ -25,6 +25,8 @@ const handlers = {
   RegisterFinancialScreen: () => <ROUTES.Auth.RegisterFinancialScreen.screen />,
   RegisterIdValidationScreen: () => <ROUTES.Auth.RegisterIdValidationScreen.screen />,
   RegisterStepsScreen: () => <ROUTES.Auth.RegisterStepsScreen.screen />,
+  RegisterIncomeScreen: () => <ROUTES.Auth.RegisterIncomeScreen.screen />,
+  RegisterCompleteScreen: () => <ROUTES.Auth.RegisterCompleteScreen.screen />,
 
   BottomTabNavigator: () => <ROUTES.Navigator.BottomTabNavigator.screen />,
   HomeScreen: () => <ROUTES.Home.HomeScreen.screen />,

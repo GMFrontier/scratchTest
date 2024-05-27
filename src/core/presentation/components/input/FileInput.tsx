@@ -15,12 +15,19 @@ import DocumentPicker from 'react-native-document-picker';
 import PdfThumbnail from 'react-native-pdf-thumbnail';
 
 interface Props {
-  isEnabled?: boolean;
+  label: string;
+  isRequired?: boolean
   marginTop?: number;
+  infoText?: string
+  showInfoModal?: boolean
 }
 
 export const FileInput = ({
-  marginTop
+  label,
+  isRequired,
+  marginTop,
+  infoText,
+  showInfoModal
 }: Props) => {
 
   const {
@@ -73,9 +80,11 @@ export const FileInput = ({
     }}
     >
       <CustomLabelText
-        text='Comprobante de ingresos'
+        text={label}
+        fontFamily={Fonts.DMSansMedium}
         textColor={colors.white}
-        showOptionalTag={true} />
+        showRequiredIcon={isRequired}
+        showOptionalTag={!isRequired} />
       <TouchableOpacity
         style={styles.rectangleContainer}
         activeOpacity={.6}
@@ -100,54 +109,61 @@ export const FileInput = ({
         }
       </TouchableOpacity>
 
-      <ButtonLink
-        text='¿Qué documentación puedo cargar?'
-        onPress={() => {
-          showStateModal({
-            image: undefined,
-            title: "",
-            size: "30%",
-            message: "",
-            actionCloseModal() {
+      {infoText &&
+        <CustomText
+          textColor={colors.white}
+          marginTop={4}
+          textSize={FontsSize._12_SIZE}
+          text={infoText} />}
+      {showInfoModal &&
+        <ButtonLink
+          text='¿Qué documentación puedo cargar?'
+          onPress={() => {
+            showStateModal({
+              image: undefined,
+              title: "",
+              size: "30%",
+              message: "",
+              actionCloseModal() {
 
-            },
-            content:
-              <View
-                style={{
-                  marginTop: 80,
-                  marginBottom: 40
-                }} >
-                <CustomText
-                  text='¿Qué documentos cargar?'
-                  fontFamily={Fonts.DMSansBold}
-                  textAlign='center'
-                  textSize={FontsSize._24_SIZE}
-                />
-                <CustomText
-                  marginTop={5.5}
-                  text='•  Un estado de cuenta bancario'
-                  textSize={FontsSize._16_SIZE}
-                />
-                <CustomText
-                  text='•  Una carta de referencia bancaria'
-                  textSize={FontsSize._16_SIZE}
-                />
-                <CustomText
-                  text='•  Una carta laboral'
-                  textSize={FontsSize._16_SIZE}
-                />
-                <CustomText
-                  text='•  Una ficha del seguro social'
-                  textSize={FontsSize._16_SIZE}
-                />
-                <CustomText
-                  text='•  Cualquier comprobante de ingresos'
-                  textSize={FontsSize._16_SIZE}
-                />
-              </View>,
-            showIcoClose: true
-          })
-        }} />
+              },
+              content:
+                <View
+                  style={{
+                    marginTop: 80,
+                    marginBottom: 40
+                  }} >
+                  <CustomText
+                    text='¿Qué documentos cargar?'
+                    fontFamily={Fonts.DMSansBold}
+                    textAlign='center'
+                    textSize={FontsSize._24_SIZE}
+                  />
+                  <CustomText
+                    marginTop={5.5}
+                    text='•  Un estado de cuenta bancario'
+                    textSize={FontsSize._16_SIZE}
+                  />
+                  <CustomText
+                    text='•  Una carta de referencia bancaria'
+                    textSize={FontsSize._16_SIZE}
+                  />
+                  <CustomText
+                    text='•  Una carta laboral'
+                    textSize={FontsSize._16_SIZE}
+                  />
+                  <CustomText
+                    text='•  Una ficha del seguro social'
+                    textSize={FontsSize._16_SIZE}
+                  />
+                  <CustomText
+                    text='•  Cualquier comprobante de ingresos'
+                    textSize={FontsSize._16_SIZE}
+                  />
+                </View>,
+              showIcoClose: true
+            })
+          }} />}
 
     </View >
   );

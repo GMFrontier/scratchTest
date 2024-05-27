@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import React = require('react');
 import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
@@ -8,20 +8,14 @@ import { CustomText } from '../../../../core/presentation/components/text/Custom
 import Fonts from '../../../../core/constants/Fonts';
 import FontsSize from '../../../../core/constants/FontsSize';
 import { ButtonPrimary } from '../../../../core/presentation/components/button/ButtonPrimary';
-import { CommonActions, StackActions, useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
 import DocumentPicker from 'react-native-document-picker';
-import { SvgXml } from 'react-native-svg';
-import ic_info_blue_filled from '../../../../../assets/svg/ic_info_blue_filled';
-import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
-import ic_error_check_filled from '../../../../../assets/svg/ic_error_check_filled';
-import ic_empty_check_filled from '../../../../../assets/svg/ic_empty_check_filled';
-import { ValidationProgressCard } from './components/ValidationProgressCard';
 import { ROUTES } from '../../../navigation/routes';
 
-export const RegisterStepsScreen = observer(() => {
+export const RegisterCompleteScreen = observer(() => {
 
   const {
     theme: { colors },
@@ -33,47 +27,48 @@ export const RegisterStepsScreen = observer(() => {
     changeNavigationBarColor(colors.accent);
   })
 
-  const title = "Al parecer no hemos validado tu identidad"
-
   return (
     <ToolbarView
-      text={"Validación de identidad"} >
+      text={"Registro completado"} >
 
       <View
         style={style.containerMain}>
 
         <CustomText
-          text={title}
+          text={"Tu crédito ha sido pre-aprobado"}
           textColor={colors.secondary}
           fontFamily={Fonts.DMSansBold}
           textSize={FontsSize._32_SIZE} />
 
         <CustomText
-          text='Deberás reintentar el proceso de validación
-          para crear tu cuenta.'
+          text='Este esta sujeto a revisión de nuestro equipo.'
           textSize={FontsSize._16_SIZE}
           marginTop={8} />
 
-        <ValidationProgressCard
-          step='id_error'
-          reason='Foto borrosa o documento inválido'
-        />
+        <Image
+          source={{ uri: "" }}
+          style={{ height: 259, width: "100%", marginTop: 16, backgroundColor: colors.darkGray02 }} />
 
-        <View style={{
-          flexDirection: "row",
-          marginBottom: 24
-        }} >
-          <SvgXml xml={ic_info_blue_filled} />
-          <Sizebox width={8} />
-          <CustomText
-            textSize={FontsSize._16_SIZE}
-            text={"Asegúrate de cumplir con todos los requisitos solicitados, como sostener tu documento de identificación de manera clara y visible."} />
-        </View>
+        <CustomText
+          marginTop={24}
+          applySubstringColor={true}
+          text={'Nos complace informarte que has sido pre-aprobado para obtener una tarjeta de crédito con un límite <b>equivalente al 25% de tus ingresos.<b>\n\nEn un plazo máximo de 48 horas hábiles, recibirás una notificación con los detalles.'}
+          textSize={FontsSize._16_SIZE}
+          fontFamily={Fonts.DMSansMedium} />
+
+        <Sizebox height={32} />
 
         <ButtonPrimary
-          text={"Reintentar validación"}
+          text={"Ir al home"}
           onPress={() => {
-            nav.navigate(ROUTES.Auth.RegisterIncomeScreen.name as never)
+            nav.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [
+                  { name: ROUTES.Navigator.BottomTabNavigator.name },
+                ],
+              })
+            );
           }} />
       </View>
     </ToolbarView>

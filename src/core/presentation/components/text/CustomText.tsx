@@ -12,9 +12,9 @@ interface Props {
   marginTop?: number;
   marginBottom?: number;
   textAlign?: 'left' | 'center' | 'right' | 'justify';
-  weight?: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900";
   numberOfLines?: number,
   lineHeight?: number,
+  applySubstringColor?: boolean,
 }
 
 export const CustomText = ({
@@ -26,9 +26,9 @@ export const CustomText = ({
   marginTop = 0,
   marginBottom = 0,
   textAlign,
-  weight,
   numberOfLines,
-  lineHeight
+  lineHeight,
+  applySubstringColor,
 }: Props) => {
   const {
     theme: { colors },
@@ -46,7 +46,6 @@ export const CustomText = ({
     textDecorationLine: underline ? 'underline' : 'none',
     textDecorationColor: textColor,
     marginTop,
-    fontWeight: weight,
     marginBottom,
     textAlign: textAlign,
     lineHeight: lineHeight ?? 1.3 * textSize
@@ -54,7 +53,7 @@ export const CustomText = ({
 
   const renderTextParts = (parts: string[], textStyle: StyleProp<TextStyle>, numberOfLines?: number) => {
     const textParts = parts.map((part, index) => (
-      <Text key={index} style={[textStyle, index % 2 !== 0 && { fontFamily: Fonts.DMSansMedium }]}>
+      <Text key={index} style={[textStyle, index % 2 !== 0 && { fontFamily: Fonts.DMSansMedium, color: applySubstringColor ? colors.blue200 : undefined }]}>
         {part}
       </Text>
     ));

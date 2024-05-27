@@ -118,7 +118,10 @@ export const RegisterFinancialScreen = observer(() => {
           </View>
 
           <FileInput
+            label='Comprobante de ingresos'
+            isRequired={false}
             marginTop={16}
+            showInfoModal={true}
           />
 
           <AutoCompleteView

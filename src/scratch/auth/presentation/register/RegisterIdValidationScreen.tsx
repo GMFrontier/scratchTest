@@ -21,7 +21,7 @@ export const RegisterIdValidationScreen = observer(() => {
     theme: { colors },
   } = useContext(ThemeContext);
   const { translation } = useTranslation();
-  const navigation = useNavigation()
+  const nav = useNavigation()
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
@@ -111,7 +111,7 @@ export const RegisterIdValidationScreen = observer(() => {
         <ButtonPrimary
           text={"Iniciar validación"}
           onPress={() => {
-            navigation.navigate(ROUTES.Auth.RegisterStepsScreen.name as never)
+            nav.navigate(ROUTES.Auth.RegisterStepsScreen.name as never)
           }} />
       </View>
     </ToolbarView>

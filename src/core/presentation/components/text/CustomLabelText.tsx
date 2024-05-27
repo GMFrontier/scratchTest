@@ -74,7 +74,7 @@ export const CustomLabelText = ({
         </Text>
       )}
       {showRequiredIcon && <Text style={{ color: colors.alertColor, marginStart: 4, marginTop: textStyle.marginTop }}>*</Text>}
-      {showOptionalTag && <Text style={{ color: colors.disableText, marginStart: 4, marginTop: textStyle.marginTop, fontFamily: Fonts.DMSansRegular, fontSize: 14 }}> {"(Opcional)"} </Text>}
+      {showOptionalTag && <Text style={{ color: colors.disableText, marginStart: 0, marginTop: textStyle.marginTop, fontFamily: Fonts.DMSansRegular, fontSize: 14 }}> {"(Opcional)"} </Text>}
       {toolTipText &&
         <View style={{ marginTop: textStyle.marginTop }} >
           <CustomToolTip

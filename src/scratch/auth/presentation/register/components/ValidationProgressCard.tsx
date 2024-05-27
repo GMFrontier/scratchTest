@@ -61,11 +61,13 @@ export const ValidationProgressCard = ({
             fontFamily={Fonts.DMSansMedium}
             textSize={FontsSize._16_SIZE} />
           {reason &&
-            <CustomText
-              text={reason}
-              textColor={colors.blu100}
-              fontFamily={Fonts.DMSansMedium}
-              textSize={FontsSize._16_SIZE} />
+            <View style={{ marginBottom: -15 }} >
+              <CustomText
+                text={reason}
+                textColor={colors.blu100}
+                fontFamily={Fonts.DMSansMedium}
+                textSize={FontsSize._16_SIZE} />
+            </View>
           }
         </View>
       </View>

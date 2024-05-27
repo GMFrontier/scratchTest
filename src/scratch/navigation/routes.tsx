@@ -18,6 +18,8 @@ import { RegisterAddressScreen } from '../auth/presentation/register/RegisterAdd
 import { RegisterFinancialScreen } from '../auth/presentation/register/RegisterFinancialScreen';
 import { RegisterIdValidationScreen } from '../auth/presentation/register/RegisterIdValidationScreen';
 import { RegisterStepsScreen } from '../auth/presentation/register/RegisterStepsScreen';
+import { RegisterIncomeScreen } from '../auth/presentation/register/RegisterIncomeScreen';
+import { RegisterCompleteScreen } from '../auth/presentation/register/RegisterCompleteScreen';
 
 interface NavRouteModel {
   [key: string]: {
@@ -51,6 +53,8 @@ export const ROUTES = {
     RegisterFinancialScreen: { screen: RegisterFinancialScreen, name: 'RegisterFinancialScreen' },
     RegisterIdValidationScreen: { screen: RegisterIdValidationScreen, name: 'RegisterIdValidationScreen' },
     RegisterStepsScreen: { screen: RegisterStepsScreen, name: 'RegisterStepsScreen' },
+    RegisterIncomeScreen: { screen: RegisterIncomeScreen, name: 'RegisterIncomeScreen' },
+    RegisterCompleteScreen: { screen: RegisterCompleteScreen, name: 'RegisterCompleteScreen' },
   },
   OnBoarding: {
     OnBoardingScreen: { screen: OnBoardingScreen, name: 'OnBoardingScreen' },

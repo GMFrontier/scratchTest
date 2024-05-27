@@ -43,6 +43,7 @@ export const BaseButton = ({
       alignSelf: "center",
       paddingHorizontal: marginHorizontal,
       backgroundColor: 'rgba(0, 0, 0, 0)',
+      marginBottom: position === "relative" ? 8 : 0
     },
     buttonContainer: {
       width: '100%',
