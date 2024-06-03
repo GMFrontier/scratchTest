@@ -90,7 +90,7 @@ export const OnBoardingScreen = () => {
         marginEnd: 16
       }} >
         <ButtonLink
-          text="Omitir"
+          text="Ir a la home (maquetación)"
           onPress={() => {
             // navigation.navigate(ROUTES.Auth.RegisterAddressScreen.name as never)
             navigation.dispatch(

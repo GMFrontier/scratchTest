@@ -140,7 +140,7 @@ const BottomTabNavigator = () => {
               <BottomTabIcon
                 text={translation.file.bottom_tab_points}
                 icon={home_ico_activity_content}
-                focusedIcon={home_ico_card_active_content}
+                focusedIcon={home_ico_activity_content}
                 focused={focused}
               />
             ),
@@ -155,7 +155,7 @@ const BottomTabNavigator = () => {
               <BottomTabIcon
                 text={translation.file.bottom_tab_settings}
                 icon={settings_ico_content}
-                focusedIcon={home_ico_card_active_content}
+                focusedIcon={settings_ico_content}
                 focused={focused}
               />
             ),
