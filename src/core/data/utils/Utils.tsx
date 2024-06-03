@@ -32,3 +32,11 @@ export function isValidPhoneCheck(phone: string, selectedOption: string): boolea
     return false;
   }
 };
+interface Number {
+  toMoneyFormat(): string;
+}
+
+export const toMoneyFormat = (number: number) => {
+  if (number > 0) return "$" + number.toFixed(2);
+  else return "- $" + Math.abs(number).toFixed(2);
+};

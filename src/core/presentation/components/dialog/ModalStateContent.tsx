@@ -66,17 +66,19 @@ export const ModalContent = ({ title, subtitle, labelButtonPrimary, icoModal, ac
         <CustomText
           textSize={FontsSize._16_SIZE}
           textAlign='center'
-          numberOfLines={2}
           text={subtitle} />
 
-        <Sizebox height={36}></Sizebox>
 
         {
           labelButtonPrimary ?
-            <ButtonPrimary
-              text={labelButtonPrimary}
-              onPress={actionButtonPrimary}
-              position='relative' />
+            <View>
+              <Sizebox height={36}></Sizebox>
+
+              <ButtonPrimary
+                text={labelButtonPrimary}
+                onPress={actionButtonPrimary}
+                position='relative' />
+            </View>
             : null
         }
 

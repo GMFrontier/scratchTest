@@ -21,7 +21,8 @@ const ProgressIndicator = ({ percentage, colorBar }: Props) => {
     container: {
       width: '100%',
       height: 8,
-      backgroundColor: '#EEEEEE',
+      borderRadius: 10,
+      backgroundColor: colors.disableText,
 
       overflow: 'hidden',
       justifyContent: 'center',

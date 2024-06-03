@@ -97,7 +97,7 @@ export const OnBoardingScreen = () => {
               CommonActions.reset({
                 index: 0,
                 routes: [
-                  { name: ROUTES.Auth.LoginScreen.name },
+                  { name: ROUTES.Navigator.BottomTabNavigator.name },
                 ],
               })
             )

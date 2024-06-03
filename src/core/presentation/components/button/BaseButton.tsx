@@ -46,7 +46,6 @@ export const BaseButton = ({
       marginBottom: position === "relative" ? 8 : 0
     },
     buttonContainer: {
-      width: '100%',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
@@ -72,8 +71,9 @@ export const BaseButton = ({
     case "small":
       defaultStyles = {
         ...defaultStyles,
-        buttonContainer: { ...defaultStyles.buttonContainer, height: 32 },
+        buttonContainer: { ...defaultStyles.buttonContainer, height: 32, paddingHorizontal: 16 },
         textStyle: { ...defaultStyles.textStyle, fontSize: FontsSize._14_SIZE },
+        mainContainer: { ...defaultStyles.mainContainer, width: undefined }
       };
       break;
     case "medium":

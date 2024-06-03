@@ -100,8 +100,7 @@ export const NewModalContextProvider = ({ children }: any) => {
       value={{ showStateModal }}>
       {children}
       {
-        ((props.title.length > 0) || (props.message.length > 0) || (props.content))
-        &&
+
         <BaseBottomSheetDialog
           bottomSheetRef={bottomSheetRef}
           size={props.size}
