@@ -31,7 +31,7 @@ interface Props {
   labelTitleRequired?: boolean,
   allowSpaces?: boolean
   returnKeyType?: ReturnKeyTypeOptions
-  inputType?: "name" | "password" | "email" | "money" | "alphanumeric" | "all"
+  inputType?: "name" | "password" | "email" | "money" | "alphanumeric" | "all" | "number"
 }
 
 export const TextInputMain = ({
@@ -68,7 +68,8 @@ export const TextInputMain = ({
       regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       break;
     case "money":
-      regex = /^[0-9]+$/;
+    case "number":
+      regex = /[^0-9]/g;
       break;
     case "alphanumeric":
       regex = /[^a-zA-Z 0-9]/g

@@ -19,6 +19,20 @@ import { ScrollView } from 'react-native-gesture-handler';
 import RadioGroup from 'react-native-radio-buttons-group';
 import { CustomLabelText } from '../../../../core/presentation/components/text/CustomLabelText';
 import { FileInput } from '../../../../core/presentation/components/input/FileInput';
+import SelectCustomDropdown from '../../../../core/presentation/components/spinner/SelectCustomDropdown';
+
+export interface JobStatus {
+  id: number;
+  title: string
+}
+export interface JobPlace {
+  id: number;
+  title: string
+}
+export interface Salary {
+  id: number;
+  title: string
+}
 
 export const RegisterFinancialScreen = observer(() => {
 
@@ -32,7 +46,51 @@ export const RegisterFinancialScreen = observer(() => {
     changeNavigationBarColor(colors.accent);
   })
 
-  const [selectedId, setSelectedId] = useState();
+  const [jobStatus, setJobStatus] = useState<JobStatus | undefined>(undefined);
+  const [jobPlace, setJobPlace] = useState<JobPlace | undefined>(undefined);
+  const [salary, setSalary] = useState<Salary | undefined>(undefined);
+  const [exposedPerson, setExposedPerson] = useState();
+  const [comprobante, setComprobante] = useState<string | undefined>();
+  const [apc, setAPC] = useState();
+  const [canVerify, setCanVerify] = useState();
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  React.useEffect(() => {
+    const isJobStatusValid = jobStatus !== undefined
+    const isJobPlaceValid = jobPlace !== undefined
+    const isSalaryValid = salary !== undefined
+    const isExposedPersonValid = exposedPerson !== undefined
+    const isFileValid = comprobante !== undefined
+    const isAPCValid = apc !== undefined
+    const isCanVerifyValid = canVerify !== undefined
+
+    setIsFormValid(
+      isJobStatusValid &&
+      isJobPlaceValid &&
+      isSalaryValid &&
+      isExposedPersonValid &&
+      isFileValid &&
+      isAPCValid &&
+      isCanVerifyValid
+    )
+    console.log(
+      isJobStatusValid + " " +
+      isJobPlaceValid + " " +
+      isSalaryValid + " " +
+      isExposedPersonValid + " " +
+      isFileValid + " " +
+      isAPCValid + " " +
+      isCanVerifyValid + " "
+    )
+  }, [
+    jobStatus,
+    jobPlace,
+    salary,
+    exposedPerson,
+    comprobante,
+    apc,
+    canVerify,
+  ])
 
   return (
     <ToolbarView
@@ -56,25 +114,24 @@ export const RegisterFinancialScreen = observer(() => {
             marginTop={8} />
 
           <AutoCompleteView
-            setSelectedItem={() => { }}
+            setSelectedItem={setJobStatus}
             data={[{ id: '0', title: "Tengo trabajo" }, { id: '1', title: "Tengo un emprendimiento o empresa" }]}
             marginTop={16}
             clearOnFocus={true}
             labelTitle={"Estatus laboral"} />
 
           <AutoCompleteView
-            setSelectedItem={() => { }}
+            setSelectedItem={setJobPlace}
             data={[{ id: "0", title: "Empleado privado" }, { id: "1", title: "Empleado público" }]}
             marginTop={16}
             labelTitle={"Lugar de trabajo"}
             clearOnFocus={true} />
 
-          <AutoCompleteView
-            setSelectedItem={() => { }}
+          <SelectCustomDropdown
+            setItem={setSalary}
             data={[{ id: "0", title: "Entre $0 y $700" }, { id: "1", title: "Entre $700 y $1000" }, { id: "2", title: "Entre $1500 y $2500" }, { id: "2", title: "Más de $2500" }]}
             marginTop={16}
-            labelTitle={"Rango salarial"}
-            clearOnFocus={true} />
+            labelTitle={"Rango salarial"} />
 
           <CustomLabelText
             text='Eres una persona políticamente expuesta'
@@ -89,23 +146,23 @@ export const RegisterFinancialScreen = observer(() => {
                     id: '1',
                     label: 'Sí',
                     value: "true",
-                    color: selectedId === "1" ? colors.white : undefined,
-                    borderSize: selectedId === "1" ? 8 : 2.5,
-                    borderColor: selectedId === "1" ? colors.blue200 : colors.disableText
+                    color: exposedPerson === "1" ? colors.white : undefined,
+                    borderSize: exposedPerson === "1" ? 8 : 2.5,
+                    borderColor: exposedPerson === "1" ? colors.blue200 : colors.disableText
                   },
                   {
                     id: '2',
                     label: 'No',
                     value: "false",
-                    color: selectedId === "2" ? colors.white : undefined,
-                    borderSize: selectedId === "2" ? 8 : 2.5,
-                    borderColor: selectedId === "2" ? colors.blue200 : colors.disableText
+                    color: exposedPerson === "2" ? colors.white : undefined,
+                    borderSize: exposedPerson === "2" ? 8 : 2.5,
+                    borderColor: exposedPerson === "2" ? colors.blue200 : colors.disableText
                   }
                 ]
               }
-              onPress={setSelectedId}
+              onPress={setExposedPerson}
               layout='row'
-              selectedId={selectedId}
+              selectedId={exposedPerson}
               containerStyle={{
                 flex: 1,
                 justifyContent: "space-between",
@@ -121,27 +178,29 @@ export const RegisterFinancialScreen = observer(() => {
             label='Comprobante de ingresos'
             isRequired={false}
             marginTop={16}
+            setFile={setComprobante}
             showInfoModal={true}
           />
 
-          <AutoCompleteView
-            setSelectedItem={() => { }}
-            data={[{ id: "0", title: "No" }, { id: "1", title: "Sí" }]}
+          <SelectCustomDropdown
+            data={[]}
+            dropdownType='boolean'
             marginTop={16}
             labelTitle={"¿Ya cuentas con APC?"}
-            clearOnFocus={true} />
+            setItem={setAPC} />
 
-          <AutoCompleteView
-            setSelectedItem={() => { }}
-            data={[{ id: "0", title: "No" }, { id: "1", title: "Sí" }]}
+          <SelectCustomDropdown
+            data={[]}
+            dropdownType='boolean'
             marginTop={16}
             labelTitle={"¿Podemos verificar?"}
-            clearOnFocus={true} />
+            setItem={setCanVerify} />
 
           <Sizebox height={32} />
           <ButtonPrimary
             text={translation.file.next}
             position="relative"
+            disabled={!isFormValid}
             onPress={() => {
               nav.navigate(ROUTES.Auth.RegisterIdValidationScreen.name as never)
             }} />

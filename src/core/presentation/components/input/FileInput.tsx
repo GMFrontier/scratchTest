@@ -13,6 +13,7 @@ import ic_download from '../../../../../assets/svg/ic_download';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DocumentPicker from 'react-native-document-picker';
 import PdfThumbnail from 'react-native-pdf-thumbnail';
+import RNFetchBlob from 'rn-fetch-blob';
 
 interface Props {
   label: string;
@@ -20,6 +21,7 @@ interface Props {
   marginTop?: number;
   infoText?: string
   showInfoModal?: boolean
+  setFile: any
 }
 
 export const FileInput = ({
@@ -27,7 +29,8 @@ export const FileInput = ({
   isRequired,
   marginTop,
   infoText,
-  showInfoModal
+  showInfoModal,
+  setFile
 }: Props) => {
 
   const {
@@ -43,9 +46,18 @@ export const FileInput = ({
   const selectPDF = async () => {
     try {
       const result = await DocumentPicker.pick({
-        type: ['application/pdf', 'image/*'],
+        type: ['application/pdf'],
+        // type: ['application/pdf', 'image/*'],
       });
+      console.log("JSON.stringify(result)")
+      console.log(JSON.stringify(result))
       if (result[0].type === "application/pdf") {
+        RNFetchBlob.fs
+          .readFile(result[0].uri, 'base64')
+          .then((data) => {
+            setFile(data)
+          })
+          .catch((err) => { });
         setURI((await PdfThumbnail.generate(result[0].uri, 0)).uri)
       } else {
         setURI(result[0].uri)

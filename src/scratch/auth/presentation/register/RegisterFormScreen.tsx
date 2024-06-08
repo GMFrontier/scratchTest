@@ -45,10 +45,10 @@ export const RegisterFormScreen = observer(() => {
   const [lastname, setLastname] = useState('');
   const [password, setPassword] = useState("");
   const [livesInPanama, setLivesInPanama] = useState();
-  const [nationality, setNationality] = useState();
   const [email, setEmail] = useState();
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [country, setCountry] = useState<Country | undefined>(undefined);
   const [date, setDate] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const maximumSelectableDate = new Date();
   const showToast = useToastContext().showYellowToast
@@ -71,7 +71,6 @@ export const RegisterFormScreen = observer(() => {
     setDate(formattedDate)
     hideDatePicker();
   };
-  const [country, setCountry] = useState<Country | undefined>(undefined);
 
   const enhancedCountries = countries_es.map((country, index) => ({
     id: index,
@@ -118,7 +117,7 @@ export const RegisterFormScreen = observer(() => {
     lastname,
     phone,
     livesInPanama,
-    nationality,
+    country,
     email,
     password,
     date
@@ -198,7 +197,8 @@ export const RegisterFormScreen = observer(() => {
 
           <SelectCustomDropdown
             labelTitle='¿Vives en Panamá?'
-            data={[{ title: "Si", id: 1 }, { title: "No", id: 0 }]}
+            data={[]}
+            dropdownType='boolean'
             marginTop={16}
             setItem={setLivesInPanama} />
 

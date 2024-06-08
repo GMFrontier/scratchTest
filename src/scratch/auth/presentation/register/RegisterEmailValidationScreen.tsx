@@ -145,8 +145,6 @@ export const RegisterEmailValidationScreen = observer(() => {
 
             }} />
 
-          <PinView
-            setValue={setValue} />
         </View>
       </View>
     </ToolbarView>

@@ -138,8 +138,6 @@ export const RegisterPhoneValidationScreen = observer(() => {
 
             }} />
 
-          <PinView
-            setValue={setValue} />
         </View>
       </View>
     </ToolbarView>

@@ -29,10 +29,6 @@ export function validatePhoneNumber(phoneNumber: string, countryCode: any): bool
 export function isValidPhoneCheck(phone: string, selectedOption: string): boolean {
   try {
     const countryArray = selectedOption.split('*')
-    console.log(countryArray)
-    console.log(phone)
-    console.log(countryArray[countryArray.length - 1])
-    console.log(validatePhoneNumber(phone, countryArray[countryArray.length - 1]))
     return validatePhoneNumber(phone, countryArray[countryArray.length - 1]);
   } catch (error) {
     return false;

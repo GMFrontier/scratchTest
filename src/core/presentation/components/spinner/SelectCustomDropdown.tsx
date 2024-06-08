@@ -20,6 +20,7 @@ interface Props {
   marginTop?: number,
   disabled?: boolean,
   defaultValue?: string,
+  dropdownType?: "boolean"
 }
 
 const SelectCustomDropdown = ({
@@ -28,6 +29,7 @@ const SelectCustomDropdown = ({
   labelTitle,
   marginTop,
   disabled = false,
+  dropdownType
 }: Props) => {
   const [selectedItem, setSelectedItem] = useState<any>();
 
@@ -36,7 +38,6 @@ const SelectCustomDropdown = ({
   } = useContext(ThemeContext);
 
   const { translation } = useTranslation();
-
 
   const style = StyleSheet.create({
     containerMain: {
@@ -80,6 +81,12 @@ const SelectCustomDropdown = ({
       height: 'auto',
     },
   });
+
+  switch (dropdownType) {
+    case "boolean":
+      data = [{ title: "Si", id: 1 }, { title: "No", id: 0 }]
+      break;
+  }
 
   return (
     <View>

@@ -19,6 +19,11 @@ import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { ScrollView } from 'react-native-gesture-handler';
 import { countryCities } from '../../../../core/constants/Cities';
 
+export interface City {
+  id: number;
+  title: string
+}
+
 export const RegisterAddressScreen = observer(() => {
 
   const {
@@ -36,6 +41,39 @@ export const RegisterAddressScreen = observer(() => {
     id: index,
     title: state
   }));
+
+  const [city, setCity] = useState<City | undefined>(undefined);
+  const [region, setRegion] = useState<string>(undefined);
+  const [address1, setAddress1] = useState<string>(undefined);
+  const [address2, setAddress2] = useState<string>(undefined);
+  const [postalCode, setPostalCode] = useState<string>(undefined);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+
+  React.useEffect(() => {
+    const isCityValid = city !== undefined
+    const isRegionValid = /^[a-zA-Z0-9\s]+$/.test(region);
+    const isAddress1Valid = /^[a-zA-Z0-9\s]+$/.test(address1);
+    const isPostalCodeValid = /^[0-9\s]+$/.test(postalCode);
+
+    setIsFormValid(
+      isCityValid &&
+      isRegionValid &&
+      isAddress1Valid &&
+      isPostalCodeValid
+    )
+    console.log(
+      isCityValid + " " +
+      isRegionValid + " " +
+      isAddress1Valid + " " +
+      isPostalCodeValid + " "
+    )
+  }, [
+    city,
+    region,
+    address1,
+    postalCode,
+  ])
 
   return (
     <ToolbarView
@@ -76,13 +114,16 @@ export const RegisterAddressScreen = observer(() => {
 
           <TextInputMain
             marginTop={16}
-            onChangeText={() => { }}
+            onChangeText={setRegion}
             labelTitleRequired={true}
             labelTitle={"Región"}
+            inputType='name'
+            errorInfo='Por favor, ingrese la región sin caracteres especiales para poder continuar'
+            inputValue={region}
             placeholder={"Ingresar región"} />
 
           <AutoCompleteView
-            setSelectedItem={() => { }}
+            setSelectedItem={setCity}
             data={cities}
             marginTop={16}
             labelTitle={"Ciudad"}
@@ -90,22 +131,29 @@ export const RegisterAddressScreen = observer(() => {
 
           <TextInputMain
             marginTop={16}
-            onChangeText={() => { }}
+            onChangeText={setAddress1}
+            inputValue={address1}
+            inputType='alphanumeric'
+            errorInfo='Por favor, ingrese la dirección 1 sin caracteres especiales para poder continuar'
             labelTitleRequired={true}
             labelTitle={"Dirección 1"}
             placeholder={"Ingresar dirección"} />
 
           <TextInputMain
             marginTop={16}
-            onChangeText={() => { }}
-            labelTitleRequired={true}
+            labelTitleRequired={false}
+            onChangeText={setAddress2}
+            inputValue={address2}
             labelTitle={"Dirección 2"}
             placeholder={"Ingresar dirección"} />
 
           <TextInputMain
             marginTop={16}
-            onChangeText={() => { }}
+            onChangeText={setPostalCode}
+            inputValue={postalCode}
             labelTitleRequired={true}
+            inputType='number'
+            errorInfo='Por favor, utilice sólo números'
             labelTitle={"Código postal"}
             placeholder={"Ej: 0000"} />
 
@@ -113,6 +161,7 @@ export const RegisterAddressScreen = observer(() => {
           <ButtonPrimary
             text={translation.file.next}
             position="relative"
+            disabled={!true}
             onPress={() => { navigation.navigate(ROUTES.Auth.RegisterFinancialScreen.name as never) }} />
         </ScrollView>
       </KeyboardAvoidingView>
