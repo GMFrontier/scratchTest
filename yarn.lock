@@ -5014,6 +5014,11 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
+libphonenumber-js@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.npmjs.org/libphonenumber-js/-/libphonenumber-js-1.11.3.tgz"
+  integrity sha512-RU0CTsLCu2v6VEzdP+W6UU2n5+jEpMDRkGxUeBgsAJgre3vKgm17eApISH9OQY4G0jZYJVIc8qXmz6CJFueAFg==
+
 lighthouse-logger@^1.0.0:
   version "1.4.2"
   resolved "https://registry.npmjs.org/lighthouse-logger/-/lighthouse-logger-1.4.2.tgz"
@@ -6095,6 +6100,11 @@ react-native-screens@^3.31.1, "react-native-screens@>= 3.0.0":
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-select-dropdown@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.npmjs.org/react-native-select-dropdown/-/react-native-select-dropdown-3.4.0.tgz"
+  integrity sha512-9xK1z4tYpwMxp3hsM0y1+xfqq/JoMh+l7sBsJ81b2eikFwT6ZbndFBqupQXrsQ1akce9hgC/10Nkzj0LjVjeXQ==
 
 react-native-size-matters@^0.4.0:
   version "0.4.2"

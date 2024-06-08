@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity, ReturnKeyTypeOptions } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, ReturnKeyTypeOptions, Keyboard, KeyboardTypeOptions } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import FontsSize from '../../../constants/FontsSize';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
@@ -8,107 +8,84 @@ import Fonts from '../../../constants/Fonts';
 import Sizebox from '../item/Sizebox';
 import ic_eye_closed_outline from '../../../../../assets/svg/ic_eye_closed_outline';
 import ic_eye_opened_outline from '../../../../../assets/svg/ic_eye_opened_outline';
+import ic_error_check_filled from '../../../../../assets/svg/ic_error_check_filled';
+import ic_exclamation_error_filled from '../../../../../assets/svg/ic_exclamation_error_filled';
 
 interface Props {
   placeholder?: string;
   rightIcon?: any;
   leftIcon?: any;
-  typeKeyboard?: any;
-  regularPhrase?: RegExp;
-  secureTextEntry?: boolean;
-  inputValue?: any;
+  inputValue?: string;
   onChangeText?: any;
   maxLength?: number;
   showError?: boolean;
-  keepFocused?: boolean;
-  textStart?: number;
+  errorInfo?: string;
   heightInput?: number
   multiline?: boolean,
   textAlign?: 'center' | 'auto' | 'bottom' | 'top',
-  enableAccountFormatting?: boolean,
   enableAmountFormatting?: boolean,
-  alphanumeric?: boolean
   showBottomIco?: boolean,
   marginTop?: number,
-  showHideButton?: boolean;
   editable?: boolean;
-  onError?: () => void;
-  onSuccess?: () => void;
-  fontFamily?: any,
-  showIconEnd?: boolean,
   labelTitle?: string,
-  onFocusEvent?: () => void;
-  onBlurEvent?: () => void;
-  filterPhrase?: any,
   labelTitleRequired?: boolean,
-  showBorderColor?: boolean
   allowSpaces?: boolean
   returnKeyType?: ReturnKeyTypeOptions
+  inputType?: "name" | "password" | "email" | "money" | "alphanumeric" | "all"
 }
 
 export const TextInputMain = ({
   leftIcon,
   rightIcon,
   placeholder,
-  typeKeyboard,
-  regularPhrase,
-  secureTextEntry = false,
-  inputValue,
+  inputValue = "",
   onChangeText,
   showError = false,
-  keepFocused = false,
   maxLength,
-  textStart = 0,
   heightInput = 56,
   multiline = false,
   textAlign = 'center',
-  enableAccountFormatting = false,
-  enableAmountFormatting = false,
   marginTop = 0,
-  alphanumeric = false,
-  showHideButton = false,
   editable = true,
-  onError,
-  onSuccess,
-  fontFamily = Fonts.DMSansMedium,
-  showIconEnd,
   allowSpaces = true,
   labelTitle,
-  onFocusEvent,
-  onBlurEvent,
-  filterPhrase = undefined,
-  labelTitleRequired = false,
-  showBorderColor = true,
   returnKeyType = 'done',
+  inputType,
+  labelTitleRequired = false,
+  errorInfo
 }: Props) => {
-  const [showIcoRight, setShowIcoRight] = useState(false);
-  const [isValid, setIsValid] = useState(true);
-  const [isFocused, setIsFocused] = useState(false);
-  const [secureText, setSecureTextEntry] = useState(secureTextEntry);
-
+  const [isInputValid, setIsValid] = useState(true);
+  const [secureText, setSecureText] = useState(true);
+  var regex
+  switch (inputType) {
+    case "name":
+      regex = /[^a-zA-Z ]/g
+      break;
+    case "password":
+      regex = /.*/
+      break;
+    case "email":
+      regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      break;
+    case "money":
+      regex = /^[0-9]+$/;
+      break;
+    case "alphanumeric":
+      regex = /[^a-zA-Z 0-9]/g
+      break;
+    default:
+      regex = /.*/
+      break;
+  }
   useEffect(() => {
-    const isRegex = regularPhrase?.test(inputValue);
-    if (isRegex ?? true) { if (onSuccess != undefined) onSuccess() }
-    else { if (onError != undefined) onError() }
-    setShowIcoRight(isRegex ?? false);
-    setIsValid(isRegex ?? true);
-
-
-  }, [inputValue, regularPhrase]);
+    var isRegexValid = true
+    if (inputValue.length > 0)
+      isRegexValid = !regex.test(inputValue)
+    setIsValid(isRegexValid);
+  }, [inputValue]);
 
   const handleFocus = () => {
-    setIsFocused(true);
-
-    if (onFocusEvent) {
-      onFocusEvent();
-    }
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-    if (onBlurEvent) {
-      onBlurEvent();
-    }
+    // setIsFocused(true);
   };
 
   const {
@@ -134,33 +111,24 @@ export const TextInputMain = ({
 
   const handleTextChange = (text: string) => {
 
-    const normalizedText = text.replace(/\s{2,}/g, ' ');
-    onChangeText(normalizedText);
+    // const normalizedText = text.replace(/\s{2,}/g, ' ');
+    onChangeText(text);
 
-    if (filterPhrase) {
-      const newText = text.replace(filterPhrase, '');
-      onChangeText(newText);
+    if (inputType === "name") {
+      // const newText = text.replace(/[^a-zA-Z ]/g, '');
+      onChangeText(text);
     }
 
-    if (alphanumeric) {
-
-      const newText = text.replace(/[^a-zA-Z0-9]/g, '');
-      onChangeText(newText);
-
+    if (inputType === "alphanumeric") {
+      // const newText = text.replace(/[^a-zA-Z0-9]/g, '');
+      onChangeText(text);
     }
 
-    if (enableAccountFormatting && typeKeyboard === 'numeric') {
-      const formattedText = normalizedText.replace(/(\d{4})(?=\d)/g, '$1-');
-      onChangeText(formattedText);
-
-      return;
-    }
-
-    if (enableAmountFormatting && typeKeyboard === 'numeric') {
+    if (inputType === "money") {
+      const normalizedText = text.replace(/\s{2,}/g, ' ');
       const formattedAmount = formatAndAddDecimalToNumber(normalizedText);
       onChangeText(formattedAmount);
-
-      return;
+      return
     }
 
     if (!allowSpaces) {
@@ -184,9 +152,8 @@ export const TextInputMain = ({
       paddingVertical: 5,
     },
     containerError: {
-      borderColor: 'red',
-
-      borderWidth: 1.6,
+      borderColor: colors.red500,
+      borderWidth: 1,
     },
     containerSuccess: {
       borderColor: '#4CA80B',
@@ -200,7 +167,7 @@ export const TextInputMain = ({
       height: 20,
     },
     icoRight: {
-      marginEnd: 26,
+      marginEnd: 16,
       width: 20,
       justifyContent: 'center',
       resizeMode: 'contain',
@@ -225,6 +192,21 @@ export const TextInputMain = ({
     },
   });
 
+  var keyboardType: KeyboardTypeOptions = "default"
+  switch (inputType) {
+    case "money":
+      keyboardType = "numeric"
+      break;
+    case "email":
+      keyboardType = "email-address"
+      break;
+    case "password":
+      break;
+    default:
+      keyboardType = "default"
+      break;
+  }
+
   return (
     <View style={{ width: '100%', marginTop: marginTop }}>
 
@@ -241,9 +223,8 @@ export const TextInputMain = ({
       </View> : null}
       <View
         style={[
-          { ...styles.container, height: heightInput }, showBorderColor &&
-          showError && isFocused && isValid && styles.containerSuccess,
-          showError && (isFocused || keepFocused) && !isValid && styles.containerError,
+          { ...styles.container, height: heightInput },
+          (showError || errorInfo) && !isInputValid && styles.containerError,
         ]}
       >
         {leftIcon && (
@@ -254,9 +235,9 @@ export const TextInputMain = ({
 
         <TextInput
           placeholder={placeholder}
-          keyboardType={typeKeyboard}
+          keyboardType={keyboardType}
           returnKeyType={returnKeyType}
-          style={{ ...styles.input, fontFamily: fontFamily, height: heightInput, marginStart: textStart, textAlignVertical: textAlign }}
+          style={{ ...styles.input, fontFamily: Fonts.DMSansRegular, height: heightInput, textAlignVertical: textAlign }}
           value={inputValue}
           maxLength={maxLength}
           editable={editable}
@@ -265,26 +246,30 @@ export const TextInputMain = ({
           multiline={multiline}
           onChangeText={handleTextChange}
           onFocus={handleFocus}
-          onBlur={handleBlur}
         />
 
         <View style={styles.icoRight}>
-          {(showIcoRight && rightIcon || showIconEnd) && <SvgXml xml={rightIcon} height={24} width={24} preserveAspectRatio="xMinYMin slice" />}
+          {rightIcon && <SvgXml xml={rightIcon} height={24} width={24} preserveAspectRatio="xMinYMin slice" />}
         </View>
 
-        {(showIcoRight || rightIcon || showIconEnd) && showHideButton ? <Sizebox width={10}></Sizebox> : null}
+        {rightIcon && (inputType === "password") ? <Sizebox width={10}></Sizebox> : null}
 
-        {/* <View style={styles.icoBottom}>
-          {showBottomIco && rightIcon && <SvgXml xml={input_bottom_indicator} />}
-        </View> */}
-
-        {showHideButton && (
-          <TouchableOpacity style={styles.icoBottom} onPress={() => { setSecureTextEntry(!secureText) }}>
+        {(inputType === "password") && (
+          <TouchableOpacity style={styles.icoBottom} onPress={() => { setSecureText(!secureText) }}>
             <SvgXml xml={!secureText ? ic_eye_opened_outline : ic_eye_closed_outline} />
           </TouchableOpacity>
         )}
-
       </View>
+      {
+        (errorInfo && !isInputValid) &&
+        <View style={{ flexDirection: "row", marginTop: 4, width: "100%" }} >
+          <SvgXml xml={ic_exclamation_error_filled} />
+          <Sizebox width={4} />
+          <CustomText
+            textColor={colors.red500}
+            text={errorInfo} />
+        </View>
+      }
     </View>
   );
 };

@@ -90,17 +90,9 @@ export const OnBoardingScreen = () => {
         marginEnd: 16
       }} >
         <ButtonLink
-          text="Ir a la home (maquetación)"
+          text="Omitir"
           onPress={() => {
-            // navigation.navigate(ROUTES.Auth.RegisterAddressScreen.name as never)
-            navigation.dispatch(
-              CommonActions.reset({
-                index: 0,
-                routes: [
-                  { name: ROUTES.Navigator.BottomTabNavigator.name },
-                ],
-              })
-            )
+            navigation.navigate(ROUTES.Auth.LoginScreen.name as never)
           }}
         />
       </View>

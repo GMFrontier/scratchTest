@@ -20,6 +20,7 @@ import { RegisterIdValidationScreen } from '../auth/presentation/register/Regist
 import { RegisterStepsScreen } from '../auth/presentation/register/RegisterStepsScreen';
 import { RegisterIncomeScreen } from '../auth/presentation/register/RegisterIncomeScreen';
 import { RegisterCompleteScreen } from '../auth/presentation/register/RegisterCompleteScreen';
+import SelectPhoneFlagScreen from '../auth/presentation/register/SelectPhoneFlagScreen';
 
 interface NavRouteModel {
   [key: string]: {
@@ -55,6 +56,7 @@ export const ROUTES = {
     RegisterStepsScreen: { screen: RegisterStepsScreen, name: 'RegisterStepsScreen' },
     RegisterIncomeScreen: { screen: RegisterIncomeScreen, name: 'RegisterIncomeScreen' },
     RegisterCompleteScreen: { screen: RegisterCompleteScreen, name: 'RegisterCompleteScreen' },
+    SelectPhoneFlagScreen: { screen: SelectPhoneFlagScreen, name: 'SelectPhoneFlagScreen' },
   },
   OnBoarding: {
     OnBoardingScreen: { screen: OnBoardingScreen, name: 'OnBoardingScreen' },

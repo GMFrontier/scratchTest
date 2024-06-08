@@ -60,12 +60,12 @@ export const FlagInput = ({
         flagCountry={selectedOption.split('*')[0]}
         disabled={!isEnabled}
         onPress={() => {
-          // nav.navigate(
-          //   ROUTES.Register.PhoneDialScreen.name,
-          //   {
-          //     onSelectOption: handleSelectOption,
-          //   },
-          // );
+          nav.navigate(
+            ROUTES.Auth.SelectPhoneFlagScreen.name,
+            {
+              onSelectOption: handleSelectOption,
+            },
+          );
         }} />
       <View style={{ flex: 1, marginStart: 4 }} >
         <TextInputMain

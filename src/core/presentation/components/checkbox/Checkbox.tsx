@@ -56,8 +56,10 @@ export const Checkbox = ({ label, checked, onToggle, uncheckedImage, checkedImag
 
   return (
     <TouchableOpacity style={styles.container} onPress={handleToggle} activeOpacity={0.7}>
-      <View style={{ flexDirection: 'row', alignSelf: 'center', alignItems: "center" }}>
-        <View >
+      <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+        <View style={{
+          top: 3
+        }} >
           {checked ? (
             checkedImage ? (
               <SvgXml xml={checkedImage} style={styles.checkedImage} width={size} height={size} preserveAspectRatio="xMinYMin slice" />

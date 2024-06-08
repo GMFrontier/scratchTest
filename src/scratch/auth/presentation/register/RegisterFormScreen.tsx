@@ -8,11 +8,9 @@ import { CustomText } from '../../../../core/presentation/components/text/Custom
 import Fonts from '../../../../core/constants/Fonts';
 import FontsSize from '../../../../core/constants/FontsSize';
 import { TextInputMain } from '../../../../core/presentation/components/input/TextInputMain';
-import { Checkbox } from '../../../../core/presentation/components/checkbox/Checkbox';
 import { ButtonPrimary } from '../../../../core/presentation/components/button/ButtonPrimary';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../../navigation/routes';
-import { ButtonLink } from '../../../../core/presentation/components/button/ButtonLink';
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
@@ -26,6 +24,14 @@ import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { ScrollView } from 'react-native-gesture-handler';
 import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 import { SvgXml } from 'react-native-svg';
+import DropdownItem from '../../../../core/presentation/components/spinner/DropdownItem';
+import ic_arrow_down_dropdown from '../../../../../assets/svg/ic_arrow_down_dropdown';
+import ic_arrow_down_dropdown_disabled from '../../../../../assets/svg/ic_arrow_down_dropdown_disabled';
+import SelectDropdown from 'react-native-select-dropdown';
+import { opacity } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
+import SelectCustomDropdown from '../../../../core/presentation/components/spinner/SelectCustomDropdown';
+import { isUserPasswordValid, isValidPhoneCheck } from '../../../../core/data/utils/Utils';
+import { useToastContext } from '../../../../core/presentation/contexts/messages/useToastContext';
 
 export const RegisterFormScreen = observer(() => {
 
@@ -35,10 +41,17 @@ export const RegisterFormScreen = observer(() => {
   const { translation } = useTranslation();
   const navigation = useNavigation()
 
+  const [name, setName] = useState('');
+  const [lastname, setLastname] = useState('');
   const [password, setPassword] = useState("");
+  const [livesInPanama, setLivesInPanama] = useState();
+  const [nationality, setNationality] = useState();
+  const [email, setEmail] = useState();
+  const [isFormValid, setIsFormValid] = useState(false);
   const [date, setDate] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const maximumSelectableDate = new Date();
+  const showToast = useToastContext().showYellowToast
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
@@ -67,20 +80,65 @@ export const RegisterFormScreen = observer(() => {
     title: country.name
   }));
 
-  const livesInPanama = [
-    {
-      id: 0,
-      title: "No"
-    },
-    {
-      id: 1,
-      title: "Sí"
-    },
-  ]
   const [selectedOption, setSelectedOption] = React.useState(
     '\ud83c\uddf5\ud83c\udde6*+507*PA',
   );
   const [phone, setPhone] = React.useState('');
+
+  React.useEffect(() => {
+    const isNameValid = /^[a-zA-Z\s]+$/.test(name);
+    const isLastNameValid = /^[a-zA-Z\s]+$/.test(lastname);
+    const isPhoneValid = isValidPhoneCheck(phone, selectedOption);
+    const isLivesInPanamaValid = (livesInPanama && livesInPanama.id === 0)
+    const isNationalityValid = country !== undefined
+    const isEmailValid = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
+    const isPasswordValid = isUserPasswordValid(password)
+    const isDateValid = date.length > 0
+
+    setIsFormValid(
+      isNameValid &&
+      isLastNameValid &&
+      isPhoneValid &&
+      isLivesInPanamaValid &&
+      isNationalityValid &&
+      isEmailValid &&
+      isPasswordValid &&
+      isDateValid
+    )
+    console.log(
+      isNameValid + " " + isLastNameValid + " " +
+      isPhoneValid + " " +
+      isLivesInPanamaValid + " " +
+      isNationalityValid + " " +
+      isEmailValid + " " +
+      isPasswordValid + " " + isDateValid
+    )
+  }, [
+    name,
+    lastname,
+    phone,
+    livesInPanama,
+    nationality,
+    email,
+    password,
+    date
+  ])
+
+  React.useEffect(() => {
+    if (livesInPanama && livesInPanama.id === 0) {
+      showToast("Lo sentimos, no podemos procesar tu solicitud. Nuestra tarjeta se encuentra disponible solo para residentes de Panamá.")
+    }
+  }, [
+    livesInPanama,
+  ])
+
+  const style = StyleSheet.create({
+    containerMain: {
+      flex: 1,
+      paddingHorizontal: 16,
+      paddingTop: 16,
+    },
+  });
 
   return (
     <ToolbarView
@@ -105,39 +163,44 @@ export const RegisterFormScreen = observer(() => {
 
           <TextInputMain
             marginTop={16}
-            onChangeText={() => { }}
+            onChangeText={setName}
             labelTitleRequired={true}
             labelTitle={"Nombre"}
+            inputType='name'
+            maxLength={12}
+            errorInfo={"Por favor ingresa tus datos sin caracteres especiales, sólo letras."}
+            inputValue={name}
             placeholder={"Ej. Diana Carolina"} />
 
           <TextInputMain
             marginTop={16}
-            onChangeText={() => { }}
+            inputValue={lastname}
+            onChangeText={setLastname}
+            maxLength={11}
             labelTitleRequired={true}
+            inputType='name'
             labelTitle={"Apellido"}
+            errorInfo={"Por favor ingresa tus datos sin caracteres especiales, sólo letras."}
             placeholder={"Ej. Rojas Diaz"} />
 
           <TouchableOpacity onPress={() => showDatePicker(0)}>
             <TextInputMain
               marginTop={16}
-              regularPhrase={/^[a-zA-Z\s]+$/}
               inputValue={date}
               onChangeText={() => { }}
               placeholder='dd/mm/aaaa'
               editable={false}
               labelTitle={"Fecha de nacimiento"}
               labelTitleRequired={true}
-              showIconEnd={true}
               rightIcon={ic_calendar_outline}
             />
           </TouchableOpacity>
 
-          <AutoCompleteView
-            setSelectedItem={setCountry}
-            data={livesInPanama}
+          <SelectCustomDropdown
+            labelTitle='¿Vives en Panamá?'
+            data={[{ title: "Si", id: 1 }, { title: "No", id: 0 }]}
             marginTop={16}
-            labelTitle={"¿Vives en Panamá?"}
-            clearOnFocus={true} />
+            setItem={setLivesInPanama} />
 
           <AutoCompleteView
             setSelectedItem={setCountry}
@@ -148,7 +211,9 @@ export const RegisterFormScreen = observer(() => {
 
           <TextInputMain
             marginTop={16}
-            onChangeText={() => { }}
+            inputType='email'
+            inputValue={email}
+            onChangeText={setEmail}
             labelTitleRequired={true}
             labelTitle={translation.file.email}
             placeholder={translation.file.email_placeholder} />
@@ -156,20 +221,17 @@ export const RegisterFormScreen = observer(() => {
           <FlagInput
             phone={phone}
             setPhone={setPhone}
-            isEnabled={false}
+            isEnabled={true}
             marginTop={16}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption} />
 
           <TextInputMain
-            regularPhrase={
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
-            }
             inputValue={password}
             marginTop={16}
+            inputType="password"
             labelTitleRequired={true}
             placeholder="Ingresa tu contraseña"
-            showHideButton={true}
             labelTitle={"Contraseña"}
             onChangeText={setPassword}
           />
@@ -179,12 +241,12 @@ export const RegisterFormScreen = observer(() => {
             flexDirection: "row",
             marginBottom: 24
           }} >
-            {(password.length > 0) &&
+            {isUserPasswordValid(password) &&
               <SvgXml xml={ic_success_check_filled} height={16} width={16} style={{ marginEnd: 8 }} />
             }
             <CustomText
               textSize={FontsSize._12_SIZE}
-              textColor={password.length > 0 ? colors.green400 : colors.white}
+              textColor={isUserPasswordValid(password) ? colors.green400 : colors.white}
               text={"Esta debe contener 8 caracteres alfanuméricos y un carácter especial."} />
           </View>
 
@@ -192,6 +254,7 @@ export const RegisterFormScreen = observer(() => {
           <ButtonPrimary
             text={translation.file.next}
             position="relative"
+            disabled={!true}
             onPress={() => { navigation.navigate(ROUTES.Auth.RegisterPhoneValidationScreen.name as never) }} />
         </ScrollView>
 
@@ -209,12 +272,4 @@ export const RegisterFormScreen = observer(() => {
 
     </ToolbarView>
   );
-});
-
-const style = StyleSheet.create({
-  containerMain: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  }
 });

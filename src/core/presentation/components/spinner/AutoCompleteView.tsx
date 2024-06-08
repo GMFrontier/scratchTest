@@ -98,7 +98,6 @@ const AutoCompleteView = ({
           },
           placeholderTextColor: disabled ? colors.title : colors.textColor04
         }}
-
         EmptyResultComponent={< View />}
         showChevron={showChevron}
         ChevronIconComponent={<SvgXml xml={disabled ? ic_arrow_down_dropdown_disabled : ic_arrow_down_dropdown}></SvgXml>}

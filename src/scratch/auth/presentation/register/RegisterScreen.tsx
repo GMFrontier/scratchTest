@@ -92,6 +92,7 @@ export const RegisterScreen = observer(() => {
 
         <ButtonPrimary
           text={translation.file.next}
+          disabled={!checkbox}
           onPress={() => { navigation.navigate(ROUTES.Auth.RegisterFormScreen.name as never) }} />
 
       </View>

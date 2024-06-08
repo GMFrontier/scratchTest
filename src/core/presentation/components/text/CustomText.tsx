@@ -49,6 +49,7 @@ export const CustomText = ({
     marginBottom,
     textAlign: textAlign,
     lineHeight: lineHeight ?? 1.3 * textSize,
+    flexShrink: 1
   };
 
   const renderTextParts = (parts: string[], textStyle: StyleProp<TextStyle>, numberOfLines?: number) => {
