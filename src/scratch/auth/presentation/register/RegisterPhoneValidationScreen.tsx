@@ -6,7 +6,7 @@ import { ThemeContext } from '../../../../core/presentation/contexts/theme/Theme
 import { useTranslation } from '../../../../core/presentation/contexts/translations/LanguageProvider';
 import { CustomText } from '../../../../core/presentation/components/text/CustomText';
 import Fonts from '../../../../core/constants/Fonts';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ButtonLink } from '../../../../core/presentation/components/button/ButtonLink';
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
@@ -17,6 +17,7 @@ import FontsSize from '../../../../core/constants/FontsSize';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
 import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 import { ROUTES } from '../../../navigation/routes';
+import { formatTime } from '../../../../core/data/utils/Utils';
 
 export const RegisterPhoneValidationScreen = observer(() => {
 
@@ -25,6 +26,9 @@ export const RegisterPhoneValidationScreen = observer(() => {
   } = useContext(ThemeContext);
   const { translation } = useTranslation();
   const nav = useNavigation()
+  const timeSec = 120
+  const [counter, setCounter] = useState(timeSec);
+  const [isCounterEnable, setIsCounterEnable] = useState(true);
 
   const [value, setValue] = useState('');
   const CELL_COUNT = 6;
@@ -35,6 +39,19 @@ export const RegisterPhoneValidationScreen = observer(() => {
     setValue,
   });
   const showModal = useNewModalContext().showStateModal
+
+  React.useEffect(() => {
+    if (counter === 0) {
+      setIsCounterEnable(false);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setCounter((currentCounter) => currentCounter - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [counter]);
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
@@ -93,7 +110,7 @@ export const RegisterPhoneValidationScreen = observer(() => {
       <View style={styles.containerMain}>
         <CustomText
           marginTop={20}
-          text={"Validemos tu correo electrónico"}
+          text={"Validemos tu número de teléfono"}
           textColor={colors.secondary}
           fontFamily={Fonts.DMSansBold}
           textSize={FontsSize._32_SIZE} />
@@ -131,13 +148,25 @@ export const RegisterPhoneValidationScreen = observer(() => {
           <CustomText
             text='¿No recibiste el código?'
             textColor={colors.white} />
-          <Sizebox height={4} />
-          <ButtonLink
-            text={"Reenviar"}
-            onPress={() => {
-
-            }} />
-
+          {!isCounterEnable ?
+            <View>
+              <Sizebox height={4} />
+              <ButtonLink
+                text={"Reenviar"}
+                onPress={() => {
+                  setIsCounterEnable(true)
+                  setCounter(timeSec)
+                }} />
+            </View>
+            :
+            <CustomText
+              textAlign="center"
+              fontFamily={Fonts.DMSansMedium}
+              textSize={FontsSize._14_SIZE}
+              underline={true}
+              textColor={"#ADB4C1"}
+              marginTop={4}
+              text={("Reenviar código en") + " " + formatTime(counter)}></CustomText>}
         </View>
       </View>
     </ToolbarView>

@@ -16,6 +16,16 @@ import { ROUTES } from '../../../navigation/routes';
 import AutoCompleteView from '../../../../core/presentation/components/spinner/AutoCompleteView';
 import { TextInputMain } from '../../../../core/presentation/components/input/TextInputMain';
 import { FileInput } from '../../../../core/presentation/components/input/FileInput';
+import { JobPlace, JobStatus, Salary } from './RegisterFinancialScreen';
+
+export interface JobPosition {
+  id: number;
+  title: string
+}
+export interface JobExperience {
+  id: number;
+  title: string
+}
 
 export const RegisterIncomeScreen = observer(() => {
 
@@ -29,16 +39,85 @@ export const RegisterIncomeScreen = observer(() => {
     changeNavigationBarColor(colors.accent);
   })
 
-  interface JobStatus {
-    id: string,
-    title: string
-  }
-  const jobStatusList: Array<JobStatus> = [{ id: '0', title: "Tengo trabajo" }, { id: '1', title: "Tengo un emprendimiento o empresa" }]
-  const [jobStatus, setJobStatus] = useState<JobStatus>();
+  const jobStatusList: Array<JobStatus> = [{ id: "0", title: "Tengo trabajo" }, { id: "1", title: "Tengo un emprendimiento o empresa" }]
+  const [jobStatus, setJobStatus] = useState<JobStatus | undefined>({ id: "0", title: "Tengo trabajo" });
+  const [jobPosition, setJobPosition] = useState<JobPosition | undefined>();
+  const [workplace, setWorkplace] = useState<string>("");
+  const [company, setCompany] = useState<string>("");
+  const [companyAge, setCompanyAge] = useState<JobExperience | undefined>();
+  const [socialMedia, setSocialMedia] = useState<string>("");
+  const [website, setWebsite] = useState<string>("");
+  const [jobExperience, setJobExperience] = useState<JobExperience | undefined>();
+  const [seguro, setSeguro] = useState<string>();
+  const [movements, setMovements] = useState<string>();
+  const [operacion, setOperacion] = useState<string>();
+  const [renta, setRenta] = useState<string>();
+  const [isFormValid, setIsFormValid] = useState(false);
 
   React.useEffect(() => {
-    console.log(jobStatus)
-  }, [jobStatus])
+
+    if (jobStatus.id === "0") {
+      const isWorkplaceValid = workplace.length > 0
+      const isJobPositionValid = jobPosition !== undefined
+      const isJobExperienceValid = jobExperience !== undefined
+      const isSeguroValid = seguro !== undefined
+      const isMovementsValid = movements !== undefined
+
+      setIsFormValid(
+        isWorkplaceValid &&
+        isJobPositionValid &&
+        isJobExperienceValid &&
+        isSeguroValid &&
+        isMovementsValid
+      )
+      console.log(
+        isWorkplaceValid + " " +
+        isJobPositionValid + " " +
+        isJobExperienceValid + " " +
+        isSeguroValid + " " +
+        isMovementsValid + " "
+      )
+    } else {
+      const isCompanyValid = company.length > 0
+      const isCompanyAgeValid = companyAge !== undefined
+      const isSocialMediaValid = socialMedia.length > 0
+      const isWebsiteValid = website !== undefined
+      const isOperationValid = operacion !== undefined
+      const isMovementsValid = movements !== undefined
+      const isRentaValid = renta !== undefined
+
+      setIsFormValid(
+        isCompanyValid &&
+        isCompanyAgeValid &&
+        isSocialMediaValid &&
+        isWebsiteValid &&
+        isOperationValid &&
+        isMovementsValid &&
+        isRentaValid
+      )
+      console.log(
+        isCompanyValid + " " +
+        isCompanyAgeValid + " " +
+        isSocialMediaValid + " " +
+        isWebsiteValid + " " +
+        isOperationValid + " " +
+        isMovementsValid + " " +
+        isRentaValid + " "
+      )
+    }
+  }, [
+    jobStatus,
+    jobPosition,
+    workplace,
+    company,
+    companyAge,
+    socialMedia,
+    jobExperience,
+    seguro,
+    movements,
+    operacion,
+    renta,
+  ])
 
   return (
     <ToolbarView
@@ -82,20 +161,23 @@ export const RegisterIncomeScreen = observer(() => {
             <View>
               <TextInputMain
                 marginTop={16}
-                onChangeText={() => { }}
+                inputValue={workplace}
+                onChangeText={setWorkplace}
                 labelTitleRequired={true}
+                inputType="name"
+                errorInfo="Por favor, evita caracteres especiales"
                 labelTitle={"¿Dónde trabajas?"}
                 placeholder={"Ej: Copa Airlines"} />
 
               <AutoCompleteView
-                setSelectedItem={() => { }}
+                setSelectedItem={setJobPosition}
                 data={[{ id: 0, title: "Pendiente a definir" }]}
                 marginTop={16}
                 labelTitle={"¿Cuál es tu posición?"}
                 clearOnFocus={true} />
 
               <AutoCompleteView
-                setSelectedItem={() => { }}
+                setSelectedItem={setJobExperience}
                 data={[{ id: 0, title: "Pendiente a definir" }]}
                 marginTop={16}
                 labelTitle={"Cuánto tiempo tienes en tu trabajo?"}
@@ -107,13 +189,15 @@ export const RegisterIncomeScreen = observer(() => {
                   isRequired={true}
                   marginTop={16}
                   showInfoModal={false}
+                  setFile={setSeguro}
                 />
 
                 <FileInput
                   label='Movimientos bancarios últimos 3 meses '
-                  isRequired={false}
+                  isRequired={true}
                   marginTop={16}
                   showInfoModal={false}
+                  setFile={setMovements}
                   infoText='Al subirlos ayuda a mejorar tu límite de crédito'
                 />
               </View>
@@ -125,13 +209,14 @@ export const RegisterIncomeScreen = observer(() => {
 
               <TextInputMain
                 marginTop={16}
-                onChangeText={() => { }}
+                onChangeText={setCompany}
+                inputValue={company}
                 labelTitleRequired={true}
                 labelTitle={"¿Cómo se llama tu emprendimiento o empresa?"}
                 placeholder={"Ej: Diseños y creaciones BR"} />
 
               <AutoCompleteView
-                setSelectedItem={() => { }}
+                setSelectedItem={setCompanyAge}
                 data={[{ id: 0, title: "Pendiente a definir" }]}
                 marginTop={16}
                 labelTitle={"¿Hace cuánto está creada?"}
@@ -139,14 +224,16 @@ export const RegisterIncomeScreen = observer(() => {
 
               <TextInputMain
                 marginTop={16}
-                onChangeText={() => { }}
+                onChangeText={setSocialMedia}
+                inputValue={socialMedia}
                 labelTitleRequired={true}
                 labelTitle={"Deja las redes sociales de tu marca"}
                 placeholder={"Ej: Instagram@brcreations"} />
 
               <TextInputMain
                 marginTop={16}
-                onChangeText={() => { }}
+                inputValue={website}
+                onChangeText={setWebsite}
                 labelTitleRequired={true}
                 labelTitle={"Deja el website de tu marca"}
                 placeholder={"Ej: brcreations.com"} />
@@ -157,19 +244,22 @@ export const RegisterIncomeScreen = observer(() => {
                   isRequired={true}
                   marginTop={16}
                   showInfoModal={false}
+                  setFile={setOperacion}
                 />
 
                 <FileInput
                   label='Movimientos bancarios últimos 3 meses'
-                  isRequired={false}
+                  isRequired={true}
                   marginTop={16}
                   showInfoModal={false}
+                  setFile={setMovements}
                 />
 
                 <FileInput
                   label='Declaración de renta o estados financieros'
-                  isRequired={false}
+                  isRequired={true}
                   marginTop={16}
+                  setFile={setRenta}
                   showInfoModal={false}
                   infoText='Al subirlos ayuda a mejorar tu límite de crédito'
                 />
@@ -182,6 +272,7 @@ export const RegisterIncomeScreen = observer(() => {
           <ButtonPrimary
             text={"Reintentar validación"}
             position="relative"
+            disabled={!isFormValid}
             onPress={() => {
               nav.navigate(ROUTES.Auth.RegisterCompleteScreen.name as never)
             }} />

@@ -22,7 +22,7 @@ import { FileInput } from '../../../../core/presentation/components/input/FileIn
 import SelectCustomDropdown from '../../../../core/presentation/components/spinner/SelectCustomDropdown';
 
 export interface JobStatus {
-  id: number;
+  id: string;
   title: string
 }
 export interface JobPlace {

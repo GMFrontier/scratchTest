@@ -92,7 +92,7 @@ export const OnBoardingScreen = () => {
         <ButtonLink
           text="Omitir"
           onPress={() => {
-            navigation.navigate(ROUTES.Auth.RegisterFinancialScreen.name as never)
+            navigation.navigate(ROUTES.Auth.RegisterPhoneValidationScreen.name as never)
           }}
         />
       </View>

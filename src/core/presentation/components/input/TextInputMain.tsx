@@ -243,7 +243,7 @@ export const TextInputMain = ({
           maxLength={maxLength}
           editable={editable}
           placeholderTextColor={colors.textColor04}
-          secureTextEntry={secureText}
+          secureTextEntry={(inputType === "password") ? secureText : false}
           multiline={multiline}
           onChangeText={handleTextChange}
           onFocus={handleFocus}
