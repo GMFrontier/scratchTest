@@ -67,7 +67,7 @@ export const PasswordScreen = observer(() => {
               CommonActions.reset({
                 index: 0,
                 routes: [
-                  { name: ROUTES.Home.HomeScreen.name },
+                  { name: ROUTES.Auth.LoginScreen.name },
                 ],
               })
             )
@@ -119,7 +119,14 @@ export const PasswordScreen = observer(() => {
           text={"Acceder"}
           position='relative'
           onPress={() => {
-            nav.navigate(ROUTES.Home.HomeScreen.name as never)
+            nav.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [
+                  { name: ROUTES.Navigator.BottomTabNavigator.name },
+                ],
+              })
+            );
           }} />
 
         <Sizebox height={8} />

@@ -22,7 +22,7 @@ import ic_food from '../../../../../assets/svg/ic_food';
 export interface Movements {
   id: string,
   title: string,
-  status: "approved" | "rejected",
+  status: "approved" | "rejected" | "pending" | "cancelled",
   amount: number,
   type: "none" | "shopping" | "food" | "bills" | "services" | "market" | "transport" | "trips",
   date?: string
@@ -123,6 +123,10 @@ export const MovementsItem = ({ item
         return "Rechazado"
       case "approved":
         return "Aprobado"
+      case "cancelled":
+        return "Anulado"
+      case "pending":
+        return "Pendiente"
     }
   }
   const getStatusColor = (): string => {
@@ -131,6 +135,10 @@ export const MovementsItem = ({ item
         return colors.red500
       case "approved":
         return colors.green400
+      case "cancelled":
+        return colors.orange300
+      case "pending":
+        return colors.yellow500
     }
   }
   const getAmountColor = (): string => {

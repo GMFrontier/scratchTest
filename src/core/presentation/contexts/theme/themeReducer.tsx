@@ -32,6 +32,9 @@ export interface ThemeState extends Theme {
     teal600: string;
     lightBlue300: string;
     orange300: string;
+    orange500: string;
+    yellow500: string;
+    blueGray300: string;
     blue300: string;
     purple300: string;
     //viejos
@@ -120,6 +123,8 @@ export const lightTheme: ThemeState = {
     lightBlue300: "#6EC6F7",
     purple300: "#8C71D2",
     blueGray300: "#87A0AC",
+    orange500: "#FF7B00",
+    yellow500: "#FDD835",
     //viejos
     alertColor: '#E11900',
     background: 'white',
