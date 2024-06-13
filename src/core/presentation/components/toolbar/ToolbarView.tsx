@@ -15,6 +15,7 @@ interface Props {
   onPress?: () => void;
   onPressIcoEnd?: () => void;
   children?: ReactNode;
+  type?: "blue";
 }
 
 const ToolbarView = ({
@@ -23,7 +24,8 @@ const ToolbarView = ({
   onPress,
   setIconEnd: showIconEnd,
   onPressIcoEnd,
-  children
+  children,
+  type
 }: Props
 ) => {
   const navigation = useNavigation();
@@ -63,7 +65,7 @@ const ToolbarView = ({
       width: '100%',
       justifyContent: 'center',
       alignItems: "center",
-      backgroundColor: colors.accentSecondary
+      backgroundColor: type === "blue" ? colors.blueHome : colors.accentSecondary
     },
     backButton: {
       marginStart: 20,
@@ -80,13 +82,6 @@ const ToolbarView = ({
       alignSelf: 'center',
       right: 0,
     },
-    title: {
-      fontSize: 16,
-      fontWeight: '500',
-      color: '#1E2227',
-      fontFamily: Fonts.PoppinsMedium,
-      alignSelf: 'center',
-    },
   });
 
   return (
@@ -98,6 +93,7 @@ const ToolbarView = ({
           </TouchableOpacity>
         )}
         <CustomText
+          textColor={type === "blue" ? colors.white : undefined}
           text={text} />
 
         {showIconEnd && (

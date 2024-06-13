@@ -7,7 +7,7 @@ import FontsSize from '../../../constants/FontsSize';
 import { CustomText } from '../text/CustomText';
 import { ButtonPrimary } from '../button/ButtonPrimary';
 import Sizebox from '../item/Sizebox';
-import { ButtonSecondary } from '../button/ButtonSeconday';
+import { ButtonSecondary } from '../button/ButtonSecondary';
 import ic_close_outline from '../../../../../assets/svg/ic_close_outline';
 
 interface Props {

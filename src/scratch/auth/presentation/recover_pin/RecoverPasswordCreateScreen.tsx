@@ -15,7 +15,7 @@ import { ROUTES } from '../../../navigation/routes';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
 import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 
-export const RecoverPinCreateScreen = observer(() => {
+export const RecoverPasswordCreateScreen = observer(() => {
 
   const {
     theme: { colors },

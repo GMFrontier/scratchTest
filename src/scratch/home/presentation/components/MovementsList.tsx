@@ -7,6 +7,8 @@ import Fonts from "../../../../core/constants/Fonts";
 import { ButtonLink } from "../../../../core/presentation/components/button/ButtonLink";
 import ic_arrow_right from "../../../../../assets/svg/ic_arrow_right";
 import { Movements, MovementsItem } from "./MovementsItem";
+import { ROUTES } from "../../../navigation/routes";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {
   items: Movements[]
@@ -18,6 +20,7 @@ export const MovementsList = ({
   const {
     theme: { colors },
   } = useContext(ThemeContext);
+  const navigation = useNavigation()
 
   return (
     <View
@@ -32,7 +35,9 @@ export const MovementsList = ({
         <ButtonLink
           text='Ver todos'
           imageEnd={ic_arrow_right}
-          onPress={() => { }} />
+          onPress={() => {
+            navigation.navigate(ROUTES.Home.MovementsScreen.name as never)
+          }} />
       </View>
       <View
         style={{

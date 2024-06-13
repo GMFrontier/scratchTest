@@ -9,7 +9,7 @@ import BottomSheet, {
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
 import { ButtonPrimary } from '../button/ButtonPrimary';
-import { ButtonSecondary } from '../button/ButtonSeconday';
+import { ButtonSecondary } from '../button/ButtonSecondary';
 import { BackdropPressBehavior } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
 import close_ico_black_content from '../../../../../assets/svg/close_ico_black_content';
 import { CustomTextEndBold } from '../text/CustomTextBoldEnd';

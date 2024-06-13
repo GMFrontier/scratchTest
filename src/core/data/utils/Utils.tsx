@@ -55,3 +55,18 @@ export const formatTime = (seconds: any) => {
   const remainingSeconds = seconds % 60;
   return `${minutes}:${remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds}`;
 };
+
+function upperCaseFirstLetter(inputString: string): string {
+  return inputString.charAt(0).toUpperCase() + inputString.slice(1);
+}
+
+export function truncateCustomDate(date: string): string {
+  const dateArray = date.split(' ')
+  const month = upperCaseFirstLetter(dateArray[0]);
+  const year = dateArray[dateArray.length - 1]
+
+  const shortenedMonth =
+    month.length > 3 ? month.slice(0, 3) + '.' : month;
+
+  return `${shortenedMonth} ${year}`;
+};

@@ -18,6 +18,7 @@ interface Props {
   inputValue?: string;
   onChangeText?: any;
   maxLength?: number;
+  backendError?: string;
   showError?: boolean;
   errorInfo?: string;
   heightInput?: number
@@ -40,6 +41,7 @@ export const TextInputMain = ({
   placeholder,
   inputValue = "",
   onChangeText,
+  backendError,
   showError = false,
   maxLength,
   heightInput = 56,
@@ -225,7 +227,7 @@ export const TextInputMain = ({
       <View
         style={[
           { ...styles.container, height: heightInput },
-          (showError || errorInfo) && !isInputValid && styles.containerError,
+          (((showError || errorInfo) && !isInputValid) || backendError) && styles.containerError,
         ]}
       >
         {leftIcon && (
@@ -238,7 +240,7 @@ export const TextInputMain = ({
           placeholder={placeholder}
           keyboardType={keyboardType}
           returnKeyType={returnKeyType}
-          style={{ ...styles.input, fontFamily: Fonts.DMSansRegular, height: heightInput, textAlignVertical: textAlign }}
+          style={{ ...styles.input, fontFamily: Fonts.DMSansRegular, height: heightInput, textAlignVertical: textAlign, paddingTop: multiline ? 12 : undefined }}
           value={inputValue}
           maxLength={maxLength}
           editable={editable}
@@ -262,13 +264,13 @@ export const TextInputMain = ({
         )}
       </View>
       {
-        (errorInfo && !isInputValid) &&
+        ((errorInfo && !isInputValid) || backendError) &&
         <View style={{ flexDirection: "row", marginTop: 4, width: "100%" }} >
           <SvgXml xml={ic_exclamation_error_filled} />
           <Sizebox width={4} />
           <CustomText
             textColor={colors.red500}
-            text={errorInfo} />
+            text={errorInfo ?? backendError} />
         </View>
       }
     </View>

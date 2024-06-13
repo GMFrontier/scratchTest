@@ -3,7 +3,7 @@ export default class Constants {
   static API_BASE_URL = 'https://api.example.com';
   static MAX_RESULTS = 50;
   static DEFAULT_TIMEOUT = 10000;
-  static INPUT_MAX_TEXT = 1200;
+  static INPUT_MAX_TEXT = 150;
 
   //SYSTEM CONFIG
   static SYSTEM_CONFIG = {

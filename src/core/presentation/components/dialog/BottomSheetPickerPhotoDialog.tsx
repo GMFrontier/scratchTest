@@ -6,7 +6,7 @@ import BottomSheet, {
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
 import { ButtonPrimary } from '../button/ButtonPrimary';
-import { ButtonSecondary } from '../button/ButtonSeconday';
+import { ButtonSecondary } from '../button/ButtonSecondary';
 import { useTranslation } from '../../contexts/translations/LanguageProvider';
 import FontsSize from '../../../constants/FontsSize';
 import Fonts from '../../../constants/Fonts';

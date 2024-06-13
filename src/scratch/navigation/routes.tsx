@@ -1,15 +1,15 @@
 
 import BottomTabNavigator from '../../core/presentation/components/navigation/BottomTabNavigator';
 import { LoginScreen } from '../auth/presentation/login/LoginScreen';
-import { PinScreen } from '../auth/presentation/login/PinScreen';
+import { PasswordScreen } from '../auth/presentation/login/PasswordScreen';
 import { HomeScreen } from '../home/presentation/HomeScreen';
 import { OnBoardingScreen } from '../onboarding/OnBoardingScreen';
 import { SplashScreen } from '../splash/presentation/SplashScreen';
 import { CardsScreen } from '../settings/presentation/CardsScreen';
 import { SettingsScreen } from '../cards/presentation/SettingsScreen';
-import { RecoverPinScreen } from '../auth/presentation/recover_pin/RecoverPinScreen';
-import { RecoverPinEmailValidationScreen } from '../auth/presentation/recover_pin/RecoverPinEmailValidationScreen';
-import { RecoverPinCreateScreen } from '../auth/presentation/recover_pin/RecoverPinCreateScreen';
+import { RecoverPasswordScreen } from '../auth/presentation/recover_pin/RecoverPasswordScreen';
+import { RecoverPasswordEmailValidationScreen } from '../auth/presentation/recover_pin/RecoverPasswordEmailValidationScreen';
+import { RecoverPasswordCreateScreen } from '../auth/presentation/recover_pin/RecoverPasswordCreateScreen';
 import { RegisterScreen } from '../auth/presentation/register/RegisterScreen';
 import { RegisterFormScreen } from '../auth/presentation/register/RegisterFormScreen';
 import { RegisterPhoneValidationScreen } from '../auth/presentation/register/RegisterPhoneValidationScreen';
@@ -21,6 +21,10 @@ import { RegisterStepsScreen } from '../auth/presentation/register/RegisterSteps
 import { RegisterIncomeScreen } from '../auth/presentation/register/RegisterIncomeScreen';
 import { RegisterCompleteScreen } from '../auth/presentation/register/RegisterCompleteScreen';
 import SelectPhoneFlagScreen from '../auth/presentation/register/SelectPhoneFlagScreen';
+import { MovementsScreen } from '../home/presentation/movements/MovementsScreen';
+import { DetailsScreen } from '../home/presentation/movements/DetailsScreen';
+import { EditCategoryScreen } from '../home/presentation/movements/EditCategoryScreen';
+import { AddCommentScreen } from '../home/presentation/movements/AddCommentScreen';
 
 interface NavRouteModel {
   [key: string]: {
@@ -42,10 +46,10 @@ export const ROUTES = {
   },
   Auth: {
     LoginScreen: { screen: LoginScreen, name: 'LoginScreen' },
-    PinScreen: { screen: PinScreen, name: 'PinScreen' },
-    RecoverPinScreen: { screen: RecoverPinScreen, name: 'RecoverPinScreen' },
-    RecoverPinEmailValidationScreen: { screen: RecoverPinEmailValidationScreen, name: 'RecoverPinEmailValidationScreen' },
-    RecoverPinCreateScreen: { screen: RecoverPinCreateScreen, name: 'RecoverPinCreateScreen' },
+    PasswordScreen: { screen: PasswordScreen, name: 'PasswordScreen' },
+    RecoverPasswordScreen: { screen: RecoverPasswordScreen, name: 'RecoverPasswordScreen' },
+    RecoverPasswordEmailValidationScreen: { screen: RecoverPasswordEmailValidationScreen, name: 'RecoverPasswordEmailValidationScreen' },
+    RecoverPasswordCreateScreen: { screen: RecoverPasswordCreateScreen, name: 'RecoverPasswordCreateScreen' },
     RegisterScreen: { screen: RegisterScreen, name: 'RegisterScreen' },
     RegisterFormScreen: { screen: RegisterFormScreen, name: 'RegisterFormScreen' },
     RegisterPhoneValidationScreen: { screen: RegisterPhoneValidationScreen, name: 'RegisterPhoneValidationScreen' },
@@ -66,6 +70,10 @@ export const ROUTES = {
   },
   Home: {
     HomeScreen: { screen: HomeScreen, name: 'HomeScreen' },
+    MovementsScreen: { screen: MovementsScreen, name: 'MovementsScreen' },
+    DetailsScreen: { screen: DetailsScreen, name: 'DetailsScreen' },
+    EditCategoryScreen: { screen: EditCategoryScreen, name: 'EditCategoryScreen' },
+    AddCommentScreen: { screen: AddCommentScreen, name: 'AddCommentScreen' },
   },
   Cards: {
     CardsScreen: { screen: CardsScreen, name: 'CardsScreen' },

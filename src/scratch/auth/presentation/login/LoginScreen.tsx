@@ -21,12 +21,10 @@ export const LoginScreen = observer(() => {
   const {
     theme: { colors },
   } = useContext(ThemeContext);
+  const { translation } = useTranslation();
+  const navigation = useNavigation()
 
   const [checkbox, setCheckbox] = useState(false);
-
-  const { translation } = useTranslation();
-
-  const navigation = useNavigation()
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
@@ -61,7 +59,7 @@ export const LoginScreen = observer(() => {
       <ButtonPrimary
         text={translation.file.continue}
         marginBottom={130}
-        onPress={() => { navigation.navigate(ROUTES.Auth.PinScreen.name as never) }} />
+        onPress={() => { navigation.navigate(ROUTES.Auth.PasswordScreen.name as never) }} />
 
       <View style={{ bottom: 70, position: "absolute", alignSelf: "center", flexDirection: "row", }} >
         <CustomText

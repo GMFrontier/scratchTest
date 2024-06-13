@@ -40,6 +40,7 @@ export const LanguageProvider = ({ children }: any) => {
       bottom_tab_points: "Puntos",
       bottom_tab_settings: "Ajustes",
       next: "Siguiente",
+      june: "Junio",
     },
   });
 

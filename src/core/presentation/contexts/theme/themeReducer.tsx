@@ -26,6 +26,14 @@ export interface ThemeState extends Theme {
     blue400: string;
     red500: string;
     green400: string;
+    blueHome: string;
+    cyan400: string;
+    pink400: string;
+    teal600: string;
+    lightBlue300: string;
+    orange300: string;
+    blue300: string;
+    purple300: string;
     //viejos
     alertColor: string;
     background: string;
@@ -103,6 +111,15 @@ export const lightTheme: ThemeState = {
     blue400: "#295FFF",
     red500: "#F33A00",
     green400: "#6ABD67",
+    blueHome: "#254298",
+    cyan400: "#33DFD6",
+    pink400: "#ED437D",
+    teal600: "#1AA179",
+    blue300: "#527DFF",
+    orange300: "#FFA552",
+    lightBlue300: "#6EC6F7",
+    purple300: "#8C71D2",
+    blueGray300: "#87A0AC",
     //viejos
     alertColor: '#E11900',
     background: 'white',

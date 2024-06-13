@@ -11,6 +11,7 @@ export interface BaseButtonProps {
   imageEnd?: any;
   disabled?: boolean;
   position?: "absolute" | "relative" | "static";
+  buttonType?: "primary" | "secondary"
   marginHorizontal?: number;
   marginBottom?: number;
   size?: "small" | "medium" | "large";
@@ -28,6 +29,7 @@ export const BaseButton = ({
   marginHorizontal,
   position,
   marginBottom = 16,
+  buttonType,
 }: BaseButtonProps) => {
   const { theme: { colors } } = useContext(ThemeContext);
   const [isPressed, setIsPressed] = useState(false);
@@ -43,7 +45,9 @@ export const BaseButton = ({
       alignSelf: "center",
       paddingHorizontal: marginHorizontal,
       backgroundColor: 'rgba(0, 0, 0, 0)',
-      marginBottom: position === "relative" ? 8 : 0
+      marginBottom: position === "relative" ? 8 : 0,
+      borderRadius: 2,
+      borderColor: colors.disableText,
     },
     buttonContainer: {
       flexDirection: 'row',
@@ -89,6 +93,26 @@ export const BaseButton = ({
         buttonContainer: { ...defaultStyles.buttonContainer, height: 56 },
         textStyle: { ...defaultStyles.textStyle, fontSize: FontsSize._16_SIZE },
       };
+      break;
+  }
+
+  switch (buttonType) {
+    case "secondary":
+      defaultStyles = {
+        ...defaultStyles,
+        buttonContainer: {
+          ...defaultStyles.buttonContainer,
+          backgroundColor: "transparent",
+          borderWidth: 2,
+          borderColor: colors.disableText,
+        },
+        textStyle: { ...defaultStyles.textStyle, color: colors.disableText },
+        mainContainer: {
+          ...defaultStyles.mainContainer,
+        }
+      };
+      break;
+    default:
       break;
   }
 

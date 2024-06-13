@@ -56,9 +56,9 @@ export const Checkbox = ({ label, checked, onToggle, uncheckedImage, checkedImag
 
   return (
     <TouchableOpacity style={styles.container} onPress={handleToggle} activeOpacity={0.7}>
-      <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+      <View style={{ flexDirection: 'row', alignSelf: 'center', }}>
         <View style={{
-          top: 3
+          top: 0
         }} >
           {checked ? (
             checkedImage ? (

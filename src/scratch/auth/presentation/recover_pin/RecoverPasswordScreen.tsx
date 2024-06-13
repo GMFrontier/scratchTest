@@ -15,7 +15,7 @@ import { ButtonPrimary } from '../../../../core/presentation/components/button/B
 import { useStatusBar } from '../../../../core/presentation/contexts/statusBar/StatusBarContext';
 import { ROUTES } from '../../../navigation/routes';
 
-export const RecoverPinScreen = observer(() => {
+export const RecoverPasswordScreen = observer(() => {
 
   const {
     theme: { colors },

@@ -13,10 +13,10 @@ const handlers = {
   OnBoardingScreen: () => <ROUTES.OnBoarding.OnBoardingScreen.screen />,
 
   LoginScreen: () => <ROUTES.Auth.LoginScreen.screen />,
-  PinScreen: () => <ROUTES.Auth.PinScreen.screen />,
-  RecoverPinScreen: () => <ROUTES.Auth.RecoverPinScreen.screen />,
-  RecoverPinEmailValidationScreen: () => <ROUTES.Auth.RecoverPinEmailValidationScreen.screen />,
-  RecoverPinCreateScreen: () => <ROUTES.Auth.RecoverPinCreateScreen.screen />,
+  PasswordScreen: () => <ROUTES.Auth.PasswordScreen.screen />,
+  RecoverPasswordScreen: () => <ROUTES.Auth.RecoverPasswordScreen.screen />,
+  RecoverPasswordEmailValidationScreen: () => <ROUTES.Auth.RecoverPasswordEmailValidationScreen.screen />,
+  RecoverPasswordCreateScreen: () => <ROUTES.Auth.RecoverPasswordCreateScreen.screen />,
   RegisterScreen: () => <ROUTES.Auth.RegisterScreen.screen />,
   RegisterFormScreen: () => <ROUTES.Auth.RegisterFormScreen.screen />,
   RegisterPhoneValidationScreen: () => <ROUTES.Auth.RegisterPhoneValidationScreen.screen />,
@@ -31,6 +31,10 @@ const handlers = {
 
   BottomTabNavigator: () => <ROUTES.Navigator.BottomTabNavigator.screen />,
   HomeScreen: () => <ROUTES.Home.HomeScreen.screen />,
+  MovementsScreen: () => <ROUTES.Home.MovementsScreen.screen />,
+  DetailsScreen: () => <ROUTES.Home.DetailsScreen.screen />,
+  EditCategoryScreen: () => <ROUTES.Home.EditCategoryScreen.screen />,
+  AddCommentScreen: () => <ROUTES.Home.AddCommentScreen.screen />,
 };
 
 export type RootParamList = {

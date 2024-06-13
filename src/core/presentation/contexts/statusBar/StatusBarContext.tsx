@@ -30,7 +30,7 @@ export const StatusBarProvider = ({ children }: any) => {
   }
 
   const setHomeStatusBar = () => {
-    setStatusBarBackgroundColor("#254298")
+    setStatusBarBackgroundColor(colors.blueHome)
     setStatusBarStyle("light-content")
   }
 

@@ -19,7 +19,7 @@ import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import { PinView } from '../../../../core/presentation/components/input/PinView';
 import { ROUTES } from '../../../navigation/routes';
 
-export const RecoverPinEmailValidationScreen = observer(() => {
+export const RecoverPasswordEmailValidationScreen = observer(() => {
 
   const {
     theme: { colors },
