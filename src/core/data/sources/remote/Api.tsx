@@ -1,11 +1,11 @@
-import axios, {AxiosError, AxiosResponse} from 'axios';
-import {ResponseAPI} from '../../models/ResponseApi';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { ResponseAPI } from '../../models/ResponseApi';
 import ResponseUtils from '../../utils/ResponseUtils';
 import Config from 'react-native-config';
 import { NativeModules } from 'react-native';
 import { getTimeZone } from "react-native-localize";
 
-const {UtilsModule} = NativeModules;
+const { UtilsModule } = NativeModules;
 
 /* Más adelante utilizar el url correspondiente dependiendo del flavor de la app
  * dev: https://middle-test.pfserver.net/PFManagementServices/api/v1/
@@ -13,27 +13,23 @@ const {UtilsModule} = NativeModules;
  *
  */
 
-const setFCMessagingToken = (token:string) => {
-  apiPagueloFacil.defaults.headers.fcmToken = token;
-};
-
-const setAuthorizationToken = (token:string) => {
-  apiPagueloFacil.defaults.headers.Authorization = `${UtilsModule.l(Config.FLAVOR)}|${token}`;
+const setAuthorizationToken = (token: string) => {
+  api.defaults.headers.Authorization = `${UtilsModule.l(Config.FLAVOR)}|${token}`;
 };
 
 const setAuthorizationTokenDefault = () => {
-  apiPagueloFacil.defaults.headers.Authorization = `${UtilsModule.l(Config.FLAVOR)}`;
+  api.defaults.headers.Authorization = `${UtilsModule.l(Config.FLAVOR)}`;
 };
 
 const setBaseToken = (token: string) => {
-  apiPagueloFacil.defaults.headers.Authorization = `${token}`;
+  api.defaults.headers.Authorization = `${token}`;
 };
 
 const getAuthorizationToken = (): string => {
-  return apiPagueloFacil.defaults.headers.Authorization?.toString() ?? ""
+  return api.defaults.headers.Authorization?.toString() ?? ""
 };
 
-const apiPagueloFacil = axios.create({
+const api = axios.create({
   baseURL: Config.API_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -46,12 +42,12 @@ const apiPagueloFacil = axios.create({
   timeout: 10000,
 });
 
-apiPagueloFacil.interceptors.request.use(request => {
+api.interceptors.request.use(request => {
   showRequestLogs(request);
   return request;
 });
 
-apiPagueloFacil.interceptors.response.use(
+api.interceptors.response.use(
   (response: AxiosResponse<ResponseAPI>) => {
     showResponseLogs(response);
     const parsedResponse = ResponseUtils.parseToResponseAPI(response);
@@ -60,7 +56,7 @@ apiPagueloFacil.interceptors.response.use(
       console.log('Bad response: ' + JSON.stringify(badResponse));
       return Promise.reject(badResponse);
     }
-    return {...response, data: parsedResponse};
+    return { ...response, data: parsedResponse };
   },
   (error: AxiosError) => {
     const errorResponse = ResponseUtils.handleAxiosErrorResponses(error);
@@ -70,9 +66,9 @@ apiPagueloFacil.interceptors.response.use(
 
 const showRequestLogs = (request: any) => {
   if (__DEV__) {
-    const {method, data, headers} = request;
-    const {Authorization, fcmToken} = headers;
-    const fullURL = apiPagueloFacil.getUri(request);
+    const { method, data, headers } = request;
+    const { Authorization, fcmToken } = headers;
+    const fullURL = api.getUri(request);
     console.log('');
     console.log('');
     console.log("---  HTTP REQUEST START  ----");
@@ -90,10 +86,10 @@ const showResponseLogs = (response: AxiosResponse) => {
   if (__DEV__) {
     console.log("--- HTTP RESPONSE START  ----");
     console.log('Method:', response.config.method?.toUpperCase());
-    console.log('url:', apiPagueloFacil.getUri(response.config));
+    console.log('url:', api.getUri(response.config));
     console.log('response:', JSON.stringify(response.data));
     console.log("---  HTTP RESPONSE END  ---");
     console.log('');
   }
 };
-export {apiPagueloFacil, setAuthorizationToken, setAuthorizationTokenDefault, setFCMessagingToken, getAuthorizationToken, setBaseToken};
+export { api, setAuthorizationToken, setAuthorizationTokenDefault, getAuthorizationToken, setBaseToken };

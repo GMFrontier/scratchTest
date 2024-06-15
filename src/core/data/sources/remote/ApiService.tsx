@@ -1,9 +1,8 @@
 import { AxiosPromise } from 'axios';
 import { ErrorAPI, ResponseAPI } from '../../models/ResponseApi';
 import ResponseUtils from '../../utils/ResponseUtils';
-import { ROUTES } from '../../../../scratch/navigation/routes';
 import { useLoadingContext } from '../../../presentation/contexts/loading/useLoadingContext';
-import { setAuthorizationTokenDefault } from './ApiPagueloFacil';
+import { setAuthorizationTokenDefault } from './Api';
 
 class ApiService {
   protected withLoadingState: (callback: () => Promise<any>) => Promise<any>;
