@@ -13,7 +13,7 @@ class MainActivity : ReactActivity() {
    * Returns the name of the main component registered from JavaScript. This is used to schedule
    * rendering of the component.
    */
-  override fun getMainComponentName(): String = "scratchTest"
+  override fun getMainComponentName(): String = "zero"
     override fun onCreate(savedInstanceState: Bundle?) {
         SplashScreen.show(this, R.style.SplashScreenTheme, true)
         super.onCreate(savedInstanceState)

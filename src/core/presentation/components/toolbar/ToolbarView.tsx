@@ -7,15 +7,18 @@ import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import { CustomText } from '../text/CustomText';
 import { useStatusBar } from '../../contexts/statusBar/StatusBarContext';
 import ic_left_arrow_outline from '../../../../../assets/svg/ic_left_arrow_outline';
+import ic_left_arrow_outline_white from '../../../../../assets/svg/ic_left_arrow_outline_white';
 
 interface Props {
   text: string;
+  backgroundColor?: string;
   showArrowBack?: boolean;
   setIconEnd?: any;
   onPress?: () => void;
-  onPressIcoEnd?: () => void;
+  onPressIconEnd?: () => void;
   children?: ReactNode;
   type?: "blue";
+
 }
 
 const ToolbarView = ({
@@ -23,9 +26,10 @@ const ToolbarView = ({
   showArrowBack = true,
   onPress,
   setIconEnd: showIconEnd,
-  onPressIcoEnd,
+  onPressIconEnd,
   children,
-  type
+  type,
+  backgroundColor
 }: Props
 ) => {
   const navigation = useNavigation();
@@ -44,8 +48,8 @@ const ToolbarView = ({
   };
 
   const handleIcoEndBackPress = () => {
-    if (onPressIcoEnd != undefined) {
-      onPressIcoEnd();
+    if (onPressIconEnd != undefined) {
+      onPressIconEnd();
       return;
     }
     navigation.goBack();
@@ -53,12 +57,13 @@ const ToolbarView = ({
 
   useEffect(() => {
     statusBar.setToolbarStatusBar()
+
     return () => {
       statusBar.setPrimaryStatusBar()
     }
   })
 
-  const style = StyleSheet.create({
+  var style = StyleSheet.create({
     toolbarContainer: {
       flexDirection: 'row',
       height: 56,
@@ -84,12 +89,21 @@ const ToolbarView = ({
     },
   });
 
+
+  var arrowBack
+  switch (arrowBack) {
+    case "profile":
+      arrowBack = ic_left_arrow_outline
+      break;
+    default:
+      arrowBack = ic_left_arrow_outline_white
+  }
   return (
-    <View style={{ flex: 1 }} >
+    <View style={{ flex: 1, backgroundColor: backgroundColor }} >
       <View style={style.toolbarContainer}>
         {showArrowBack && (
           <TouchableOpacity onPress={handleBackPress} style={style.backButton}>
-            <SvgXml xml={ic_left_arrow_outline} />
+            <SvgXml xml={arrowBack} />
           </TouchableOpacity>
         )}
         <CustomText

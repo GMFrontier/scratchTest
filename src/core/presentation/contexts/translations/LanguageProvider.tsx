@@ -38,7 +38,7 @@ export const LanguageProvider = ({ children }: any) => {
       bottom_tab_home: "Home",
       bottom_tab_cards: "Tarjetas",
       bottom_tab_points: "Puntos",
-      bottom_tab_settings: "Ajustes",
+      bottom_tab_settings: "Perfil",
       next: "Siguiente",
       june: "Junio",
     },

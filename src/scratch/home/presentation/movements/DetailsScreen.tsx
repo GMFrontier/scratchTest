@@ -62,7 +62,7 @@ export const DetailsScreen = observer(() => {
     <ToolbarView
       type='blue'
       setIconEnd={ic_share}
-      onPressIcoEnd={() => { }}
+      onPressIconEnd={() => { }}
       text='Detalle del movimiento'>
       <LinearGradient colors={[colors.blueHome, '#282828A6']} style={styles.linearGradient} />
 

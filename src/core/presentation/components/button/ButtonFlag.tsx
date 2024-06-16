@@ -23,14 +23,14 @@ export const ButtonFlag = ({ onPress, flagCountry, codePhone, disabled = false }
 
   const style = StyleSheet.create({
     viewContainer: {
+      flex: 1,
       backgroundColor: colors.blue50,
       flexDirection: 'row',
       alignSelf: 'center',
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 10,
-      padding: 16,
-      height: 56
+      padding: 16
     }
   });
 

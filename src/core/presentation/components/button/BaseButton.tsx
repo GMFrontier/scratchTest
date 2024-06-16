@@ -9,6 +9,7 @@ export interface BaseButtonProps {
   text: string;
   imageStart?: any;
   imageEnd?: any;
+  textColor?: string;
   disabled?: boolean;
   position?: "absolute" | "relative" | "static";
   buttonType?: "primary" | "secondary"

@@ -25,6 +25,12 @@ import { MovementsScreen } from '../home/presentation/movements/MovementsScreen'
 import { DetailsScreen } from '../home/presentation/movements/DetailsScreen';
 import { EditCategoryScreen } from '../home/presentation/movements/EditCategoryScreen';
 import { AddCommentScreen } from '../home/presentation/movements/AddCommentScreen';
+import { ProfileScreen } from '../settings/presentation/ProfileScreen';
+import { AboutUsScreen } from '../cards/presentation/AboutUsScreen';
+import { PrivactPolicyScreen } from '../cards/presentation/PrivactPolicyScreen';
+import { TyCScreen } from '../cards/presentation/TyCScreen';
+import { FAQScreen } from '../cards/presentation/FAQScreen';
+import { SupportScreen } from '../cards/presentation/SupportScreen';
 
 interface NavRouteModel {
   [key: string]: {
@@ -66,7 +72,13 @@ export const ROUTES = {
     OnBoardingScreen: { screen: OnBoardingScreen, name: 'OnBoardingScreen' },
   },
   Settings: {
+    ProfileScreen: { screen: ProfileScreen, name: 'ProfileScreen' },
     SettingsScreen: { screen: SettingsScreen, name: 'SettingsScreen' },
+    AboutUsScreen: { screen: AboutUsScreen, name: 'AboutUsScreen' },
+    PrivactPolicyScreen: { screen: PrivactPolicyScreen, name: 'PrivactPolicyScreen' },
+    TyCScreen: { screen: TyCScreen, name: 'TyCScreen' },
+    FAQScreen: { screen: FAQScreen, name: 'FAQScreen' },
+    SupportScreen: { screen: SupportScreen, name: 'SupportScreen' },
   },
   Home: {
     HomeScreen: { screen: HomeScreen, name: 'HomeScreen' },

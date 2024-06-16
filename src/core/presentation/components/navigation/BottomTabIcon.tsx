@@ -7,19 +7,6 @@ import Fonts from '../../../constants/Fonts';
 import { ROUTES } from '../../../../scratch/navigation/routes';
 import FontsSize from '../../../constants/FontsSize';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
-import { useTranslation } from '../../contexts/translations/LanguageProvider';
-import qr_bottom_ico_content from '../../../../../assets/svg/qr_bottom_ico_content';
-import subtractbottom1 from '../../../../../assets/svg/subtractbottom1';
-import home_ico_active_content from '../../../../../assets/svg/home_ico_active_content';
-import home_ico_content from '../../../../../assets/svg/home_ico_content';
-import home_ico_card_active_content from '../../../../../assets/svg/home_ico_card_active_content';
-import home_ico_card_content from '../../../../../assets/svg/home_ico_card_content';
-import home_ico_activity_active_content from '../../../../../assets/svg/home_ico_activity_active_content';
-import home_ico_activity_content from '../../../../../assets/svg/home_ico_activity_content';
-import settings_ico_active_content from '../../../../../assets/svg/settings_ico_active_content';
-import settings_ico_content from '../../../../../assets/svg/settings_ico_content';
-import { HomeScreen } from '../../../../scratch/home/presentation/HomeScreen';
-import { CardsScreen } from '../../../../scratch/settings/presentation/CardsScreen';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import React = require('react');
 import Sizebox from '../item/Sizebox';
@@ -58,8 +45,8 @@ const BottomTabIcon = ({
         flexDirection: "row",
         backgroundColor: focused ? colors.secondary : "transparent",
         paddingVertical: 8,
-        paddingHorizontal: 13,
-        borderRadius: 24
+        paddingHorizontal: 8,
+        borderRadius: 24,
       }}
     >
       <SvgXml

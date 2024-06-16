@@ -35,6 +35,15 @@ const handlers = {
   DetailsScreen: () => <ROUTES.Home.DetailsScreen.screen />,
   EditCategoryScreen: () => <ROUTES.Home.EditCategoryScreen.screen />,
   AddCommentScreen: () => <ROUTES.Home.AddCommentScreen.screen />,
+
+  ProfileScreen: () => <ROUTES.Settings.ProfileScreen.screen />,
+  SettingsScreen: () => <ROUTES.Settings.SettingsScreen.screen />,
+  AboutUsScreen: () => <ROUTES.Settings.AboutUsScreen.screen />,
+  PrivactPolicyScreen: () => <ROUTES.Settings.PrivactPolicyScreen.screen />,
+  TyCScreen: () => <ROUTES.Settings.TyCScreen.screen />,
+  FAQScreen: () => <ROUTES.Settings.FAQScreen.screen />,
+  SupportScreen: () => <ROUTES.Settings.SupportScreen.screen />,
+
 };
 
 export type RootParamList = {

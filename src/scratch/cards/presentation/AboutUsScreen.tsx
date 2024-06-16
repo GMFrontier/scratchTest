@@ -17,54 +17,38 @@ import ic_settings_tyc from '../../../../assets/svg/ic_settings_tyc';
 import ic_settings_privacy from '../../../../assets/svg/ic_settings_privacy';
 import ic_settings_faq from '../../../../assets/svg/ic_settings_faq';
 import ic_settings_support from '../../../../assets/svg/ic_settings_support';
-import { useNavigation } from '@react-navigation/native';
-import { ROUTES } from '../../navigation/routes';
+import { CustomText } from '../../../core/presentation/components/text/CustomText';
 
-export const SettingsScreen = observer(() => {
+export const AboutUsScreen = observer(() => {
 
   const {
     theme: { colors },
   } = useContext(ThemeContext);
 
   const showStateModal = useNewModalContext().showStateModal
-  const navigation = useNavigation()
 
   const { translation } = useTranslation();
 
   return (
     <ToolbarView
-      text={'Ajustes'}
+      text={'Sobre nosotros'}
     >
-      <View style={{ paddingHorizontal: 16 }} >
-        <Sizebox height={20} />
-        {/* <SettingsButtonItem
-          text={"Invita y gana"}
-          icon={ic_settings_star}
-          onPress={() => { }} /> */}
-        <SettingsButtonItem
-          text={"Cambio de contraseña"}
-          icon={ic_settings_pass}
-          onPress={() => { }} />
-        <SettingsButtonItem
-          text={"Acerca de nosotros"}
-          icon={ic_settings_about}
-          onPress={() => { navigation.navigate(ROUTES.Settings.AboutUsScreen.name as never) }} />
-        <SettingsButtonItem
-          text={"Términos y condiciones"}
-          icon={ic_settings_tyc}
-          onPress={() => { navigation.navigate(ROUTES.Settings.TyCScreen.name as never) }} />
-        <SettingsButtonItem
-          text={"Políticas de privacidad"}
-          icon={ic_settings_privacy}
-          onPress={() => { navigation.navigate(ROUTES.Settings.PrivactPolicyScreen.name as never) }} />
-        <SettingsButtonItem
-          text={"Preguntas frecuentes"}
-          icon={ic_settings_faq}
-          onPress={() => { navigation.navigate(ROUTES.Settings.FAQScreen.name as never) }} />
-        <SettingsButtonItem
-          text={"Contactar a soporte"}
-          icon={ic_settings_support}
-          onPress={() => { navigation.navigate(ROUTES.Settings.SupportScreen.name as never) }} />
+      <View style={{ paddingHorizontal: 16, marginTop: 24 }} >
+        <CustomText
+          text='
+        Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum. nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.
+
+Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.'
+        />
+        <CustomText
+          marginTop={24}
+          text='
+      
+nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.
+nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum..
+
+Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis'
+        />
 
       </View>
     </ToolbarView>

@@ -16,11 +16,10 @@ interface Props {
   selectedOption?: any;
   setSelectedOption?: any;
   isEnabled?: boolean;
-  marginTop?: number;
 }
 
 export const FlagInput = ({
-  phone, setPhone, selectedOption, setSelectedOption, isEnabled = true, marginTop
+  phone, setPhone, selectedOption, setSelectedOption, isEnabled = true
 }: Props) => {
 
   const {
@@ -51,36 +50,38 @@ export const FlagInput = ({
   });
 
   return (
-    <View style={{
-      flexDirection: "row", alignItems: 'center', marginTop: marginTop
-    }} >
+    <View>
+      <View style={{
+        flexDirection: "row", alignItems: 'center',
+      }} >
 
-      <ButtonFlag
-        codePhone={selectedOption.split('*')[1]}
-        flagCountry={selectedOption.split('*')[0]}
-        disabled={!isEnabled}
-        onPress={() => {
-          nav.navigate(
-            ROUTES.Auth.SelectPhoneFlagScreen.name,
-            {
-              onSelectOption: handleSelectOption,
-            },
-          );
-        }} />
-      <View style={{ flex: 1, marginStart: 4 }} >
-        <TextInputMain
-          inputValue={phone}
-          onChangeText={(value: any) => {
-            setPhone(value);
-            //setIsValidPhone(isValidPhoneCheck(value, selectedOption));
-          }}
-          editable={isEnabled}
-          typeKeyboard="numeric"
-          maxLength={20}
-          placeholder='000000'
-        // rightIcon={check_ico_content}
-        //showIconEnd={isValidPhone}
-        />
+        <ButtonFlag
+          codePhone={selectedOption.split('*')[1]}
+          flagCountry={selectedOption.split('*')[0]}
+          disabled={!isEnabled}
+          onPress={() => {
+            // nav.navigate(
+            //   ROUTES.Register.PhoneDialScreen.name,
+            //   {
+            //     onSelectOption: handleSelectOption,
+            //   },
+            // );
+          }} />
+        <View style={{ flex: 1, marginStart: 4 }} >
+          <TextInputMain
+            inputValue={phone}
+            onChangeText={(value: any) => {
+              setPhone(value);
+              //setIsValidPhone(isValidPhoneCheck(value, selectedOption));
+            }}
+            editable={isEnabled}
+            typeKeyboard="numeric"
+            maxLength={20}
+            placeholder='00000000'
+          // rightIcon={check_ico_content}
+          //showIconEnd={isValidPhone}
+          />
+        </View>
       </View>
     </View>
   );

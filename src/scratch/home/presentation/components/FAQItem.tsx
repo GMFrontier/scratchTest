@@ -25,11 +25,13 @@ export interface Movements {
 interface Props {
   text: string,
   onPress: () => void,
+  icon?: string
 }
 
 export const FAQItem = ({
   text,
-  onPress
+  onPress,
+  icon
 }: Props) => {
 
   const {
@@ -45,7 +47,7 @@ export const FAQItem = ({
         textSize={FontsSize._16_SIZE}
         textColor={colors.white}
         textAlign="center" />
-      <SvgXml xml={ic_arrow_right_white} />
+      <SvgXml xml={icon ?? ic_arrow_right_white} />
     </TouchableOpacity>
   );
 };
