@@ -17,17 +17,10 @@ export const CardsScreen = observer(() => {
 
   const statusBar = useStatusBar()
 
-  const changeStatusBarColor = () => {
-    statusBar.setWhiteStatusBar()
-  }
-
   const showStateModal = useNewModalContext().showStateModal
 
   const { translation } = useTranslation();
 
-
-  const [bannerVisible, setBannerVisible] = React.useState(false);
-  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
   return (
     <View style={style.containerMain}>

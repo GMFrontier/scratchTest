@@ -44,6 +44,10 @@ const handlers = {
   FAQScreen: () => <ROUTES.Settings.FAQScreen.screen />,
   SupportScreen: () => <ROUTES.Settings.SupportScreen.screen />,
 
+  CardsScreen: () => <ROUTES.Cards.CardsScreen.screen />,
+
+  PointsScreen: () => <ROUTES.Points.PointsScreen.screen />,
+
 };
 
 export type RootParamList = {

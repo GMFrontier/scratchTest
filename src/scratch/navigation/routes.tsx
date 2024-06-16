@@ -5,8 +5,8 @@ import { PasswordScreen } from '../auth/presentation/login/PasswordScreen';
 import { HomeScreen } from '../home/presentation/HomeScreen';
 import { OnBoardingScreen } from '../onboarding/OnBoardingScreen';
 import { SplashScreen } from '../splash/presentation/SplashScreen';
-import { CardsScreen } from '../settings/presentation/CardsScreen';
-import { SettingsScreen } from '../cards/presentation/SettingsScreen';
+import { CardsScreen } from '../cards/presentation/CardsScreen';
+import { SettingsScreen } from '../settings/presentation/SettingsScreen';
 import { RecoverPasswordScreen } from '../auth/presentation/recover_pin/RecoverPasswordScreen';
 import { RecoverPasswordEmailValidationScreen } from '../auth/presentation/recover_pin/RecoverPasswordEmailValidationScreen';
 import { RecoverPasswordCreateScreen } from '../auth/presentation/recover_pin/RecoverPasswordCreateScreen';
@@ -26,11 +26,12 @@ import { DetailsScreen } from '../home/presentation/movements/DetailsScreen';
 import { EditCategoryScreen } from '../home/presentation/movements/EditCategoryScreen';
 import { AddCommentScreen } from '../home/presentation/movements/AddCommentScreen';
 import { ProfileScreen } from '../settings/presentation/ProfileScreen';
-import { AboutUsScreen } from '../cards/presentation/AboutUsScreen';
-import { PrivactPolicyScreen } from '../cards/presentation/PrivactPolicyScreen';
-import { TyCScreen } from '../cards/presentation/TyCScreen';
-import { FAQScreen } from '../cards/presentation/FAQScreen';
-import { SupportScreen } from '../cards/presentation/SupportScreen';
+import { AboutUsScreen } from '../settings/presentation/AboutUsScreen';
+import { PrivactPolicyScreen } from '../settings/presentation/PrivactPolicyScreen';
+import { TyCScreen } from '../settings/presentation/TyCScreen';
+import { FAQScreen } from '../settings/presentation/FAQScreen';
+import { SupportScreen } from '../settings/presentation/SupportScreen';
+import { PointsScreen } from '../points/presentation/PointsScreen';
 
 interface NavRouteModel {
   [key: string]: {
@@ -90,9 +91,7 @@ export const ROUTES = {
   Cards: {
     CardsScreen: { screen: CardsScreen, name: 'CardsScreen' },
   },
-  // Login: {
-  //   SplashScreen: { screen: BottomTabNavigator, name: 'BottomTabNavigator' },
-  //   SplashScreen: { screen: BottomTabNavigator, name: 'BottomTabNavigator' },
-  //   SplashScreen: { screen: BottomTabNavigator, name: 'BottomTabNavigator' },
-  // },
+  Points: {
+    PointsScreen: { screen: PointsScreen, name: 'PointsScreen' },
+  },
 };

@@ -1,25 +1,20 @@
 import { useContext } from 'react';
-import { View, TouchableOpacity, StyleSheet, Image, Dimensions, LayoutChangeEvent, Platform, StatusBar } from 'react-native';
+import { View, Dimensions, Platform, StatusBar } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ROUTES } from '../../../../scratch/navigation/routes';
-import FontsSize from '../../../constants/FontsSize';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import { useTranslation } from '../../contexts/translations/LanguageProvider';
 import home_ico_active_content from '../../../../../assets/svg/home_ico_active_content';
 import home_ico_content from '../../../../../assets/svg/home_ico_content';
 import home_ico_card_active_content from '../../../../../assets/svg/home_ico_card_active_content';
 import home_ico_card_content from '../../../../../assets/svg/home_ico_card_content';
-import home_ico_activity_active_content from '../../../../../assets/svg/home_ico_activity_active_content';
 import home_ico_activity_content from '../../../../../assets/svg/home_ico_activity_content';
-import { CardsScreen } from '../../../../scratch/settings/presentation/CardsScreen';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import React = require('react');
-import Sizebox from '../item/Sizebox';
 import BottomTabIcon from './BottomTabIcon';
 import { useNavigation } from '@react-navigation/native';
 import ic_profile_focused from '../../../../../assets/svg/ic_profile_focused';
 import ic_profile from '../../../../../assets/svg/ic_profile';
-
+import { ROUTES } from '../../../../scratch/navigation/routes';
 
 const BottomTabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -93,7 +88,7 @@ const BottomTabNavigator = () => {
         />
 
         <Tab.Screen
-          name="CardScreen"
+          name={"CardsScreen"}
           component={ROUTES.Cards.CardsScreen.screen}
           options={{
             tabBarIcon: ({ focused }) => (
@@ -108,8 +103,8 @@ const BottomTabNavigator = () => {
         />
 
         <Tab.Screen
-          name={ROUTES.Cards.CardsScreen.name}
-          component={CardsScreen}
+          name={"PointsScreen"}
+          component={ROUTES.Points.PointsScreen.screen}
           options={{
             tabBarIcon: ({ focused }) => (
               <BottomTabIcon
@@ -119,6 +114,11 @@ const BottomTabNavigator = () => {
                 focused={focused}
               />
             ),
+          }}
+          listeners={{
+            focus: (s) => {
+              setBottomDisplay(false)
+            }
           }}
         />
 
@@ -145,9 +145,5 @@ const BottomTabNavigator = () => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  imageIco: {
-    height: 100,
-  },
-});
+
 export default BottomTabNavigator;

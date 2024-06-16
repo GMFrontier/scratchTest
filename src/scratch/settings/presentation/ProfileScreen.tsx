@@ -27,6 +27,7 @@ import ic_logout_outline from '../../../../assets/svg/ic_logout_outline';
 import { useNavigation } from '@react-navigation/core';
 import { ROUTES } from '../../navigation/routes';
 import LinearGradient from 'react-native-linear-gradient';
+import { CommonActions } from '@react-navigation/native';
 
 export const ProfileScreen = observer(() => {
 
@@ -236,7 +237,16 @@ export const ProfileScreen = observer(() => {
           position='relative'
           imageStart={ic_logout_outline}
           textColor={colors.defaultTextButton}
-          onPress={() => { }} />
+          onPress={() => {
+            nav.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [
+                  { name: ROUTES.Auth.LoginScreen.name },
+                ],
+              })
+            )
+          }} />
 
         <CustomText
           marginTop={16}
