@@ -16,10 +16,11 @@ interface Props {
   selectedOption?: any;
   setSelectedOption?: any;
   isEnabled?: boolean;
+  marginTop?: number;
 }
 
 export const FlagInput = ({
-  phone, setPhone, selectedOption, setSelectedOption, isEnabled = true
+  phone, setPhone, selectedOption, setSelectedOption, isEnabled = true, marginTop
 }: Props) => {
 
   const {
@@ -38,21 +39,10 @@ export const FlagInput = ({
 
   const nav = useNavigation()
 
-  const styles = StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      borderRadius: 12,
-      width: '100%',
-      height: 56,
-      position: 'absolute',
-      zIndex: isEnabled ? undefined : 1
-    },
-  });
-
   return (
     <View>
       <View style={{
-        flexDirection: "row", alignItems: 'center',
+        flexDirection: "row", alignItems: 'center', marginTop: marginTop
       }} >
 
         <ButtonFlag
@@ -60,12 +50,12 @@ export const FlagInput = ({
           flagCountry={selectedOption.split('*')[0]}
           disabled={!isEnabled}
           onPress={() => {
-            // nav.navigate(
-            //   ROUTES.Register.PhoneDialScreen.name,
-            //   {
-            //     onSelectOption: handleSelectOption,
-            //   },
-            // );
+            nav.navigate(
+              ROUTES.Auth.SelectPhoneFlagScreen.name,
+              {
+                onSelectOption: handleSelectOption,
+              },
+            );
           }} />
         <View style={{ flex: 1, marginStart: 4 }} >
           <TextInputMain
@@ -75,7 +65,7 @@ export const FlagInput = ({
               //setIsValidPhone(isValidPhoneCheck(value, selectedOption));
             }}
             editable={isEnabled}
-            typeKeyboard="numeric"
+            inputType='number'
             maxLength={20}
             placeholder='00000000'
           // rightIcon={check_ico_content}

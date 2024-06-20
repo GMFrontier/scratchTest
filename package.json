@@ -1,6 +1,6 @@
 {
   "name": "zero",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -19,7 +19,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@react-navigation/stack": "^6.3.29",
-    "axios": "^1.6.8",
+    "axios": "^1.4.0",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "inversify": "^6.0.2",
     "libphonenumber-js": "^1.11.3",

@@ -16,12 +16,16 @@ import { ButtonLink } from '../../../../core/presentation/components/button/Butt
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
+import container from '../../../di/inversify.config';
+import RegisterViewModel from './RegisterViewModel';
+import { TYPES } from '../../../di/types';
 
 export const RegisterScreen = observer(() => {
 
   const {
     theme: { colors },
   } = useContext(ThemeContext);
+
 
   const [checkbox, setCheckbox] = useState(false);
 
@@ -94,6 +98,7 @@ export const RegisterScreen = observer(() => {
           text={translation.file.next}
           disabled={!checkbox}
           onPress={() => { navigation.navigate(ROUTES.Auth.RegisterFormScreen.name as never) }} />
+
 
       </View>
 

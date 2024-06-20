@@ -32,6 +32,12 @@ import { opacity } from 'react-native-reanimated/lib/typescript/reanimated2/Colo
 import SelectCustomDropdown from '../../../../core/presentation/components/spinner/SelectCustomDropdown';
 import { isUserPasswordValid, isValidPhoneCheck } from '../../../../core/data/utils/Utils';
 import { useToastContext } from '../../../../core/presentation/contexts/messages/useToastContext';
+import container from '../../../di/inversify.config';
+import RegisterViewModel, { ExternalCardErrorType as ErrorTypes } from './RegisterViewModel';
+import { TYPES } from '../../../di/types';
+import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
+import ic_exclamation_error_filled from '../../../../../assets/svg/ic_exclamation_error_filled';
+import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
 
 export const RegisterFormScreen = observer(() => {
 
@@ -40,6 +46,11 @@ export const RegisterFormScreen = observer(() => {
   } = useContext(ThemeContext);
   const { translation } = useTranslation();
   const navigation = useNavigation()
+  const showStateModal = useNewModalContext().showStateModal
+
+  const viewModel = container.get<RegisterViewModel>(
+    TYPES.RegisterViewModel,
+  );
 
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
@@ -139,6 +150,30 @@ export const RegisterFormScreen = observer(() => {
     },
   });
 
+  const errorModal = (errorType: ErrorTypes) => {
+    switch (errorType) {
+      case ErrorTypes.ERROR_TEMP_REGISTERED:
+        showStateModal({
+          title: "Ha ocurrido un problema",
+          message: "Al parecer has intentado registrarte con estos datos previamente aguardar 15 min e inténtalo nuevamente.",
+          image: ic_exclamation_error_filled_48,
+          showIcoClose: true,
+          enableOverlayTap: "none"
+        })
+        break;
+      default:
+        showStateModal({
+          title: "Ha ocurrido un problema",
+          message: "Por favor, vuelva a intentarlo nuevamente.",
+          image: ic_exclamation_error_filled_48,
+          showIcoClose: true,
+          enableOverlayTap: "none",
+          size: "30%"
+        })
+        break;
+    }
+  }
+
   return (
     <ToolbarView
       text={"Registro de usuario"} >
@@ -188,7 +223,6 @@ export const RegisterFormScreen = observer(() => {
               inputValue={date}
               onChangeText={() => { }}
               placeholder='dd/mm/aaaa'
-              editable={false}
               labelTitle={"Fecha de nacimiento"}
               labelTitleRequired={true}
               rightIcon={ic_calendar_outline}
@@ -219,10 +253,10 @@ export const RegisterFormScreen = observer(() => {
             placeholder={translation.file.email_placeholder} />
 
           <FlagInput
+            marginTop={16}
             phone={phone}
             setPhone={setPhone}
             isEnabled={true}
-            marginTop={16}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption} />
 
@@ -255,7 +289,19 @@ export const RegisterFormScreen = observer(() => {
             text={translation.file.next}
             position="relative"
             disabled={!true}
-            onPress={() => { navigation.navigate(ROUTES.Auth.RegisterPhoneValidationScreen.name as never) }} />
+            onPress={() => {
+              viewModel.registerUser(
+                name,
+                lastname,
+                date,
+                country.countryCode,
+                email,
+                phone,
+                password,
+                errorModal
+              )
+            }} />
+          {/* onPress={() => { navigation.navigate(ROUTES.Auth.RegisterPhoneValidationScreen.name as never) }} /> */}
         </ScrollView>
 
 

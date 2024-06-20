@@ -5,7 +5,7 @@ import Config from 'react-native-config';
 import { NativeModules } from 'react-native';
 import { getTimeZone } from "react-native-localize";
 
-const { UtilsModule } = NativeModules;
+// const { UtilsModule } = NativeModules;
 
 /* Más adelante utilizar el url correspondiente dependiendo del flavor de la app
  * dev: https://middle-test.pfserver.net/PFManagementServices/api/v1/
@@ -14,15 +14,16 @@ const { UtilsModule } = NativeModules;
  */
 
 const setAuthorizationToken = (token: string) => {
-  api.defaults.headers.Authorization = `${UtilsModule.l(Config.FLAVOR)}|${token}`;
+  // api.defaults.headers.Authorization = `${UtilsModule.l(Config.FLAVOR)}|${token}`;
+  api.defaults.headers.Authorization = `Bearer ${token}`;
 };
 
 const setAuthorizationTokenDefault = () => {
-  api.defaults.headers.Authorization = `${UtilsModule.l(Config.FLAVOR)}`;
+  api.defaults.headers.Authorization = ``;
 };
 
 const setBaseToken = (token: string) => {
-  api.defaults.headers.Authorization = `${token}`;
+  api.defaults.headers.Authorization = `Bearer ${token}`;
 };
 
 const getAuthorizationToken = (): string => {
@@ -30,17 +31,17 @@ const getAuthorizationToken = (): string => {
 };
 
 const api = axios.create({
-  baseURL: Config.API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    platform: '1',
-    Authorization: UtilsModule.l(Config.FLAVOR),
-    offset: -180, //crear utils get timezone offset
-    timezone: getTimeZone(),
-    fcmToken: '""', //token identicatorio del dispositivo que provee firebase para su FCM
-  },
+  baseURL: Config.BASE_URL,
+  // headers: {
+  //   // 'Content-Type': 'application/json',
+  //   // platform: '1',
+  //   // Authorization: "",
+  //   // offset: -180, //crear utils get timezone offset
+  //   // timezone: getTimeZone(),
+  //   // fcmToken: '""', //token identicatorio del dispositivo que provee firebase para su FCM
+  // },
   timeout: 10000,
-});
+})
 
 api.interceptors.request.use(request => {
   showRequestLogs(request);
@@ -49,6 +50,7 @@ api.interceptors.request.use(request => {
 
 api.interceptors.response.use(
   (response: AxiosResponse<ResponseAPI>) => {
+    JSON.stringify(response)
     showResponseLogs(response);
     const parsedResponse = ResponseUtils.parseToResponseAPI(response);
     const badResponse = ResponseUtils.handleBadResponses(parsedResponse);
@@ -60,6 +62,10 @@ api.interceptors.response.use(
   },
   (error: AxiosError) => {
     const errorResponse = ResponseUtils.handleAxiosErrorResponses(error);
+    console.log("error.code");
+    console.log(JSON.stringify(error));
+    console.log(error.message);
+
     return Promise.reject(errorResponse);
   },
 );

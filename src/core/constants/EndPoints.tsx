@@ -2,7 +2,7 @@ export default class EndPoints {
   static LOGIN = '/LoginApp';
   static REFRESH_LOGIN = '/RefreshUserLoginApp';
   static RECOVER_PASSWORD = '/RecoveryPassword';
-  static REGISTER = '/RegisterUser';
+  static REGISTER = '/registerUser';
   static ACTIVITIES = '/Activities';
   static VALID_DATA_USER = '/ValidDataUser';
   static REQUEST_KYC_VALIDATION = '/RequestKycUser';

@@ -67,7 +67,7 @@ const TYPES = {
   BaseViewModel: Symbol.for('BaseViewModel'),
   WebViewViewModel: Symbol.for('WebViewViewModel'),
   LoginViewModel: Symbol.for('LoginViewModel'),
-  RegistrationViewModel: Symbol.for('RegistrationViewModel'),
+  RegisterViewModel: Symbol.for('RegisterViewModel'),
   MetaMapViewModel: Symbol.for('MetaMapViewModel'),
   PayQrViewModel: Symbol.for('PayQrViewModel'),
   SettingViewModel: Symbol.for('SettingViewModel'),

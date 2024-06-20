@@ -28,7 +28,7 @@ export const FAQScreen = observer(() => {
     showStateModal({
       image: undefined,
       title: "k",
-      size: "65%",
+      size: "75%",
       message: "d",
       actionCloseModal() {
 

@@ -92,7 +92,14 @@ export const OnBoardingScreen = () => {
         <ButtonLink
           text="Omitir"
           onPress={() => {
-            navigation.navigate(ROUTES.Auth.RegisterPhoneValidationScreen.name as never)
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [
+                  { name: ROUTES.Auth.LoginScreen.name },
+                ],
+              })
+            )
           }}
         />
       </View>

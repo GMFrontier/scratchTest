@@ -30,7 +30,8 @@ export const ButtonFlag = ({ onPress, flagCountry, codePhone, disabled = false }
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 10,
-      padding: 16
+      padding: 16,
+      height: 56
     }
   });
 
