@@ -1,5 +1,5 @@
-import {AxiosResponse} from 'axios';
-import {ErrorAPI, ResponseAPI} from '../models/ResponseApi';
+import { AxiosResponse } from 'axios';
+import { ErrorAPI, ResponseAPI } from '../models/ResponseApi';
 import {
   APP_API_DEFAULT_DESCRIPTION,
   APP_API_DEFAULT_MESSAGE,
@@ -16,10 +16,9 @@ import {
 
 class ResponseUtils {
   static parseToResponseAPI(response: AxiosResponse<ResponseAPI>): ResponseAPI {
-    const {success, message, data, headerStatus, serverTime, requestId} =
+    const { message, data, headerStatus, serverTime, requestId } =
       response.data;
     const parsedResponse: ResponseAPI = {
-      success,
       message,
       data,
       headerStatus,
@@ -43,7 +42,7 @@ class ResponseUtils {
     description?: string;
     message?: string;
   }): ErrorAPI {
-    const {code = 0, description = '', message = ''} = options;
+    const { code = 0, description = '', message = '' } = options;
     const errorAPI: ErrorAPI = {
       code: code,
       description: description,
@@ -54,8 +53,7 @@ class ResponseUtils {
 
   static handleBadResponses(response: ResponseAPI): ErrorAPI | undefined {
     if (
-      response.success === false &&
-      response.headerStatus.code !== PRE_REGISTER_USER
+      response.headerStatus.code >= 300 && response.headerStatus.code <= 800
     ) {
       return ResponseUtils.newErrorAPI({
         code: response.headerStatus.code ?? GENERIC_ERROR,
@@ -66,7 +64,7 @@ class ResponseUtils {
     if (
       response.headerStatus.code === PRE_REGISTER_USER &&
       response.message ===
-        'We sent you an email with a confirmation code, please copy the code and try again!!!'
+      'We sent you an email with a confirmation code, please copy the code and try again!!!'
     ) {
       //es un pre registro que se registra como error a ojos de backend por faltarle el emailCode
       return undefined;
@@ -109,7 +107,7 @@ class ResponseUtils {
     if (
       //Sólamente aplica SESSION_EXPIRED.includes(code), el resto es para pruebas
       error.code === USER_NOT_LOGGED_IN ||
-        error.code === SESSION_EXPIRED
+      error.code === SESSION_EXPIRED
     ) {
       logoutCallback(); //mejorar codigo
       return {

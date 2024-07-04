@@ -8,6 +8,7 @@ import { CustomText } from '../text/CustomText';
 import { useStatusBar } from '../../contexts/statusBar/StatusBarContext';
 import ic_left_arrow_outline from '../../../../../assets/svg/ic_left_arrow_outline';
 import ic_left_arrow_outline_white from '../../../../../assets/svg/ic_left_arrow_outline_white';
+import FontsSize from '../../../constants/FontsSize';
 
 interface Props {
   text: string;
@@ -108,6 +109,7 @@ const ToolbarView = ({
         )}
         <CustomText
           textColor={type === "blue" ? colors.white : undefined}
+          textSize={FontsSize._16_SIZE}
           text={text} />
 
         {showIconEnd && (

@@ -1,4 +1,4 @@
 export interface LoginModel {
-  user: string;
+  email: string;
   password: string;
 }

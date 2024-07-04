@@ -60,21 +60,21 @@ export const RegisterIncomeScreen = observer(() => {
       const isWorkplaceValid = workplace.length > 0
       const isJobPositionValid = jobPosition !== undefined
       const isJobExperienceValid = jobExperience !== undefined
-      const isSeguroValid = seguro !== undefined
+      // const isSeguroValid = seguro !== undefined
       const isMovementsValid = movements !== undefined
 
       setIsFormValid(
         isWorkplaceValid &&
         isJobPositionValid &&
         isJobExperienceValid &&
-        isSeguroValid &&
+        // isSeguroValid &&
         isMovementsValid
       )
       console.log(
         isWorkplaceValid + " " +
         isJobPositionValid + " " +
         isJobExperienceValid + " " +
-        isSeguroValid + " " +
+        // isSeguroValid + " " +
         isMovementsValid + " "
       )
     } else {
@@ -186,7 +186,7 @@ export const RegisterIncomeScreen = observer(() => {
               <View>
                 <FileInput
                   label='Ficha Caja Seguro Social'
-                  isRequired={true}
+                  isRequired={false}
                   marginTop={16}
                   showInfoModal={false}
                   setFile={setSeguro}
@@ -270,7 +270,7 @@ export const RegisterIncomeScreen = observer(() => {
           <Sizebox height={32} />
 
           <ButtonPrimary
-            text={"Reintentar validación"}
+            text={"Siguiente"}
             position="relative"
             disabled={!isFormValid}
             onPress={() => {

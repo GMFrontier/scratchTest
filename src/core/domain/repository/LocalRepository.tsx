@@ -7,7 +7,7 @@ export interface LocalRepository {
   saveUser(user: User): Promise<void>;
   getUser(): Promise<User>;
 
-  savePreferences(data: string, key: string): Promise<void>;
+  savePreferences(key: string, data: string): Promise<void>;
   getPreferences(key: string): Promise<string>;
 
   saveUserCredentials(userCredentials: UserCredentials): Promise<void>

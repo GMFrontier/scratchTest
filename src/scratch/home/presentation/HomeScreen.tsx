@@ -15,6 +15,7 @@ import { Movements } from './components/MovementsItem';
 import { FAQCard } from './components/FAQCard';
 import bg_home from '../../../../assets/svg/bg_home';
 import { ExpirationPaymentCard } from './components/ExpirationPaymentCard';
+import { useBiometrics } from '../../../core/presentation/utils/biometric/BiometricUtils';
 
 export const HomeScreen = observer(() => {
 
@@ -23,12 +24,20 @@ export const HomeScreen = observer(() => {
   } = useContext(ThemeContext);
 
   const statusBar = useStatusBar()
+  const { saveUserBiometrics } = useBiometrics()
 
   useEffect(() => {
     statusBar.setHomeStatusBar()
     return () => {
       statusBar.setPrimaryStatusBar()
     }
+  })
+
+  useEffect(() => {
+    saveUserBiometrics(
+      "Desea utilizar su huella digital para iniciar sesión?" ?? "",
+      "Asociación completada" ?? ""
+    )
   })
 
   const { translation } = useTranslation();

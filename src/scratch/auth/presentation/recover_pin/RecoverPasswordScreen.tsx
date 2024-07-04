@@ -49,6 +49,8 @@ export const RecoverPasswordScreen = observer(() => {
         <TextInputMain
           marginTop={48}
           onChangeText={setEmail}
+          inputValue={email}
+          inputType='email'
           labelTitleRequired={true}
           labelTitle={translation.file.email}
           placeholder={translation.file.email_placeholder} />
@@ -57,7 +59,7 @@ export const RecoverPasswordScreen = observer(() => {
           text={translation.file.next}
           disabled={email.trim().length <= 0}
           onPress={() => {
-            nav.navigate(ROUTES.Auth.RecoverPinEmailValidationScreen.name as never)
+            nav.navigate(ROUTES.Auth.RecoverPasswordEmailValidationScreen.name as never)
           }}
         />
       </View>

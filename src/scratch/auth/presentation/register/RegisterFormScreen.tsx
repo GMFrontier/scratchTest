@@ -38,6 +38,7 @@ import { TYPES } from '../../../di/types';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
 import ic_exclamation_error_filled from '../../../../../assets/svg/ic_exclamation_error_filled';
 import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 export const RegisterFormScreen = observer(() => {
 
@@ -99,7 +100,7 @@ export const RegisterFormScreen = observer(() => {
     const isNameValid = /^[a-zA-Z\s]+$/.test(name);
     const isLastNameValid = /^[a-zA-Z\s]+$/.test(lastname);
     const isPhoneValid = isValidPhoneCheck(phone, selectedOption);
-    const isLivesInPanamaValid = (livesInPanama && livesInPanama.id === 0)
+    const isLivesInPanamaValid = (livesInPanama && livesInPanama.id === 1)
     const isNationalityValid = country !== undefined
     const isEmailValid = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
     const isPasswordValid = isUserPasswordValid(password)
@@ -263,6 +264,7 @@ export const RegisterFormScreen = observer(() => {
           <TextInputMain
             inputValue={password}
             marginTop={16}
+            showError={!isUserPasswordValid(password)}
             inputType="password"
             labelTitleRequired={true}
             placeholder="Ingresa tu contraseña"
@@ -288,7 +290,7 @@ export const RegisterFormScreen = observer(() => {
           <ButtonPrimary
             text={translation.file.next}
             position="relative"
-            disabled={!true}
+            disabled={!isFormValid}
             onPress={() => {
               viewModel.registerUser(
                 name,
@@ -301,7 +303,6 @@ export const RegisterFormScreen = observer(() => {
                 errorModal
               )
             }} />
-          {/* onPress={() => { navigation.navigate(ROUTES.Auth.RegisterPhoneValidationScreen.name as never) }} /> */}
         </ScrollView>
 
 

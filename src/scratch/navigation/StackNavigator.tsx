@@ -13,7 +13,7 @@ const handlers = {
   OnBoardingScreen: () => <ROUTES.OnBoarding.OnBoardingScreen.screen />,
 
   LoginScreen: () => <ROUTES.Auth.LoginScreen.screen />,
-  PasswordScreen: () => <ROUTES.Auth.PasswordScreen.screen />,
+  PasswordScreen: (params: any) => <ROUTES.Auth.PasswordScreen.screen {...params} />,
   RecoverPasswordScreen: () => <ROUTES.Auth.RecoverPasswordScreen.screen />,
   RecoverPasswordEmailValidationScreen: () => <ROUTES.Auth.RecoverPasswordEmailValidationScreen.screen />,
   RecoverPasswordCreateScreen: () => <ROUTES.Auth.RecoverPasswordCreateScreen.screen />,

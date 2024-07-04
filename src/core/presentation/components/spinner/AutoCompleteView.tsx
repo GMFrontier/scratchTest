@@ -84,11 +84,10 @@ const AutoCompleteView = ({
         }}
         inputContainerStyle={{
           backgroundColor: disabled ? colors.disableText : colors.accentSecondary,
-          borderRadius: 12,
+          borderRadius: 8,
           borderColor: colors.captionText,
           borderWidth: 1,
-          paddingTop: 5,
-          paddingBottom: 5,
+          paddingVertical: 7
         }}
         textInputProps={{
           placeholder: translation.file.Select ?? 'Seleccionar',
@@ -100,7 +99,7 @@ const AutoCompleteView = ({
         }}
         EmptyResultComponent={< View />}
         showChevron={showChevron}
-        ChevronIconComponent={<SvgXml xml={disabled ? ic_arrow_down_dropdown_disabled : ic_arrow_down_dropdown}></SvgXml>}
+        ChevronIconComponent={<SvgXml xml={disabled ? ic_arrow_down_dropdown : ic_arrow_down_dropdown_disabled}></SvgXml>}
         RightIconComponent={rightIcon ? <SvgXml xml={rightIcon}></SvgXml> : undefined}
         showClear={false}
         useFilter={useFilter}

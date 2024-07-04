@@ -46,17 +46,17 @@ const SelectCustomDropdown = ({
       paddingTop: 16,
     },
     buttonTextStyle: {
-      color: selectedItem ? colors.white : colors.secondaryText,
+      color: selectedItem ? colors.white : colors.textColor04,
       textAlign: 'left',
       fontSize: FontsSize._16_SIZE,
       fontFamily: Fonts.DMSansRegular,
-      opacity: selectedItem ? 1 : .8,
+      opacity: selectedItem ? 1 : 1,
     },
     buttonStyle: {
       width: '100%',
       height: 56,
       backgroundColor: colors.accentSecondary,
-      borderRadius: 12,
+      borderRadius: 8,
       borderColor: colors.captionText,
       borderWidth: 1,
     },
@@ -72,6 +72,7 @@ const SelectCustomDropdown = ({
       width: '100%',
       marginTop: 10,
       paddingBottom: 10,
+      borderColor: "transparent",
       alignItems: "center"
     },
     dropdownStyle: {

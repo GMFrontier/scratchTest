@@ -3,6 +3,8 @@ import { TYPES } from '../../../di/types';
 import { User } from '../../../../core/data/models/User';
 import { RegistrationModel } from '../../presentation/register/model/RegistrationModel';
 import RegisterRepository from '../repositories/RegisterRepository';
+import { EmailValidationModel, SMSValidationModel } from '../../presentation/register/model/SMSValidationModel';
+import { ResponseAPI } from '../../../../core/data/models/ResponseApi';
 
 @injectable()
 class RegistrationUseCase {
@@ -22,7 +24,7 @@ class RegistrationUseCase {
   ): Promise<User> {
     const registrationModel: RegistrationModel = {
       step: 1,
-      firstName: name,
+      name: name,
       lastName: lastname,
       email: email,
       password: password,
@@ -30,10 +32,26 @@ class RegistrationUseCase {
       livePanama: true,
       birthDate: birthDate,
       nationality: nationality,
-      document: 41684688
     }
     return this.registerRepository
       .registerUser(registrationModel)
+  }
+
+  async resendSMS(user: User): Promise<ResponseAPI> {
+    const smsModel: SMSValidationModel = {
+      email: user.email,
+      phone_number: user.phone,
+    }
+    return this.registerRepository
+      .resendSMS(smsModel)
+  }
+
+  async resendEmail(user: User): Promise<ResponseAPI> {
+    const emailModel: EmailValidationModel = {
+      email: user.email,
+    }
+    return this.registerRepository
+      .resendEmail(emailModel)
   }
 }
 

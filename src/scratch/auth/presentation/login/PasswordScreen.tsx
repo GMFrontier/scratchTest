@@ -18,8 +18,22 @@ import { ButtonSecondary } from '../../../../core/presentation/components/button
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import { Translations } from '../../../../core/presentation/contexts/translations/Translations';
 import { useBiometrics } from '../../../../core/presentation/utils/biometric/BiometricUtils';
+import { NavigationProps } from '../../../navigation/StackNavigator';
+import container from '../../../di/inversify.config';
+import LoginViewModel from './LoginViewModel';
+import { TYPES } from '../../../di/types';
+import { reaction } from 'mobx';
+import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
+import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
+import SplashScreen from 'react-native-splash-screen';
 
-export const PasswordScreen = observer(() => {
+export const PasswordScreen = observer(({ route }: NavigationProps) => {
+  var email = undefined
+  if (route.params && route.params.email) email = route.params.email
+
+  const viewModel = container.get<LoginViewModel>(
+    TYPES.LoginViewModel,
+  );
 
   const {
     theme: { colors },
@@ -28,14 +42,14 @@ export const PasswordScreen = observer(() => {
   const nav = useNavigation()
 
   const { isBiometricAvailable, biometricPrompt } = useBiometrics()
+  const showStateModal = useNewModalContext().showStateModal
 
-  const [user, setUser] = useState<boolean>(false);
   const [password, setPassword] = useState<string>();
   const [backendError, setBackendError] = useState<string>();
   const [showBiometricButton, setShowBiometricButton] = useState(true);
 
   React.useEffect(() => {
-    setUser(false)
+    SplashScreen.hide();
     // setBackendError("Contraseña inválida, inténtalo nuevamente")
   })
 
@@ -57,46 +71,88 @@ export const PasswordScreen = observer(() => {
       })
   }
 
+  reaction(
+    () => viewModel.loginSuccess,
+    () => {
+      nav.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            { name: ROUTES.Navigator.BottomTabNavigator.name },
+          ],
+        })
+      );
+    }
+  )
+
+  reaction(
+    () => viewModel.showError,
+    () => {
+      showStateModal({
+        title: "Ha ocurrido un problema",
+        message: "Email o contraseña incorrectos.",
+        image: ic_exclamation_error_filled_48,
+        showIcoClose: true,
+        size: "30%"
+      })
+    }
+  )
+
   return (
     <View style={style.containerMain}>
-      <View style={{ alignSelf: "flex-end", marginTop: 20 }} >
-        <ButtonLink
-          text={"Acceder a otra cuenta"}
-          onPress={() => {
-            nav.dispatch(
-              CommonActions.reset({
-                index: 0,
-                routes: [
-                  { name: ROUTES.Auth.LoginScreen.name },
-                ],
-              })
-            )
-          }} />
-      </View>
-      <View style={{
-        marginTop: 140,
-        alignSelf: "center",
-        alignItems: "center",
-      }} >
-        <AvatarImage size={56} />
+      {
+        viewModel.user &&
+        <View style={{ alignSelf: "flex-end", top: 20, position: "absolute" }} >
+          <ButtonLink
+            text={"Acceder a otra cuenta"}
+            onPress={() => {
+              nav.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [
+                    { name: ROUTES.Auth.LoginScreen.name },
+                  ],
+                })
+              )
+            }} />
+        </View>
+      }
+      {
+        viewModel.user &&
+        <View style={{
+          marginTop: 130,
+          alignSelf: "center",
+          alignItems: "center",
+        }} >
+          <AvatarImage size={56} />
 
-        <CustomText
-          text={"Hola, Gabriela Carolina"}
-          marginTop={16}
-          textSize={FontsSize._16_SIZE}
-          fontFamily={Fonts.DMSansMedium}
-          textColor={colors.blue50} />
-      </View>
+          <CustomText
+            text={"Hola, " + viewModel.user.name + " " + viewModel.user.lastName}
+            marginTop={16}
+            textSize={FontsSize._16_SIZE}
+            fontFamily={Fonts.DMSansMedium}
+            textColor={colors.blue50} />
+        </View>
+      }
 
-      <CustomText
-        text={"ejemplo@mail.com.ar"}
-        marginTop={10}
-        textSize={FontsSize._16_SIZE}
-        fontFamily={Fonts.DMSansMedium}
-        textColor={colors.blue50} />
+      {
+        !viewModel.user &&
+        <View style={{
+          marginTop: 201,
+          alignSelf: "center",
+          alignItems: "center",
+        }} >
+          <CustomText
+            text={email ?? "ejemplo@mail.com.ar"}
+            marginTop={10}
+            textSize={FontsSize._16_SIZE}
+            fontFamily={Fonts.DMSansMedium}
+            textColor={colors.blue50} />
+        </View>
+      }
 
       <TextInputMain
-        marginTop={32}
+        marginTop={72}
         inputValue={password}
         onChangeText={setPassword}
         inputType="password"
@@ -119,14 +175,7 @@ export const PasswordScreen = observer(() => {
           text={"Acceder"}
           position='relative'
           onPress={() => {
-            nav.dispatch(
-              CommonActions.reset({
-                index: 0,
-                routes: [
-                  { name: ROUTES.Navigator.BottomTabNavigator.name },
-                ],
-              })
-            );
+            viewModel.login(email ?? "", password)
           }} />
 
         <Sizebox height={8} />

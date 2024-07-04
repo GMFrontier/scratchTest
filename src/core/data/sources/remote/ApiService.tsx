@@ -15,8 +15,6 @@ class ApiService {
     try {
       return (await axiosCall()).data;
     } catch (error) {
-      console.log("ASDASDSD")
-      console.log(JSON.stringify(error))
       const responseError = error as ErrorAPI;
       throw ResponseUtils.handleBackendErrorResponses(responseError, () => {
         this.delay(1500).then(() => {

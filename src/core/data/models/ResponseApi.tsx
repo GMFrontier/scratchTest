@@ -1,14 +1,13 @@
 export interface ResponseAPI {
-  success: boolean;
   message?: string | null;
   data?: any;
   headerStatus: HeaderStatus;
-  serverTime?: string | null;
+  serverTime?: string | null;
   requestId?: string | null;
 }
 
 export interface HeaderStatus {
-  code?: number | null;
+  code?: number | null;
   description?: string | null;
 }
 

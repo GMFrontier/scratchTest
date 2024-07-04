@@ -43,14 +43,7 @@ export const RecoverPasswordEmailValidationScreen = observer(() => {
 
   React.useEffect(() => {
     if (value.length === PIN_LENGTH) {
-      nav.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [
-            { name: ROUTES.Auth.RecoverPinCreateScreen.name },
-          ],
-        })
-      );
+      nav.navigate(ROUTES.Auth.RecoverPasswordCreateScreen.name as never);
     }
   }, [value])
 
@@ -134,9 +127,6 @@ export const RecoverPasswordEmailValidationScreen = observer(() => {
             onPress={() => {
 
             }} />
-
-          <PinView
-            setValue={setValue} />
         </View>
       </View>
     </ToolbarView>

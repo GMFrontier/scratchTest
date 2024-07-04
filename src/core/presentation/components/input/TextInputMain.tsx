@@ -67,7 +67,7 @@ export const TextInputMain = ({
       regex = /.*/
       break;
     case "email":
-      regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      regex = /^(?![^\s@]+@[^\s@]+\.[^\s@]+$).*$/
       break;
     case "money":
     case "number":

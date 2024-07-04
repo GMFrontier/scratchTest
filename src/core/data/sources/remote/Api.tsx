@@ -32,15 +32,17 @@ const getAuthorizationToken = (): string => {
 
 const api = axios.create({
   baseURL: Config.BASE_URL,
-  // headers: {
-  //   // 'Content-Type': 'application/json',
-  //   // platform: '1',
-  //   // Authorization: "",
-  //   // offset: -180, //crear utils get timezone offset
-  //   // timezone: getTimeZone(),
-  //   // fcmToken: '""', //token identicatorio del dispositivo que provee firebase para su FCM
-  // },
+  headers: {
+    Authorization: "",
+    // platform: '1',
+    // offset: -180, //crear utils get timezone offset
+    // timezone: getTimeZone(),
+    // fcmToken: '""', //token identicatorio del dispositivo que provee firebase para su FCM
+  },
   timeout: 10000,
+  validateStatus: (status) => {
+    return status >= 200 && status <= 800
+  },
 })
 
 api.interceptors.request.use(request => {
@@ -49,8 +51,7 @@ api.interceptors.request.use(request => {
 });
 
 api.interceptors.response.use(
-  (response: AxiosResponse<ResponseAPI>) => {
-    JSON.stringify(response)
+  (response: AxiosResponse<any>) => {
     showResponseLogs(response);
     const parsedResponse = ResponseUtils.parseToResponseAPI(response);
     const badResponse = ResponseUtils.handleBadResponses(parsedResponse);
@@ -60,12 +61,9 @@ api.interceptors.response.use(
     }
     return { ...response, data: parsedResponse };
   },
-  (error: AxiosError) => {
+  (error: any) => {
+    console.log(JSON.stringify(error))
     const errorResponse = ResponseUtils.handleAxiosErrorResponses(error);
-    console.log("error.code");
-    console.log(JSON.stringify(error));
-    console.log(error.message);
-
     return Promise.reject(errorResponse);
   },
 );

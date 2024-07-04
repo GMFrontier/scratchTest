@@ -15,19 +15,33 @@ import { ROUTES } from '../../../navigation/routes';
 import { ButtonLink } from '../../../../core/presentation/components/button/ButtonLink';
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import LoginViewModel from './LoginViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
+import { useStatusBar } from '../../../../core/presentation/contexts/statusBar/StatusBarContext';
+import SplashScreen from 'react-native-splash-screen';
 
 export const LoginScreen = observer(() => {
 
   const {
     theme: { colors },
   } = useContext(ThemeContext);
+
+  const viewModel = container.get<LoginViewModel>(
+    TYPES.LoginViewModel,
+  );
+
   const { translation } = useTranslation();
   const navigation = useNavigation()
+  const statusBar = useStatusBar()
 
   const [checkbox, setCheckbox] = useState(false);
+  const [email, setEmail] = useState('');
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
+    statusBar.setPrimaryStatusBar()
+    SplashScreen.hide();
   })
 
   return (
@@ -43,7 +57,10 @@ export const LoginScreen = observer(() => {
 
       <TextInputMain
         marginTop={32}
-        onChangeText={() => { }}
+        inputValue={email}
+        inputType='email'
+        showError={true}
+        onChangeText={setEmail}
         labelTitleRequired={true}
         labelTitle={translation.file.email}
         placeholder={translation.file.email_placeholder} />
@@ -59,7 +76,14 @@ export const LoginScreen = observer(() => {
       <ButtonPrimary
         text={translation.file.continue}
         marginBottom={130}
-        onPress={() => { navigation.navigate(ROUTES.Auth.PasswordScreen.name as never) }} />
+        disabled={/^(?![^\s@]+@[^\s@]+\.[^\s@]+$).*$/.test(email)}
+        onPress={() => {
+          viewModel.saveLoginPreference(checkbox)
+          const args = {
+            email: email
+          }
+          navigation.navigate(ROUTES.Auth.PasswordScreen.name as never, args)
+        }} />
 
       <View style={{ bottom: 70, position: "absolute", alignSelf: "center", flexDirection: "row", }} >
         <CustomText

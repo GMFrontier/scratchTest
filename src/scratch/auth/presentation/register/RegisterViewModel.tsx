@@ -46,11 +46,44 @@ class RegisterViewModel {
         })
       })
       .catch((error: ErrorAPI) => {
-        if (error.code === 555) {
+        console.log(JSON.stringify(error))
+        if (error.code === 416) {
           errorModal(ExternalCardErrorType.ERROR_TEMP_REGISTERED)
         } else {
           errorModal(ExternalCardErrorType.ERROR_GENERIC)
         }
+      });
+  }
+
+  @action
+  resendSMS() {
+    this.registrationUseCase
+      .resendSMS(this.user)
+      .then((response: ResponseAPI) => {
+        runInAction(() => {
+          this.phoneSuccess = postEvent()
+        })
+      })
+      .catch((error: ErrorAPI) => {
+        runInAction(() => {
+          this.showError = postEvent()
+        })
+      });
+  }
+
+  @action
+  resendEmail() {
+    this.registrationUseCase
+      .resendEmail(this.user)
+      .then((response: ResponseAPI) => {
+        runInAction(() => {
+          this.emailSuccess = postEvent()
+        })
+      })
+      .catch((error: ErrorAPI) => {
+        runInAction(() => {
+          this.showError = postEvent()
+        })
       });
   }
 

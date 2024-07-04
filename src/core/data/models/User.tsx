@@ -1,17 +1,15 @@
 export interface User {
-  idUsr: number
+  id: number
   name: string
-  lastname: string
-  login: string
+  lastName: string
   email: string
   photo: string | null
-  imageId: string | null
   verifiedStatus: any
   nationality: string | null
-  phone: string
-  idMerchant: number
+  phoneNumber: string
   hasPfCardActivated: boolean
   token: string
+  role: string
   phoneVerifiedDate?: any | undefined;
 }
 

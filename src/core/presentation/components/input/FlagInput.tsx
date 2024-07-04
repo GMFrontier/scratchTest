@@ -9,6 +9,9 @@ import { isValidPhoneCheck } from '../../../data/utils/Utils';
 import { ButtonFlag } from '../button/ButtonFlag';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../../../scratch/navigation/routes';
+import ic_alert_triangle_filled from '../../../../../assets/svg/ic_alert_triangle_filled';
+import check_ico_content from '../../../../../assets/svg/check_ico_content';
+import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 
 interface Props {
   phone?: any;
@@ -68,6 +71,8 @@ export const FlagInput = ({
             inputType='number'
             maxLength={20}
             placeholder='00000000'
+            backendError=''
+            rightIcon={isValidPhoneCheck(phone, selectedOption) ? ic_success_check_filled : undefined}
           // rightIcon={check_ico_content}
           //showIconEnd={isValidPhone}
           />
