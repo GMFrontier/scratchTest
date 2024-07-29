@@ -17,6 +17,9 @@ import AutoCompleteView from '../../../../core/presentation/components/spinner/A
 import { TextInputMain } from '../../../../core/presentation/components/input/TextInputMain';
 import { FileInput } from '../../../../core/presentation/components/input/FileInput';
 import { JobPlace, JobStatus, Salary } from './RegisterFinancialScreen';
+import container from '../../../di/inversify.config';
+import RegisterViewModel from './RegisterViewModel';
+import { TYPES } from '../../../di/types';
 
 export interface JobPosition {
   id: number;
@@ -28,6 +31,10 @@ export interface JobExperience {
 }
 
 export const RegisterIncomeScreen = observer(() => {
+
+  const viewModel = container.get<RegisterViewModel>(
+    TYPES.RegisterViewModel,
+  );
 
   const {
     theme: { colors },
@@ -274,7 +281,19 @@ export const RegisterIncomeScreen = observer(() => {
             position="relative"
             disabled={!isFormValid}
             onPress={() => {
-              nav.navigate(ROUTES.Auth.RegisterCompleteScreen.name as never)
+              viewModel.registerStep5(
+                jobPosition.title,
+                workplace,
+                company,
+                companyAge.title,
+                socialMedia,
+                website,
+                jobExperience.title,
+                seguro,
+                movements,
+                operacion,
+                renta,
+              )
             }} />
         </ScrollView>
       </KeyboardAvoidingView>

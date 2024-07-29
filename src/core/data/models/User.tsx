@@ -11,6 +11,21 @@ export interface User {
   token: string
   role: string
   phoneVerifiedDate?: any | undefined;
+  address: Address
+  pep: boolean
+  isActive: boolean
+  walletId: string
+  kycUrl: string
+  creationDate: string
+}
+export interface Address {
+  addressLine1: string,
+  addressLine2: string,
+  homeNumber: string,
+  city: string,
+  region: string,
+  postalCode: string,
+  country: string,
 }
 
 export enum UserVerifiedStatus {

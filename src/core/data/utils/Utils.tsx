@@ -49,6 +49,10 @@ export const isUserPasswordValid = (password: string) => {
   );
 };
 
+export const doesPasswordsMatch = (password: string, matchingPassword: string) => {
+  return password === matchingPassword
+};
+
 
 export const formatTime = (seconds: any) => {
   const minutes = Math.floor(seconds / 60);
@@ -70,3 +74,14 @@ export function truncateCustomDate(date: string): string {
 
   return `${shortenedMonth} ${year}`;
 };
+
+export function maskEmail(email: string): string {
+  return email.replace(/([^@]+)@(.*)/, (match, localPart, domain) => {
+    if (localPart.length <= 3) {
+      return '*'.repeat(localPart.length) + '@' + domain;
+    } else {
+      const numAsterisks = Math.min(localPart.length - 3, 3);
+      return '*'.repeat(numAsterisks) + localPart.slice(-3) + '@' + domain;
+    }
+  });
+}

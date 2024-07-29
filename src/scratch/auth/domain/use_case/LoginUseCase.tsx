@@ -8,6 +8,7 @@ import { ResponseAPI } from '../../../../core/data/models/ResponseApi';
 import { LoginModel } from '../../presentation/login/model/LoginModel';
 import LoginRepository from '../repositories/LoginRepository';
 import LocalRepository from '../../../../core/domain/repository/LocalRepository';
+import { PasswordRecoveryStep2, PasswordRecoveryStep3 } from '../../../../core/data/models/PasswordRecoveryDto';
 
 @injectable()
 class LoginUseCase {
@@ -40,22 +41,31 @@ class LoginUseCase {
       })
   }
 
-  // async resendSMS(user: User): Promise<ResponseAPI> {
-  //   const smsModel: SMSValidationModel = {
-  //     email: user.email,
-  //     phone_number: user.phone,
-  //   }
-  //   return this.registerRepository
-  //     .resendSMS(smsModel)
-  // }
+  async sendRecoveryEmail(email: string): Promise<ResponseAPI> {
+    const emailModel: EmailValidationModel = {
+      email: email,
+    }
+    return this.mLoginRepository
+      .sendRecoveryEmail(emailModel)
+  }
 
-  // async resendEmail(user: User): Promise<ResponseAPI> {
-  //   const emailModel: EmailValidationModel = {
-  //     email: user.email,
-  //   }
-  //   return this.registerRepository
-  //     .resendEmail(emailModel)
-  // }
+  async sendEmailCode(email: string, code: string): Promise<ResponseAPI> {
+    const dto: PasswordRecoveryStep2 = {
+      email: email,
+      recovery_code: code
+    }
+    return this.mLoginRepository
+      .sendRecoveryCode(dto)
+  }
+
+  async sendNewPassword(email: string, new_password: string): Promise<ResponseAPI> {
+    const dto: PasswordRecoveryStep3 = {
+      email: email,
+      new_password: new_password
+    }
+    return this.mLoginRepository
+      .sendNewPassword(dto)
+  }
 }
 
 export default LoginUseCase;

@@ -18,13 +18,23 @@ import AutoCompleteView from '../../../../core/presentation/components/spinner/A
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { ScrollView } from 'react-native-gesture-handler';
 import { countryCities } from '../../../../core/constants/Cities';
+import RegisterViewModel from './RegisterViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
+import { countries_es } from '../../../../core/constants/Countries';
+import { AddressRegisterModel } from './model/RegistrationModel';
 
 export interface City {
   id: number;
   title: string
+  code: string
 }
 
 export const RegisterAddressScreen = observer(() => {
+
+  const viewModel = container.get<RegisterViewModel>(
+    TYPES.RegisterViewModel,
+  );
 
   const {
     theme: { colors },
@@ -36,10 +46,11 @@ export const RegisterAddressScreen = observer(() => {
     changeNavigationBarColor(colors.accent);
   })
 
-  const states = (countryCities.find(item => item.code2 === "PA"))?.states.map(item => item.name)
+  const states = (countryCities.find(item => item.code2 === viewModel.user.nationality))?.states.map(item => item)
   var cities = states.map((state: any, index: any) => ({
     id: index,
-    title: state
+    title: state.name,
+    code: state.code
   }));
 
   const [city, setCity] = useState<City | undefined>(undefined);
@@ -49,6 +60,15 @@ export const RegisterAddressScreen = observer(() => {
   const [postalCode, setPostalCode] = useState<string>(undefined);
   const [isFormValid, setIsFormValid] = useState(false);
 
+  const getCountry = (): string => {
+    const enhancedCountries = countries_es.map((country, index) => ({
+      id: index,
+      name: country.name,
+      countryCode: country.countryCode,
+      title: country.name
+    }));
+    return enhancedCountries.find(item => item.countryCode === viewModel.user.nationality).name ?? viewModel.user.nationality
+  }
 
   React.useEffect(() => {
     const isCityValid = city !== undefined
@@ -105,7 +125,7 @@ export const RegisterAddressScreen = observer(() => {
             />
             <AutoCompleteView
               setSelectedItem={() => { }}
-              data={[{ id: '0', title: "Panamá" }]}
+              data={[{ id: '0', title: { getCountry } }]}
               marginTop={16}
               disabled={true}
               initialValueId={'0'}
@@ -162,7 +182,20 @@ export const RegisterAddressScreen = observer(() => {
             text={translation.file.next}
             position="relative"
             disabled={!true}
-            onPress={() => { navigation.navigate(ROUTES.Auth.RegisterFinancialScreen.name as never) }} />
+            onPress={() => {
+              const addressModel: AddressRegisterModel = {
+                region,
+                city: city.code,
+                addressLine1: address1,
+                addressLine2: address2,
+                postalCode
+              }
+              const args = {
+                addressModel: addressModel
+              }
+              navigation.navigate(
+                ROUTES.Auth.RegisterFinancialScreen.name as never, args)
+            }} />
         </ScrollView>
       </KeyboardAvoidingView>
     </ToolbarView>

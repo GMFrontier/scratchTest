@@ -18,8 +18,19 @@ import { ButtonLink } from '../../../../core/presentation/components/button/Butt
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import { PinView } from '../../../../core/presentation/components/input/PinView';
 import { ROUTES } from '../../../navigation/routes';
+import LoginViewModel from '../login/LoginViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
+import { reaction } from 'mobx';
+import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
+import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
+import { maskEmail } from '../../../../core/data/utils/Utils';
 
 export const RecoverPasswordEmailValidationScreen = observer(() => {
+
+  const viewModel = container.get<LoginViewModel>(
+    TYPES.LoginViewModel,
+  );
 
   const {
     theme: { colors },
@@ -36,6 +47,7 @@ export const RecoverPasswordEmailValidationScreen = observer(() => {
     value,
     setValue,
   });
+  const showStateModal = useNewModalContext().showStateModal
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
@@ -43,9 +55,29 @@ export const RecoverPasswordEmailValidationScreen = observer(() => {
 
   React.useEffect(() => {
     if (value.length === PIN_LENGTH) {
-      nav.navigate(ROUTES.Auth.RecoverPasswordCreateScreen.name as never);
+      viewModel.sendRecoverCode(value)
     }
   }, [value])
+
+  reaction(
+    () => viewModel.emailSuccess,
+    () => {
+      nav.navigate(ROUTES.Auth.RecoverPasswordCreateScreen.name as never);
+    }
+  )
+
+  reaction(
+    () => viewModel.showError,
+    () => {
+      showStateModal({
+        title: "Ha ocurrido un problema",
+        message: "Email o contraseña incorrectos.",
+        image: ic_exclamation_error_filled_48,
+        showIcoClose: true,
+        size: "30%"
+      })
+    }
+  )
 
   const styles = StyleSheet.create({
     containerMain: {
@@ -89,7 +121,7 @@ export const RecoverPasswordEmailValidationScreen = observer(() => {
           textSize={FontsSize._32_SIZE} />
 
         <CustomText
-          text={"Ingresa el código de 6 digitos enviado a ********ser@mail.com."}
+          text={"Ingresa el código de 6 digitos enviado a " + maskEmail(viewModel.recoverPasswordEmail)}
           marginTop={8}
           marginBottom={72}
           fontFamily={Fonts.DMSansRegular}
@@ -125,7 +157,7 @@ export const RecoverPasswordEmailValidationScreen = observer(() => {
           <ButtonLink
             text={"Reenviar"}
             onPress={() => {
-
+              viewModel.recoverPassword()
             }} />
         </View>
       </View>

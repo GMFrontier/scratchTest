@@ -11,15 +11,22 @@ import { ButtonLink } from '../../../../core/presentation/components/button/Butt
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
-import { PinView } from '../../../../core/presentation/components/input/PinView';
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
 import FontsSize from '../../../../core/constants/FontsSize';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
 import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 import { ROUTES } from '../../../navigation/routes';
 import { formatTime } from '../../../../core/data/utils/Utils';
+import RegisterViewModel from './RegisterViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
+import { reaction } from 'mobx'
+import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
 
 export const RegisterPhoneValidationScreen = observer(() => {
+  const viewModel = container.get<RegisterViewModel>(
+    TYPES.RegisterViewModel,
+  );
 
   const {
     theme: { colors },
@@ -63,6 +70,13 @@ export const RegisterPhoneValidationScreen = observer(() => {
 
   React.useEffect(() => {
     if (value.length === PIN_LENGTH) {
+      viewModel.sendSMSCode(value)
+    }
+  }, [value])
+
+  reaction(
+    () => viewModel.phoneSuccess,
+    () => {
       showModal({
         title: "Teléfono validado",
         message: "Se ha validado tu número con éxito, ahora validaremos tu correo.",
@@ -74,7 +88,19 @@ export const RegisterPhoneValidationScreen = observer(() => {
         enableOverlayTap: "none"
       })
     }
-  }, [value])
+  )
+  reaction(
+    () => viewModel.showError,
+    () => {
+      showModal({
+        title: "Ha ocurrido un problema",
+        message: "El código es inválido.",
+        image: ic_exclamation_error_filled_48,
+        showIcoClose: true,
+        size: "30%"
+      })
+    }
+  )
 
   const styles = StyleSheet.create({
     containerMain: {
@@ -156,6 +182,7 @@ export const RegisterPhoneValidationScreen = observer(() => {
                 onPress={() => {
                   setIsCounterEnable(true)
                   setCounter(timeSec)
+                  viewModel.getSMSCode()
                 }} />
             </View>
             :

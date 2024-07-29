@@ -1,8 +1,11 @@
 export default class EndPoints {
   static LOGIN = '/auth/login';
   static REFRESH_LOGIN = '/RefreshUserLoginApp';
-  static RECOVER_PASSWORD = '/RecoveryPassword';
+  static RECOVER_PASSWORD = '/api/request_password_recovery';
+  static VERIFY_RECOVERY_CODE = '/api/verify_recovery_code';
+  static SET_NEW_PASSWORD = '/api/set_new_password';
   static REGISTER = '/api/registerUser';
+  static REGISTER_STEP_5 = '/api/financialInfo/';
   static RESEND_SMS = '/resendSms';
   static RESEND_EMAIL = '/resendEmailCode';
   static ACTIVITIES = '/Activities';

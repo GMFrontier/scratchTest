@@ -1,17 +1,29 @@
 import { ResponseAPI } from "../../../../core/data/models/ResponseApi";
 import { User } from "../../../../core/data/models/User";
-import { RegistrationModel } from "../../presentation/register/model/RegistrationModel";
-import { EmailValidationModel, SMSValidationModel } from "../../presentation/register/model/SMSValidationModel";
+import { RegistrationModel, RegistrationStep5Model } from "../../presentation/register/model/RegistrationModel";
+import { EmailValidationModel, RegisterEmailValidationModel, RegisterSMSValidationModel, SMSValidationModel } from "../../presentation/register/model/SMSValidationModel";
 
 export interface RegisterRepository {
   registerUser(
     registrationUser: RegistrationModel,
   ): Promise<User>;
-  resendSMS(
+  sendSMSCode(
+    smsModel: RegisterSMSValidationModel,
+  ): Promise<ResponseAPI>;
+  sendEmailCode(
+    smsModel: RegisterEmailValidationModel,
+  ): Promise<ResponseAPI>;
+  getSMSCode(
     smsModel: SMSValidationModel,
   ): Promise<ResponseAPI>;
-  resendEmail(
+  getEmailCode(
     emailModel: EmailValidationModel,
+  ): Promise<ResponseAPI>;
+  registerStep4(
+    dto: any,
+  ): Promise<ResponseAPI>;
+  registerStep5(
+    dto: RegistrationStep5Model,
   ): Promise<ResponseAPI>;
 
 

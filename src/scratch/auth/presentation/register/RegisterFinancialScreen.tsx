@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { View, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import React = require('react');
 import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
@@ -9,17 +9,25 @@ import Fonts from '../../../../core/constants/Fonts';
 import FontsSize from '../../../../core/constants/FontsSize';
 import { ButtonPrimary } from '../../../../core/presentation/components/button/ButtonPrimary';
 import { useNavigation } from '@react-navigation/native';
-import { ROUTES } from '../../../navigation/routes';
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
 import AutoCompleteView from '../../../../core/presentation/components/spinner/AutoCompleteView';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { ScrollView } from 'react-native-gesture-handler';
-import RadioGroup from 'react-native-radio-buttons-group';
+import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { CustomLabelText } from '../../../../core/presentation/components/text/CustomLabelText';
 import { FileInput } from '../../../../core/presentation/components/input/FileInput';
 import SelectCustomDropdown from '../../../../core/presentation/components/spinner/SelectCustomDropdown';
+import { NavigationProps } from '../../../navigation/StackNavigator';
+import RegisterViewModel from './RegisterViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
+import { reaction } from 'mobx'
+import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
+import { ROUTES } from '../../../navigation/routes';
+import { FinancialRegisterModel } from './model/RegistrationModel';
+import { TextInputMain } from '../../../../core/presentation/components/input/TextInputMain';
 
 export interface JobStatus {
   id: string;
@@ -32,23 +40,60 @@ export interface JobPlace {
 export interface Salary {
   id: number;
   title: string
+  code: string
 }
 
-export const RegisterFinancialScreen = observer(() => {
+export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => {
+  var data = undefined
+  if (route.params && route.params.addressModel) data = route.params.addressModel
+
+  const viewModel = container.get<RegisterViewModel>(
+    TYPES.RegisterViewModel,
+  );
 
   const {
     theme: { colors },
   } = useContext(ThemeContext);
   const { translation } = useTranslation();
   const nav = useNavigation()
+  const showModal = useNewModalContext().showStateModal
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
   })
 
+  const radioButtonsData: RadioButtonProps[] = React.useMemo(() => (
+    [
+      {
+        id: '1',
+        label: 'Sí',
+        value: true,
+        color: exposedPerson === "1" ? colors.white : undefined,
+        borderSize: exposedPerson === "1" ? 8 : 2.5,
+        borderColor: exposedPerson === "1" ? colors.blue200 : colors.disableText
+      },
+      {
+        id: '2',
+        label: 'No',
+        value: false,
+        color: exposedPerson === "2" ? colors.white : undefined,
+        borderSize: exposedPerson === "2" ? 8 : 2.5,
+        borderColor: exposedPerson === "2" ? colors.blue200 : colors.disableText
+      }
+    ]), []);
+
+  const salaryData = [
+    { id: "0", title: "Entre $0 y $700", code: 700 },
+    { id: "1", title: "Entre $700 y $1000", code: 1000 },
+    { id: "1", title: "Entre $1000 y $1500", code: 1500 },
+    { id: "2", title: "Entre $1500 y $2500", code: 2500 },
+    { id: "2", title: "Más de $2500", code: 2501 }
+  ]
+
   const [jobStatus, setJobStatus] = useState<JobStatus | undefined>(undefined);
   const [jobPlace, setJobPlace] = useState<JobPlace | undefined>(undefined);
   const [salary, setSalary] = useState<Salary | undefined>(undefined);
+  const [occupation, setOccupation] = useState<string>("");
   const [exposedPerson, setExposedPerson] = useState();
   const [comprobante, setComprobante] = useState<string | undefined>();
   const [apc, setAPC] = useState();
@@ -59,6 +104,7 @@ export const RegisterFinancialScreen = observer(() => {
     const isJobStatusValid = jobStatus !== undefined
     const isJobPlaceValid = jobPlace !== undefined
     const isSalaryValid = salary !== undefined
+    const isOccupationValid = occupation.length > 4
     const isExposedPersonValid = exposedPerson !== undefined
     const isFileValid = comprobante !== undefined
     const isAPCValid = apc !== undefined
@@ -71,7 +117,8 @@ export const RegisterFinancialScreen = observer(() => {
       isExposedPersonValid &&
       isFileValid &&
       isAPCValid &&
-      isCanVerifyValid
+      isCanVerifyValid &&
+      isOccupationValid
     )
     console.log(
       isJobStatusValid + " " +
@@ -80,7 +127,8 @@ export const RegisterFinancialScreen = observer(() => {
       isExposedPersonValid + " " +
       isFileValid + " " +
       isAPCValid + " " +
-      isCanVerifyValid + " "
+      (radioButtonsData.find(item => item.id === canVerify)?.value ?? false) + " " +
+      isOccupationValid + " "
     )
   }, [
     jobStatus,
@@ -90,7 +138,15 @@ export const RegisterFinancialScreen = observer(() => {
     comprobante,
     apc,
     canVerify,
+    occupation
   ])
+
+  reaction(
+    () => viewModel.step4Success,
+    () => {
+      nav.navigate(ROUTES.Auth.RegisterIncomeScreen.name as never)
+    }
+  )
 
   return (
     <ToolbarView
@@ -127,9 +183,18 @@ export const RegisterFinancialScreen = observer(() => {
             labelTitle={"Lugar de trabajo"}
             clearOnFocus={true} />
 
+          <TextInputMain
+            marginTop={16}
+            onChangeText={setOccupation}
+            inputValue={occupation}
+            labelTitleRequired={true}
+            labelTitle={"Ocupación"}
+            placeholder={"Ej: Developer"} />
+
+
           <SelectCustomDropdown
             setItem={setSalary}
-            data={[{ id: "0", title: "Entre $0 y $700" }, { id: "1", title: "Entre $700 y $1000" }, { id: "2", title: "Entre $1500 y $2500" }, { id: "2", title: "Más de $2500" }]}
+            data={salaryData}
             marginTop={16}
             labelTitle={"Rango salarial"} />
 
@@ -140,26 +205,7 @@ export const RegisterFinancialScreen = observer(() => {
             showRequiredIcon={true} />
           <View style={{ flexDirection: "row" }} >
             <RadioGroup
-              radioButtons={
-                [
-                  {
-                    id: '1',
-                    label: 'Sí',
-                    value: "true",
-                    color: exposedPerson === "1" ? colors.white : undefined,
-                    borderSize: exposedPerson === "1" ? 8 : 2.5,
-                    borderColor: exposedPerson === "1" ? colors.blue200 : colors.disableText
-                  },
-                  {
-                    id: '2',
-                    label: 'No',
-                    value: "false",
-                    color: exposedPerson === "2" ? colors.white : undefined,
-                    borderSize: exposedPerson === "2" ? 8 : 2.5,
-                    borderColor: exposedPerson === "2" ? colors.blue200 : colors.disableText
-                  }
-                ]
-              }
+              radioButtons={radioButtonsData}
               onPress={setExposedPerson}
               layout='row'
               selectedId={exposedPerson}
@@ -182,19 +228,49 @@ export const RegisterFinancialScreen = observer(() => {
             showInfoModal={true}
           />
 
-          <SelectCustomDropdown
-            data={[]}
-            dropdownType='boolean'
+          <CustomLabelText
+            text="¿Ya cuentas con APC?"
             marginTop={16}
-            labelTitle={"¿Ya cuentas con APC?"}
-            setItem={setAPC} />
+            textColor={colors.white}
+            showRequiredIcon={true} />
+          <View style={{ flexDirection: "row" }} >
+            <RadioGroup
+              radioButtons={radioButtonsData}
+              onPress={setAPC}
+              layout='row'
+              selectedId={apc}
+              containerStyle={{
+                flex: 1,
+                justifyContent: "space-between",
+                marginHorizontal: 66,
+              }}
+              labelStyle={{
+                color: colors.white
+              }}
+            />
+          </View>
 
-          <SelectCustomDropdown
-            data={[]}
-            dropdownType='boolean'
+          <CustomLabelText
+            text="¿Podemos verificar?"
             marginTop={16}
-            labelTitle={"¿Podemos verificar?"}
-            setItem={setCanVerify} />
+            textColor={colors.white}
+            showRequiredIcon={true} />
+          <View style={{ flexDirection: "row" }} >
+            <RadioGroup
+              radioButtons={radioButtonsData}
+              onPress={setCanVerify}
+              layout='row'
+              selectedId={canVerify}
+              containerStyle={{
+                flex: 1,
+                justifyContent: "space-between",
+                marginHorizontal: 66,
+              }}
+              labelStyle={{
+                color: colors.white
+              }}
+            />
+          </View>
 
           <Sizebox height={32} />
           <ButtonPrimary
@@ -202,7 +278,17 @@ export const RegisterFinancialScreen = observer(() => {
             position="relative"
             disabled={!isFormValid}
             onPress={() => {
-              nav.navigate(ROUTES.Auth.RegisterIdValidationScreen.name as never)
+              const financialModel: FinancialRegisterModel = {
+                jobStatus: jobStatus.title,
+                jobPlace: jobPlace.title,
+                salary: salary.code,
+                exposedPerson: radioButtonsData.find(item => item.id === exposedPerson)?.value ?? false,
+                comprobante,
+                apc: radioButtonsData.find(item => item.id === apc)?.value ?? false,
+                canVerify: radioButtonsData.find(item => item.id === canVerify)?.value ?? false,
+                pdfDocument: comprobante
+              }
+              viewModel.registerStep4(data, financialModel)
             }} />
         </ScrollView>
       </KeyboardAvoidingView>

@@ -10,9 +10,63 @@ import Config from 'react-native-config';
 import { SMSValidationModel, EmailValidationModel } from '../../presentation/register/model/SMSValidationModel';
 import LoginRepository from '../../domain/repositories/LoginRepository';
 import { LoginModel } from '../../presentation/login/model/LoginModel';
+import { PasswordRecoveryStep2, PasswordRecoveryStep3 } from '../../../../core/data/models/PasswordRecoveryDto';
 
 @injectable()
 class LoginRepositoryImpl implements LoginRepository {
+  sendNewPassword(dto: PasswordRecoveryStep3): Promise<any> {
+
+    return new Promise<any>((resolve, reject) => {
+      ApiService.apiCallWithLoading(() => {
+        return api.post<ResponseAPI>(
+          EndPoints.SET_NEW_PASSWORD,
+          dto,
+        )
+      })
+        .then((result: ResponseAPI) => {
+          resolve(result);
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
+    });
+  }
+  sendRecoveryCode(dto: PasswordRecoveryStep2): Promise<any> {
+
+    return new Promise<any>((resolve, reject) => {
+      ApiService.apiCallWithLoading(() => {
+        return api.post<ResponseAPI>(
+          EndPoints.VERIFY_RECOVERY_CODE,
+          dto,
+        )
+      })
+        .then((result: ResponseAPI) => {
+          resolve(result);
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
+    });
+  }
+
+  sendRecoveryEmail(dto: EmailValidationModel): Promise<any> {
+
+    return new Promise<any>((resolve, reject) => {
+      ApiService.apiCallWithLoading(() => {
+        return api.post<ResponseAPI>(
+          EndPoints.RECOVER_PASSWORD,
+          dto,
+        )
+      })
+        .then((result: ResponseAPI) => {
+          resolve(result);
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
+    });
+  }
+
   login(dto: LoginModel): Promise<User> {
 
     return new Promise<User>((resolve, reject) => {

@@ -1,15 +1,11 @@
 import { injectable } from 'inversify';
-import { Dispatch, SetStateAction } from 'react';
 import { observable, makeObservable, action, runInAction } from 'mobx'
 import RegistrationUseCase from '../../domain/use_case/RegistrationUseCase';
 import { ErrorAPI, ResponseAPI } from '../../../../core/data/models/ResponseApi';
 import { postEvent } from '../../../../core/presentation/utils/MobxUtils';
 import { User } from '../../../../core/data/models/User';
-
-export enum ExternalCardErrorType {
-  ERROR_GENERIC,
-  ERROR_TEMP_REGISTERED
-}
+import { PresentationErrorTypes } from '../../../../core/presentation/utils/PresentationErrors';
+import { AddressRegisterModel, FinancialRegisterModel } from './model/RegistrationModel';
 
 @injectable()
 class RegisterViewModel {
@@ -19,9 +15,11 @@ class RegisterViewModel {
   @observable showError: any
   @observable phoneSuccess: any;
   @observable emailSuccess: any;
+  @observable step4Success: any;
+  @observable step5Success: any;
 
   constructor(
-    private registrationUseCase: RegistrationUseCase,
+    private mRegistrationUseCase: RegistrationUseCase,
   ) {
     makeObservable(this)
   }
@@ -35,9 +33,9 @@ class RegisterViewModel {
     email: string,
     phone: string,
     password: string,
-    errorModal: (errorType: ExternalCardErrorType) => void
+    errorModal: (errorType: PresentationErrorTypes) => void
   ) {
-    this.registrationUseCase
+    this.mRegistrationUseCase
       .registerUser(name, lastname, birthDate, nationality, email, phone, password)
       .then((response: User) => {
         runInAction(() => {
@@ -48,17 +46,30 @@ class RegisterViewModel {
       .catch((error: ErrorAPI) => {
         console.log(JSON.stringify(error))
         if (error.code === 416) {
-          errorModal(ExternalCardErrorType.ERROR_TEMP_REGISTERED)
+          errorModal(PresentationErrorTypes.ERROR_TEMP_REGISTERED)
         } else {
-          errorModal(ExternalCardErrorType.ERROR_GENERIC)
+          errorModal(PresentationErrorTypes.ERROR_GENERIC)
         }
       });
   }
 
   @action
-  resendSMS() {
-    this.registrationUseCase
-      .resendSMS(this.user)
+  getSMSCode() {
+    this.mRegistrationUseCase
+      .getSMSCode(this.user)
+      .catch((error: ErrorAPI) => {
+        runInAction(() => {
+          this.showError = postEvent()
+        })
+      });
+  }
+
+  @action
+  sendSMSCode(
+    code: string,
+  ) {
+    this.mRegistrationUseCase
+      .sendSMSCode(this.user, code)
       .then((response: ResponseAPI) => {
         runInAction(() => {
           this.phoneSuccess = postEvent()
@@ -72,12 +83,84 @@ class RegisterViewModel {
   }
 
   @action
-  resendEmail() {
-    this.registrationUseCase
-      .resendEmail(this.user)
+  sendEmailCode(
+    code: string,
+  ) {
+    this.mRegistrationUseCase
+      .sendEmailCode(this.user, code)
       .then((response: ResponseAPI) => {
         runInAction(() => {
           this.emailSuccess = postEvent()
+        })
+      })
+      .catch((error: ErrorAPI) => {
+        runInAction(() => {
+          this.showError = postEvent()
+        })
+      });
+  }
+
+  @action
+  getEmailCode() {
+    this.mRegistrationUseCase
+      .getEmailCode(this.user)
+      .catch((error: ErrorAPI) => {
+        runInAction(() => {
+          this.showError = postEvent()
+        })
+      });
+  }
+
+  @action
+  registerStep4(
+    address: AddressRegisterModel,
+    financial: FinancialRegisterModel,
+  ) {
+    this.mRegistrationUseCase
+      .registerStep4(this.user, address, financial)
+      .then((response: ResponseAPI) => {
+        runInAction(() => {
+          this.step4Success = postEvent()
+        })
+      })
+      .catch((error: ErrorAPI) => {
+        runInAction(() => {
+          this.showError = postEvent()
+        })
+      });
+  }
+
+  @action
+  registerStep5(
+    jobPosition?: string,
+    workplace?: string,
+    company?: string,
+    companyAge?: string,
+    socialMedia?: string,
+    website?: string,
+    jobExperience?: string,
+    seguro?: string,
+    movements?: string,
+    operacion?: string,
+    renta?: string,
+  ) {
+    this.mRegistrationUseCase
+      .registerStep5(
+        jobPosition,
+        workplace,
+        company,
+        companyAge,
+        socialMedia,
+        website,
+        jobExperience,
+        seguro,
+        movements,
+        operacion,
+        renta,
+      )
+      .then((response: ResponseAPI) => {
+        runInAction(() => {
+          this.step5Success = postEvent()
         })
       })
       .catch((error: ErrorAPI) => {

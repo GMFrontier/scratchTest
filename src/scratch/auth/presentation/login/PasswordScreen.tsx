@@ -102,7 +102,7 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
     <View style={style.containerMain}>
       {
         viewModel.user &&
-        <View style={{ alignSelf: "flex-end", top: 20, position: "absolute" }} >
+        <View style={{ alignSelf: "flex-end", top: 20, position: "absolute", right: 16 }} >
           <ButtonLink
             text={"Acceder a otra cuenta"}
             onPress={() => {
@@ -166,7 +166,10 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
       <ButtonLink
         text={"¿Olvidaste tu contraseña?"}
         onPress={() => {
-          nav.navigate(ROUTES.Auth.RecoverPasswordScreen.name as never)
+          const args = {
+            email: email ?? viewModel.user.email
+          }
+          nav.navigate(ROUTES.Auth.RecoverPasswordScreen.name as never, args)
         }} />
 
       <View style={{ position: "absolute", width: "100%", bottom: 32 }}  >

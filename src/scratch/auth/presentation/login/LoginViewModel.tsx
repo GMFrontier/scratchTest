@@ -5,6 +5,7 @@ import { postEvent } from '../../../../core/presentation/utils/MobxUtils';
 import { User } from '../../../../core/data/models/User';
 import LoginUseCase from '../../domain/use_case/LoginUseCase';
 import PreferencesUseCase from '../../../../core/domain/use_case/PreferencesUseCase';
+import { PresentationErrorTypes } from '../../../../core/presentation/utils/PresentationErrors';
 
 export const REMEMBER_USER = "REMEMBER_USER"
 
@@ -21,7 +22,10 @@ class LoginViewModel {
   @observable loginSuccess: any
   @observable showError: any
   @observable phoneSuccess: any;
+  @observable sendCodeSuccess: any;
+  @observable recoverPasswordSuccess: any;
   @observable emailSuccess: any;
+  recoverPasswordEmail = ""
 
   constructor(
     private mLoginUseCase: LoginUseCase,
@@ -75,39 +79,65 @@ class LoginViewModel {
     }
   }
 
-  // @action
-  // resendSMS() {
-  //   this.registrationUseCase
-  //     .resendSMS(this.user)
-  //     .then((response: ResponseAPI) => {
-  //       runInAction(() => {
-  //         this.phoneSuccess = postEvent()
-  //       })
-  //     })
-  //     .catch((error: ErrorAPI) => {
-  //       runInAction(() => {
-  //         this.showError = postEvent()
-  //       })
-  //     });
-  // }
+  @action
+  recoverPassword(
+    email?: string,
+  ) {
+    if (email) this.recoverPasswordEmail = email
+    this.mLoginUseCase
+      .sendRecoveryEmail(this.recoverPasswordEmail)
+      .then((response: ResponseAPI) => {
+        runInAction(() => {
+          this.emailSuccess = postEvent()
+        })
+      })
+      .catch((error: ErrorAPI) => {
+        runInAction(() => {
+          this.showError = postEvent()
+        })
+      });
+  }
 
-  // @action
-  // resendEmail() {
-  //   this.registrationUseCase
-  //     .resendEmail(this.user)
-  //     .then((response: ResponseAPI) => {
-  //       runInAction(() => {
-  //         this.emailSuccess = postEvent()
-  //       })
-  //     })
-  //     .catch((error: ErrorAPI) => {
-  //       runInAction(() => {
-  //         this.showError = postEvent()
-  //       })
-  //     });
-  // }
+  @action
+  sendRecoverCode(
+    code: string,
+  ) {
+    this.mLoginUseCase
+      .sendEmailCode(this.recoverPasswordEmail, code)
+      .then((response: ResponseAPI) => {
+        runInAction(() => {
+          this.sendCodeSuccess = postEvent()
+        })
+      })
+      .catch((error: ErrorAPI) => {
+        runInAction(() => {
+          this.showError = postEvent()
+        })
+      });
+  }
 
-
+  @action
+  sendNewPassword(
+    newPassword: string,
+    showError: (error: PresentationErrorTypes) => void,
+  ) {
+    this.mLoginUseCase
+      .sendNewPassword(this.recoverPasswordEmail, newPassword)
+      .then((response: ResponseAPI) => {
+        runInAction(() => {
+          this.recoverPasswordSuccess = postEvent()
+        })
+      })
+      .catch((error: ErrorAPI) => {
+        runInAction(() => {
+          if (error.code === 416) {
+            showError(PresentationErrorTypes.SAME_PASSWORD)
+          } else {
+            showError(PresentationErrorTypes.ERROR_GENERIC)
+          }
+        })
+      });
+  }
 }
 
 export default LoginViewModel;

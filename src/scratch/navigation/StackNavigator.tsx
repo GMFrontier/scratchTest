@@ -14,7 +14,7 @@ const handlers = {
 
   LoginScreen: () => <ROUTES.Auth.LoginScreen.screen />,
   PasswordScreen: (params: any) => <ROUTES.Auth.PasswordScreen.screen {...params} />,
-  RecoverPasswordScreen: () => <ROUTES.Auth.RecoverPasswordScreen.screen />,
+  RecoverPasswordScreen: (params: any) => <ROUTES.Auth.RecoverPasswordScreen.screen {...params} />,
   RecoverPasswordEmailValidationScreen: () => <ROUTES.Auth.RecoverPasswordEmailValidationScreen.screen />,
   RecoverPasswordCreateScreen: () => <ROUTES.Auth.RecoverPasswordCreateScreen.screen />,
   RegisterScreen: () => <ROUTES.Auth.RegisterScreen.screen />,
@@ -22,7 +22,7 @@ const handlers = {
   RegisterPhoneValidationScreen: () => <ROUTES.Auth.RegisterPhoneValidationScreen.screen />,
   RegisterEmailValidationScreen: () => <ROUTES.Auth.RegisterEmailValidationScreen.screen />,
   RegisterAddressScreen: () => <ROUTES.Auth.RegisterAddressScreen.screen />,
-  RegisterFinancialScreen: () => <ROUTES.Auth.RegisterFinancialScreen.screen />,
+  RegisterFinancialScreen: (params: any) => <ROUTES.Auth.RegisterFinancialScreen.screen {...params} />,
   RegisterIdValidationScreen: () => <ROUTES.Auth.RegisterIdValidationScreen.screen />,
   RegisterStepsScreen: () => <ROUTES.Auth.RegisterStepsScreen.screen />,
   RegisterIncomeScreen: () => <ROUTES.Auth.RegisterIncomeScreen.screen />,

@@ -14,8 +14,20 @@ import { TextInputMain } from '../../../../core/presentation/components/input/Te
 import { ButtonPrimary } from '../../../../core/presentation/components/button/ButtonPrimary';
 import { useStatusBar } from '../../../../core/presentation/contexts/statusBar/StatusBarContext';
 import { ROUTES } from '../../../navigation/routes';
+import { NavigationProps } from '../../../navigation/StackNavigator';
+import container from '../../../di/inversify.config';
+import LoginViewModel from '../login/LoginViewModel';
+import { TYPES } from '../../../di/types';
+import { reaction } from 'mobx';
+import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
 
-export const RecoverPasswordScreen = observer(() => {
+export const RecoverPasswordScreen = observer(({ route }: NavigationProps) => {
+  var data = undefined
+  if (route.params && route.params.email) data = route.params.email
+
+  const viewModel = container.get<LoginViewModel>(
+    TYPES.LoginViewModel,
+  );
 
   const {
     theme: { colors },
@@ -28,6 +40,29 @@ export const RecoverPasswordScreen = observer(() => {
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
   })
+  React.useEffect(() => {
+    if (data) setEmail(data)
+  }, [data])
+
+  reaction(
+    () => viewModel.emailSuccess,
+    () => {
+      nav.navigate(ROUTES.Auth.RecoverPasswordEmailValidationScreen.name as never)
+    }
+  )
+
+  reaction(
+    () => viewModel.showError,
+    () => {
+      showStateModal({
+        title: "Ha ocurrido un problema",
+        message: "Intentelo nuevamente más tarde.",
+        image: ic_exclamation_error_filled_48,
+        showIcoClose: true,
+        size: "30%"
+      })
+    }
+  )
 
   return (
     <ToolbarView
@@ -48,9 +83,10 @@ export const RecoverPasswordScreen = observer(() => {
 
         <TextInputMain
           marginTop={48}
-          onChangeText={setEmail}
           inputValue={email}
           inputType='email'
+          showError={true}
+          onChangeText={setEmail}
           labelTitleRequired={true}
           labelTitle={translation.file.email}
           placeholder={translation.file.email_placeholder} />
@@ -59,7 +95,7 @@ export const RecoverPasswordScreen = observer(() => {
           text={translation.file.next}
           disabled={email.trim().length <= 0}
           onPress={() => {
-            nav.navigate(ROUTES.Auth.RecoverPasswordEmailValidationScreen.name as never)
+            viewModel.recoverPassword(email)
           }}
         />
       </View>
@@ -78,3 +114,7 @@ const style = StyleSheet.create({
     justifyContent: 'flex-end',
   },
 });
+
+function showStateModal(arg0: { title: string; message: string; image: any; showIcoClose: boolean; size: string; }) {
+  throw new Error('Function not implemented.');
+}

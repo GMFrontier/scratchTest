@@ -18,8 +18,16 @@ import { useNewModalContext } from '../../../../core/presentation/contexts/messa
 import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 import { ROUTES } from '../../../navigation/routes';
 import { formatTime } from '../../../../core/data/utils/Utils';
+import RegisterViewModel from './RegisterViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
+import { reaction } from 'mobx'
+import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
 
 export const RegisterEmailValidationScreen = observer(() => {
+  const viewModel = container.get<RegisterViewModel>(
+    TYPES.RegisterViewModel,
+  );
 
   const {
     theme: { colors },
@@ -71,6 +79,14 @@ export const RegisterEmailValidationScreen = observer(() => {
 
   React.useEffect(() => {
     if (value.length === PIN_LENGTH) {
+      viewModel.sendEmailCode(value)
+    }
+  }, [value])
+
+  reaction(
+    () => viewModel.emailSuccess,
+    () => {
+
       showModal({
         title: "Correo validado",
         message: "Se ha validado tu correo electrónico con éxito, completa tu registro y solicita tu tarjeta.",
@@ -82,7 +98,20 @@ export const RegisterEmailValidationScreen = observer(() => {
         enableOverlayTap: "none"
       })
     }
-  }, [value])
+  )
+
+  reaction(
+    () => viewModel.showError,
+    () => {
+      showModal({
+        title: "Ha ocurrido un problema",
+        message: "El código es inválido.",
+        image: ic_exclamation_error_filled_48,
+        showIcoClose: true,
+        size: "30%"
+      })
+    }
+  )
 
   const styles = StyleSheet.create({
     containerMain: {
@@ -162,6 +191,7 @@ export const RegisterEmailValidationScreen = observer(() => {
               <ButtonLink
                 text={"Reenviar"}
                 onPress={() => {
+                  viewModel.getEmailCode()
                   setIsCounterEnable(true)
                   setCounter(timeSec)
                 }} />

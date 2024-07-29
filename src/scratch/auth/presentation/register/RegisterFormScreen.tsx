@@ -24,21 +24,16 @@ import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { ScrollView } from 'react-native-gesture-handler';
 import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 import { SvgXml } from 'react-native-svg';
-import DropdownItem from '../../../../core/presentation/components/spinner/DropdownItem';
-import ic_arrow_down_dropdown from '../../../../../assets/svg/ic_arrow_down_dropdown';
-import ic_arrow_down_dropdown_disabled from '../../../../../assets/svg/ic_arrow_down_dropdown_disabled';
-import SelectDropdown from 'react-native-select-dropdown';
-import { opacity } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 import SelectCustomDropdown from '../../../../core/presentation/components/spinner/SelectCustomDropdown';
 import { isUserPasswordValid, isValidPhoneCheck } from '../../../../core/data/utils/Utils';
 import { useToastContext } from '../../../../core/presentation/contexts/messages/useToastContext';
 import container from '../../../di/inversify.config';
-import RegisterViewModel, { ExternalCardErrorType as ErrorTypes } from './RegisterViewModel';
+import RegisterViewModel from './RegisterViewModel';
 import { TYPES } from '../../../di/types';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
-import ic_exclamation_error_filled from '../../../../../assets/svg/ic_exclamation_error_filled';
 import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { PresentationErrorTypes } from '../../../../core/presentation/utils/PresentationErrors';
+import { reaction } from 'mobx'
 
 export const RegisterFormScreen = observer(() => {
 
@@ -96,6 +91,13 @@ export const RegisterFormScreen = observer(() => {
   );
   const [phone, setPhone] = React.useState('');
 
+  reaction(
+    () => viewModel.registerSuccess,
+    () => {
+      navigation.navigate(ROUTES.Auth.RegisterPhoneValidationScreen.name as never)
+    }
+  )
+
   React.useEffect(() => {
     const isNameValid = /^[a-zA-Z\s]+$/.test(name);
     const isLastNameValid = /^[a-zA-Z\s]+$/.test(lastname);
@@ -151,9 +153,9 @@ export const RegisterFormScreen = observer(() => {
     },
   });
 
-  const errorModal = (errorType: ErrorTypes) => {
+  const errorModal = (errorType: PresentationErrorTypes) => {
     switch (errorType) {
-      case ErrorTypes.ERROR_TEMP_REGISTERED:
+      case PresentationErrorTypes.ERROR_TEMP_REGISTERED:
         showStateModal({
           title: "Ha ocurrido un problema",
           message: "Al parecer has intentado registrarte con estos datos previamente aguardar 15 min e inténtalo nuevamente.",
@@ -298,7 +300,7 @@ export const RegisterFormScreen = observer(() => {
                 date,
                 country.countryCode,
                 email,
-                phone,
+                selectedOption.split('*')[1] + phone,
                 password,
                 errorModal
               )
