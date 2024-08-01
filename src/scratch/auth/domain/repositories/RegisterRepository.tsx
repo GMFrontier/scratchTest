@@ -12,7 +12,7 @@ export interface RegisterRepository {
   ): Promise<ResponseAPI>;
   sendEmailCode(
     smsModel: RegisterEmailValidationModel,
-  ): Promise<ResponseAPI>;
+  ): Promise<User>;
   getSMSCode(
     smsModel: SMSValidationModel,
   ): Promise<ResponseAPI>;
@@ -23,6 +23,7 @@ export interface RegisterRepository {
     dto: any,
   ): Promise<ResponseAPI>;
   registerStep5(
+    userId: string,
     dto: RegistrationStep5Model,
   ): Promise<ResponseAPI>;
 

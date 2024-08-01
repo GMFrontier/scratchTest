@@ -1,5 +1,5 @@
 export interface User {
-  id: number
+  id: string
   name: string
   lastName: string
   email: string
@@ -14,9 +14,14 @@ export interface User {
   address: Address
   pep: boolean
   isActive: boolean
+  isVerifyPhone: boolean
+  isVerifyEmail: boolean
+  isCreateWallet: boolean
+  isCreateFinancialInfo: boolean
   walletId: string
   kycUrl: string
   creationDate: string
+  password?: string
 }
 export interface Address {
   addressLine1: string,

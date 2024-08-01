@@ -14,8 +14,16 @@ import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
 import DocumentPicker from 'react-native-document-picker';
 import { ROUTES } from '../../../navigation/routes';
+import { reaction } from 'mobx'
+import RegisterViewModel from './RegisterViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
 
 export const RegisterIdValidationScreen = observer(() => {
+
+  const viewModel = container.get<RegisterViewModel>(
+    TYPES.RegisterViewModel,
+  );
 
   const {
     theme: { colors },
@@ -111,7 +119,7 @@ export const RegisterIdValidationScreen = observer(() => {
         <ButtonPrimary
           text={"Iniciar validación"}
           onPress={() => {
-            nav.navigate(ROUTES.Auth.RegisterStepsScreen.name as never)
+            nav.navigate(ROUTES.Auth.RegisterFinancial2Screen.name as never)
           }} />
       </View>
     </ToolbarView>

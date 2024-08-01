@@ -28,6 +28,7 @@ import { useNewModalContext } from '../../../../core/presentation/contexts/messa
 import { ROUTES } from '../../../navigation/routes';
 import { FinancialRegisterModel } from './model/RegistrationModel';
 import { TextInputMain } from '../../../../core/presentation/components/input/TextInputMain';
+import { stringToBoolean } from '../../../../core/data/utils/Utils';
 
 export interface JobStatus {
   id: string;
@@ -67,7 +68,7 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
       {
         id: '1',
         label: 'Sí',
-        value: true,
+        value: "true",
         color: exposedPerson === "1" ? colors.white : undefined,
         borderSize: exposedPerson === "1" ? 8 : 2.5,
         borderColor: exposedPerson === "1" ? colors.blue200 : colors.disableText
@@ -75,7 +76,7 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
       {
         id: '2',
         label: 'No',
-        value: false,
+        value: "false",
         color: exposedPerson === "2" ? colors.white : undefined,
         borderSize: exposedPerson === "2" ? 8 : 2.5,
         borderColor: exposedPerson === "2" ? colors.blue200 : colors.disableText
@@ -144,7 +145,7 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
   reaction(
     () => viewModel.step4Success,
     () => {
-      nav.navigate(ROUTES.Auth.RegisterIncomeScreen.name as never)
+      nav.navigate(ROUTES.Auth.RegisterIdValidationScreen.name as never)
     }
   )
 
@@ -279,13 +280,13 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
             disabled={!isFormValid}
             onPress={() => {
               const financialModel: FinancialRegisterModel = {
-                jobStatus: jobStatus.title,
-                jobPlace: jobPlace.title,
+                type_OfWork: jobStatus.title,
+                placeOfWork: jobPlace.title,
+                occupation: occupation,
                 salary: salary.code,
-                exposedPerson: radioButtonsData.find(item => item.id === exposedPerson)?.value ?? false,
-                comprobante,
-                apc: radioButtonsData.find(item => item.id === apc)?.value ?? false,
-                canVerify: radioButtonsData.find(item => item.id === canVerify)?.value ?? false,
+                pep: stringToBoolean(radioButtonsData.find(item => item.id === exposedPerson)?.value) ?? false,
+                apc: stringToBoolean(radioButtonsData.find(item => item.id === apc)?.value) ?? false,
+                toVerify: stringToBoolean(radioButtonsData.find(item => item.id === canVerify)?.value) ?? false,
                 pdfDocument: comprobante
               }
               viewModel.registerStep4(data, financialModel)

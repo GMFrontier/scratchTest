@@ -31,15 +31,16 @@ export interface AddressRegisterModel {
   addressLine1: string;
   addressLine2: string;
   postalCode: string;
+  country?: string;
 }
 
 export interface FinancialRegisterModel {
-  jobStatus: string;
-  jobPlace: string;
+  type_OfWork: string;
+  placeOfWork: string;
+  occupation: string;
   salary: string;
-  exposedPerson: boolean;
-  comprobante: string;
+  pep: boolean;
   apc: boolean;
-  canVerify: boolean;
+  toVerify: boolean;
   pdfDocument: string;
 }

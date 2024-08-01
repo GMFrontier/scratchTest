@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { View, StyleSheet, Platform, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Platform, Text } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import React = require('react');
 import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
@@ -10,13 +10,9 @@ import FontsSize from '../../../../core/constants/FontsSize';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
-import { TextInputMain } from '../../../../core/presentation/components/input/TextInputMain';
-import { ButtonPrimary } from '../../../../core/presentation/components/button/ButtonPrimary';
-import { useStatusBar } from '../../../../core/presentation/contexts/statusBar/StatusBarContext';
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
 import { ButtonLink } from '../../../../core/presentation/components/button/ButtonLink';
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
-import { PinView } from '../../../../core/presentation/components/input/PinView';
 import { ROUTES } from '../../../navigation/routes';
 import LoginViewModel from '../login/LoginViewModel';
 import container from '../../../di/inversify.config';
@@ -60,7 +56,7 @@ export const RecoverPasswordEmailValidationScreen = observer(() => {
   }, [value])
 
   reaction(
-    () => viewModel.emailSuccess,
+    () => viewModel.sendCodeSuccess,
     () => {
       nav.navigate(ROUTES.Auth.RecoverPasswordCreateScreen.name as never);
     }

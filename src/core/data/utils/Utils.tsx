@@ -1,5 +1,18 @@
 import { isValidPhoneNumber } from "libphonenumber-js";
 
+export function stringToBoolean(s?: string): boolean {
+  return s?.toLowerCase() === 'true';
+}
+
+export function obfuscatePhone(s?: string): string {
+  if (!s) return ""
+  if (s.length <= 6) {
+    return s;
+  }
+  return s.slice(0, 2) + "****" + s.slice(-3);
+}
+
+
 export function divideListByChunks<T>(inputArray: T[], chunkSize: number): T[][] {
   const tempArray: T[][] = [];
 
@@ -50,7 +63,7 @@ export const isUserPasswordValid = (password: string) => {
 };
 
 export const doesPasswordsMatch = (password: string, matchingPassword: string) => {
-  return password === matchingPassword
+  return password.length > 0 && password === matchingPassword
 };
 
 

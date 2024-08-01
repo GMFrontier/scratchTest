@@ -18,7 +18,7 @@ import { RegisterAddressScreen } from '../auth/presentation/register/RegisterAdd
 import { RegisterFinancialScreen } from '../auth/presentation/register/RegisterFinancialScreen';
 import { RegisterIdValidationScreen } from '../auth/presentation/register/RegisterIdValidationScreen';
 import { RegisterStepsScreen } from '../auth/presentation/register/RegisterStepsScreen';
-import { RegisterIncomeScreen } from '../auth/presentation/register/RegisterIncomeScreen';
+import { RegisterFinancial2Screen } from '../auth/presentation/register/RegisterFinancial2Screen';
 import { RegisterCompleteScreen } from '../auth/presentation/register/RegisterCompleteScreen';
 import SelectPhoneFlagScreen from '../auth/presentation/register/SelectPhoneFlagScreen';
 import { MovementsScreen } from '../home/presentation/movements/MovementsScreen';
@@ -65,7 +65,7 @@ export const ROUTES = {
     RegisterFinancialScreen: { screen: RegisterFinancialScreen, name: 'RegisterFinancialScreen' },
     RegisterIdValidationScreen: { screen: RegisterIdValidationScreen, name: 'RegisterIdValidationScreen' },
     RegisterStepsScreen: { screen: RegisterStepsScreen, name: 'RegisterStepsScreen' },
-    RegisterIncomeScreen: { screen: RegisterIncomeScreen, name: 'RegisterIncomeScreen' },
+    RegisterFinancial2Screen: { screen: RegisterFinancial2Screen, name: 'RegisterFinancial2Screen' },
     RegisterCompleteScreen: { screen: RegisterCompleteScreen, name: 'RegisterCompleteScreen' },
     SelectPhoneFlagScreen: { screen: SelectPhoneFlagScreen, name: 'SelectPhoneFlagScreen' },
   },

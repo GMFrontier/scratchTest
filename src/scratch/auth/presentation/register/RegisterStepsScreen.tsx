@@ -73,7 +73,7 @@ export const RegisterStepsScreen = observer(() => {
         <ButtonPrimary
           text={"Reintentar validación"}
           onPress={() => {
-            nav.navigate(ROUTES.Auth.RegisterIncomeScreen.name as never)
+            nav.navigate(ROUTES.Auth.RegisterFinancial2Screen.name as never)
           }} />
       </View>
     </ToolbarView>

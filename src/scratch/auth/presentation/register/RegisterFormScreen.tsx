@@ -57,7 +57,7 @@ export const RegisterFormScreen = observer(() => {
   const [date, setDate] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const maximumSelectableDate = new Date();
+  const maximumSelectableDate = new Date(2006, 11, 31);
   const showToast = useToastContext().showYellowToast
 
   React.useEffect(() => {

@@ -18,11 +18,12 @@ import AutoCompleteView from '../../../../core/presentation/components/spinner/A
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { ScrollView } from 'react-native-gesture-handler';
 import { countryCities } from '../../../../core/constants/Cities';
-import RegisterViewModel from './RegisterViewModel';
+import RegisterViewModel, { DEFAULT_COUNTRY } from './RegisterViewModel';
 import container from '../../../di/inversify.config';
 import { TYPES } from '../../../di/types';
 import { countries_es } from '../../../../core/constants/Countries';
 import { AddressRegisterModel } from './model/RegistrationModel';
+import { Country } from '../../../../core/data/models/Country';
 
 export interface City {
   id: number;
@@ -46,13 +47,6 @@ export const RegisterAddressScreen = observer(() => {
     changeNavigationBarColor(colors.accent);
   })
 
-  const states = (countryCities.find(item => item.code2 === viewModel.user.nationality))?.states.map(item => item)
-  var cities = states.map((state: any, index: any) => ({
-    id: index,
-    title: state.name,
-    code: state.code
-  }));
-
   const [city, setCity] = useState<City | undefined>(undefined);
   const [region, setRegion] = useState<string>(undefined);
   const [address1, setAddress1] = useState<string>(undefined);
@@ -60,15 +54,31 @@ export const RegisterAddressScreen = observer(() => {
   const [postalCode, setPostalCode] = useState<string>(undefined);
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const getCountry = (): string => {
+  const getCountry = (): Country => {
     const enhancedCountries = countries_es.map((country, index) => ({
       id: index,
       name: country.name,
       countryCode: country.countryCode,
       title: country.name
     }));
-    return enhancedCountries.find(item => item.countryCode === viewModel.user.nationality).name ?? viewModel.user.nationality
+    if (viewModel.user?.nationality) {
+      return enhancedCountries.find(item => item.countryCode === viewModel.user.nationality)
+    }
+    return enhancedCountries.find(item => item.countryCode === DEFAULT_COUNTRY)
   }
+
+  const getCountryName = (): string => {
+    console.log("ASDASD")
+    console.log(getCountry())
+    return getCountry().name ?? viewModel.user?.nationality
+  }
+
+  const states = countryCities.find(item => item.code2 === (viewModel.user?.nationality ?? DEFAULT_COUNTRY))?.states
+  var cities = states.map((state: any, index: any) => ({
+    id: index,
+    title: state.name,
+    code: state.code
+  }));
 
   React.useEffect(() => {
     const isCityValid = city !== undefined
@@ -125,7 +135,7 @@ export const RegisterAddressScreen = observer(() => {
             />
             <AutoCompleteView
               setSelectedItem={() => { }}
-              data={[{ id: '0', title: { getCountry } }]}
+              data={[{ id: '0', title: getCountryName() }]}
               marginTop={16}
               disabled={true}
               initialValueId={'0'}

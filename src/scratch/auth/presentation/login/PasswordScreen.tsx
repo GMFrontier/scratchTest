@@ -26,6 +26,7 @@ import { reaction } from 'mobx';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
 import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
 import SplashScreen from 'react-native-splash-screen';
+import RegisterViewModel from '../register/RegisterViewModel';
 
 export const PasswordScreen = observer(({ route }: NavigationProps) => {
   var email = undefined
@@ -74,6 +75,36 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
   reaction(
     () => viewModel.loginSuccess,
     () => {
+      if (!viewModel.user.isCreateWallet) {
+        const registerViewModel = container.get<RegisterViewModel>(
+          TYPES.RegisterViewModel,
+        );
+        registerViewModel.setUser(viewModel.user, password)
+        nav.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              { name: ROUTES.Auth.RegisterAddressScreen.name },
+            ],
+          })
+        );
+        return
+      }
+      if (!viewModel.user.isCreateFinancialInfo) {
+        const registerViewModel = container.get<RegisterViewModel>(
+          TYPES.RegisterViewModel,
+        );
+        registerViewModel.setUser(viewModel.user)
+        nav.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              { name: ROUTES.Auth.RegisterFinancial2Screen.name },
+            ],
+          })
+        );
+        return
+      }
       nav.dispatch(
         CommonActions.reset({
           index: 0,

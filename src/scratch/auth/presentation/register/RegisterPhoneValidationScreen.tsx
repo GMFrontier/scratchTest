@@ -16,7 +16,7 @@ import FontsSize from '../../../../core/constants/FontsSize';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
 import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 import { ROUTES } from '../../../navigation/routes';
-import { formatTime } from '../../../../core/data/utils/Utils';
+import { formatTime, obfuscatePhone } from '../../../../core/data/utils/Utils';
 import RegisterViewModel from './RegisterViewModel';
 import container from '../../../di/inversify.config';
 import { TYPES } from '../../../di/types';
@@ -142,7 +142,7 @@ export const RegisterPhoneValidationScreen = observer(() => {
           textSize={FontsSize._32_SIZE} />
 
         <CustomText
-          text={"Ingresa el código de 6 dígitos enviado vía SMS al +507 *****0987."}
+          text={"Ingresa el código de 6 dígitos enviado vía SMS al " + obfuscatePhone(viewModel.user?.phoneNumber) + "."}
           marginTop={8}
           marginBottom={72}
           fontFamily={Fonts.DMSansRegular}

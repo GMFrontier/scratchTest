@@ -56,7 +56,7 @@ class RegistrationUseCase {
       .sendSMSCode(dto)
   }
 
-  async sendEmailCode(user: User, code: string): Promise<ResponseAPI> {
+  async sendEmailCode(user: User, code: string): Promise<User> {
     const dto: RegisterEmailValidationModel = {
       email: user.email,
       email_code: code,
@@ -80,16 +80,20 @@ class RegistrationUseCase {
     address: AddressRegisterModel,
     financial: FinancialRegisterModel,
   ): Promise<ResponseAPI> {
+    address.country = "AR"
     const dto = {
-      ...user,
+      step: 4,
+      id: user.id,
+      email: user.email,
       address: address,
-      ...financial
+      ...financial,
     }
     return this.registerRepository
       .registerStep4(dto)
   }
 
   async registerStep5(
+    user: User,
     jobPosition?: string,
     workplace?: string,
     company?: string,
@@ -117,7 +121,7 @@ class RegistrationUseCase {
       renta,
     }
     return this.registerRepository
-      .registerStep5(dto)
+      .registerStep5(user.id, dto)
   }
 }
 

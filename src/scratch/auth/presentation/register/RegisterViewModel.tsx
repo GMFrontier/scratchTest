@@ -7,6 +7,7 @@ import { User } from '../../../../core/data/models/User';
 import { PresentationErrorTypes } from '../../../../core/presentation/utils/PresentationErrors';
 import { AddressRegisterModel, FinancialRegisterModel } from './model/RegistrationModel';
 
+export const DEFAULT_COUNTRY = "PA"
 @injectable()
 class RegisterViewModel {
 
@@ -40,6 +41,7 @@ class RegisterViewModel {
       .then((response: User) => {
         runInAction(() => {
           this.user = response
+          this.user.password = password
           this.registerSuccess = postEvent()
         })
       })
@@ -62,6 +64,17 @@ class RegisterViewModel {
           this.showError = postEvent()
         })
       });
+  }
+
+  @action
+  setUser(
+    user: User,
+    password: string
+  ) {
+    runInAction(() => {
+      user.password = password
+      this.user = user
+    })
   }
 
   @action
@@ -88,9 +101,14 @@ class RegisterViewModel {
   ) {
     this.mRegistrationUseCase
       .sendEmailCode(this.user, code)
-      .then((response: ResponseAPI) => {
+      .then((user: User) => {
         runInAction(() => {
           this.emailSuccess = postEvent()
+          if (this.user) {
+            this.user = { ...this.user, ...user };
+          } else {
+            this.user = user;
+          }
         })
       })
       .catch((error: ErrorAPI) => {
@@ -146,6 +164,7 @@ class RegisterViewModel {
   ) {
     this.mRegistrationUseCase
       .registerStep5(
+        this.user,
         jobPosition,
         workplace,
         company,

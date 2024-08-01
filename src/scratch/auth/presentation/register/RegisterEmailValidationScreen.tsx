@@ -17,7 +17,7 @@ import FontsSize from '../../../../core/constants/FontsSize';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
 import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 import { ROUTES } from '../../../navigation/routes';
-import { formatTime } from '../../../../core/data/utils/Utils';
+import { formatTime, maskEmail } from '../../../../core/data/utils/Utils';
 import RegisterViewModel from './RegisterViewModel';
 import container from '../../../di/inversify.config';
 import { TYPES } from '../../../di/types';
@@ -153,7 +153,7 @@ export const RegisterEmailValidationScreen = observer(() => {
           textSize={FontsSize._32_SIZE} />
 
         <CustomText
-          text={"Ingresa el código de 6 dígitos enviado a ********ser@mail.com."}
+          text={"Ingresa el código de 6 dígitos enviado a " + maskEmail(viewModel.user.email) + "."}
           marginTop={8}
           marginBottom={72}
           fontFamily={Fonts.DMSansRegular}

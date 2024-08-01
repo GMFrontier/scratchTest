@@ -27,8 +27,8 @@ class RegisterRepositoryImpl implements RegisterRepository {
         });
     });
   }
-  sendEmailCode(dto: RegisterEmailValidationModel): Promise<ResponseAPI> {
-    return new Promise<ResponseAPI>((resolve, reject) => {
+  sendEmailCode(dto: RegisterEmailValidationModel): Promise<User> {
+    return new Promise<User>((resolve, reject) => {
       ApiService.apiCallWithLoading(() => {
         return api.post<ResponseAPI>(
           EndPoints.REGISTER,
@@ -36,7 +36,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
         )
       })
         .then((result: ResponseAPI) => {
-          resolve(result);
+          resolve(result.data.user as User);
         })
         .catch((error: any) => {
           reject(error);
@@ -116,13 +116,14 @@ class RegisterRepositoryImpl implements RegisterRepository {
   }
 
   registerStep5(
+    userId: string,
     dto: RegistrationStep5Model,
   ): Promise<ResponseAPI> {
 
     return new Promise<ResponseAPI>((resolve, reject) => {
       ApiService.apiCallWithLoading(() => {
         return api.put<ResponseAPI>(
-          EndPoints.REGISTER_STEP_5,
+          EndPoints.REGISTER_STEP_5 + userId,
           dto,
         )
       })

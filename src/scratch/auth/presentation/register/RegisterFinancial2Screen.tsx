@@ -20,6 +20,8 @@ import { JobPlace, JobStatus, Salary } from './RegisterFinancialScreen';
 import container from '../../../di/inversify.config';
 import RegisterViewModel from './RegisterViewModel';
 import { TYPES } from '../../../di/types';
+import { reaction } from 'mobx'
+import LoginViewModel from '../login/LoginViewModel';
 
 export interface JobPosition {
   id: number;
@@ -30,10 +32,13 @@ export interface JobExperience {
   title: string
 }
 
-export const RegisterIncomeScreen = observer(() => {
+export const RegisterFinancial2Screen = observer(() => {
 
   const viewModel = container.get<RegisterViewModel>(
     TYPES.RegisterViewModel,
+  );
+  const loginViewModel = container.get<LoginViewModel>(
+    TYPES.LoginViewModel,
   );
 
   const {
@@ -41,6 +46,20 @@ export const RegisterIncomeScreen = observer(() => {
   } = useContext(ThemeContext);
   const { translation } = useTranslation();
   const nav = useNavigation()
+
+  reaction(
+    () => viewModel.step5Success,
+    () => {
+      loginViewModel.login(viewModel.user.email, viewModel.user.password)
+    }
+  )
+
+  reaction(
+    () => loginViewModel.loginSuccess,
+    () => {
+      nav.navigate(ROUTES.Auth.RegisterCompleteScreen.name as never)
+    }
+  )
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
@@ -285,10 +304,10 @@ export const RegisterIncomeScreen = observer(() => {
                 jobPosition.title,
                 workplace,
                 company,
-                companyAge.title,
+                companyAge?.title,
                 socialMedia,
                 website,
-                jobExperience.title,
+                jobExperience?.title,
                 seguro,
                 movements,
                 operacion,

@@ -49,14 +49,7 @@ export const RecoverPasswordCreateScreen = observer(() => {
   const showModal = useNewModalContext().showStateModal
 
   const goToHome = () => {
-    nav.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [
-          { name: ROUTES.Navigator.BottomTabNavigator.name },
-        ],
-      })
-    );
+    viewModel.login(viewModel.user.email, password)
   }
 
   reaction(
@@ -72,6 +65,20 @@ export const RecoverPasswordCreateScreen = observer(() => {
         showIcoClose: true,
         enableOverlayTap: "none"
       })
+    }
+  )
+
+  reaction(
+    () => viewModel.loginSuccess,
+    () => {
+      nav.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            { name: ROUTES.Navigator.BottomTabNavigator.name },
+          ],
+        })
+      );
     }
   )
 
@@ -178,7 +185,7 @@ export const RecoverPasswordCreateScreen = observer(() => {
 
         <ButtonPrimary
           text={translation.file.next}
-          disabled={doesPasswordsMatch(password, matchPassword)}
+          disabled={!doesPasswordsMatch(password, matchPassword)}
           onPress={() => {
             viewModel.sendNewPassword(password, showError)
           }}
