@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "zero.app"
-               BlueprintName = "zero"
-               ReferencedContainer = "container:zero.xcodeproj">
+               BuildableName = "scratchTest.app"
+               BlueprintName = "scratchTest"
+               ReferencedContainer = "container:scratchTest.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "zeroTests.xctest"
-               BlueprintName = "zeroTests"
-               ReferencedContainer = "container:zero.xcodeproj">
+               BuildableName = "scratchTestTests.xctest"
+               BlueprintName = "scratchTestTests"
+               ReferencedContainer = "container:scratchTest.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "zero.app"
-            BlueprintName = "zero"
-            ReferencedContainer = "container:zero.xcodeproj">
+            BuildableName = "scratchTest.app"
+            BlueprintName = "scratchTest"
+            ReferencedContainer = "container:scratchTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "zero.app"
-            BlueprintName = "zero"
-            ReferencedContainer = "container:zero.xcodeproj">
+            BuildableName = "scratchTest.app"
+            BlueprintName = "scratchTest"
+            ReferencedContainer = "container:scratchTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

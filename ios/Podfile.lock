@@ -1276,7 +1276,7 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.23.1):
     - React-Core
-  - RNDateTimePicker (7.4.2):
+  - RNDateTimePicker (8.2.0):
     - React-Core
   - RNFastImage (8.6.3):
     - React-Core
@@ -1699,7 +1699,7 @@ SPEC CHECKSUMS:
   ReactCommon: caf0aeedbd8afc25731582379f15a4f86407ae29
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
-  RNDateTimePicker: a21bfcc694e3190f8ddb5aacb0dd16f97b6be79f
+  RNDateTimePicker: 40ffda97d071a98a10fdca4fa97e3977102ccd14
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNFBApp: de81f7eb68c1e6107574f2b102b0dee92a9862fa
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
