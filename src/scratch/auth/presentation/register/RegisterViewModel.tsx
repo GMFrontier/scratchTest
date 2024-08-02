@@ -162,6 +162,7 @@ class RegisterViewModel {
     operacion?: string,
     renta?: string,
   ) {
+    console.log("this.mRegistrationUseCase()")
     this.mRegistrationUseCase
       .registerStep5(
         this.user,

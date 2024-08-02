@@ -47,19 +47,24 @@ export const RegisterFinancial2Screen = observer(() => {
   const { translation } = useTranslation();
   const nav = useNavigation()
 
-  reaction(
-    () => viewModel.step5Success,
-    () => {
-      loginViewModel.login(viewModel.user.email, viewModel.user.password)
-    }
-  )
+  React.useEffect(() => {
+    return reaction(
+      () => viewModel.step5Success,
+      () => {
+        loginViewModel.login(viewModel.user.email, viewModel.user.password)
 
-  reaction(
-    () => loginViewModel.loginSuccess,
-    () => {
-      nav.navigate(ROUTES.Auth.RegisterCompleteScreen.name as never)
-    }
-  )
+      }
+    )
+  })
+
+  React.useEffect(() => {
+    return reaction(
+      () => loginViewModel.loginSuccess,
+      () => {
+        nav.navigate(ROUTES.Auth.RegisterCompleteScreen.name as never)
+      }
+    )
+  })
 
   React.useEffect(() => {
     changeNavigationBarColor(colors.accent);
@@ -298,7 +303,7 @@ export const RegisterFinancial2Screen = observer(() => {
           <ButtonPrimary
             text={"Siguiente"}
             position="relative"
-            disabled={!isFormValid}
+            disabled={false}
             onPress={() => {
               viewModel.registerStep5(
                 jobPosition.title,

@@ -61,19 +61,20 @@ export const RegisterAddressScreen = observer(() => {
       countryCode: country.countryCode,
       title: country.name
     }));
-    if (viewModel.user?.nationality) {
-      return enhancedCountries.find(item => item.countryCode === viewModel.user.nationality)
-    }
+    // if (viewModel.user?.nationality) {
+    //   return enhancedCountries.find(item => item.countryCode === viewModel.user.nationality)
+    // }
+    // retornamos un default country "PA" porque al ser MVP sólo saldremos para éste país
     return enhancedCountries.find(item => item.countryCode === DEFAULT_COUNTRY)
   }
 
   const getCountryName = (): string => {
-    console.log("ASDASD")
-    console.log(getCountry())
-    return getCountry().name ?? viewModel.user?.nationality
+    return getCountry().name ?? "Panamá"//?? viewModel.user?.nationality
   }
 
-  const states = countryCities.find(item => item.code2 === (viewModel.user?.nationality ?? DEFAULT_COUNTRY))?.states
+  // retornamos un default country "PA" porque al ser MVP sólo saldremos para éste país
+  //const states = countryCities.find(item => item.code2 === (viewModel.user?.nationality ?? DEFAULT_COUNTRY))?.states
+  const states = countryCities.find(item => item.code2 === DEFAULT_COUNTRY)?.states
   var cities = states.map((state: any, index: any) => ({
     id: index,
     title: state.name,

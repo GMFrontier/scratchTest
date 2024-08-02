@@ -16,6 +16,9 @@ import { FAQCard } from './components/FAQCard';
 import bg_home from '../../../../assets/svg/bg_home';
 import { ExpirationPaymentCard } from './components/ExpirationPaymentCard';
 import { useBiometrics } from '../../../core/presentation/utils/biometric/BiometricUtils';
+import container from '../../di/inversify.config';
+import HomeViewModel from './HomeViewModel';
+import { TYPES } from '../../di/types';
 
 export const HomeScreen = observer(() => {
 
@@ -25,6 +28,10 @@ export const HomeScreen = observer(() => {
 
   const statusBar = useStatusBar()
   const { saveUserBiometrics } = useBiometrics()
+
+  const viewModel = container.get<HomeViewModel>(
+    TYPES.HomeViewModel,
+  );
 
   useEffect(() => {
     statusBar.setHomeStatusBar()
@@ -38,6 +45,7 @@ export const HomeScreen = observer(() => {
       "Desea utilizar su huella digital para iniciar sesión?" ?? "",
       "Asociación completada" ?? ""
     )
+    viewModel.getUser()
   })
 
   const { translation } = useTranslation();

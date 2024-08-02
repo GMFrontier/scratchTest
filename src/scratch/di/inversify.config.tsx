@@ -9,6 +9,8 @@ import RegisterRepositoryImpl from '../auth/data/repositories/RegisterRepository
 import LoginViewModel from '../auth/presentation/login/LoginViewModel';
 import LoginRepository from '../auth/domain/repositories/LoginRepository';
 import LoginRepositoryImpl from '../auth/data/repositories/LoginRepositoryImpl';
+import HomeViewModel from '../home/presentation/HomeViewModel';
+import SettingsViewModel from '../settings/presentation/SettingsViewModel';
 
 //inicializacion
 const container = new Container({ autoBindInjectable: true });
@@ -22,5 +24,7 @@ container.bind<LoginRepository>(TYPES.LoginRepository).to(LoginRepositoryImpl);
 container.bind<BiometricViewModel>(TYPES.BiometricViewModel).to(BiometricViewModel).inSingletonScope();
 container.bind<RegisterViewModel>(TYPES.RegisterViewModel).to(RegisterViewModel).inSingletonScope();
 container.bind<LoginViewModel>(TYPES.LoginViewModel).to(LoginViewModel).inSingletonScope();
+container.bind<HomeViewModel>(TYPES.HomeViewModel).to(HomeViewModel).inSingletonScope();
+container.bind<SettingsViewModel>(TYPES.SettingsViewModel).to(SettingsViewModel).inSingletonScope();
 
 export default container;

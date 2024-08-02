@@ -49,17 +49,36 @@ export const RecoverPasswordCreateScreen = observer(() => {
   const showModal = useNewModalContext().showStateModal
 
   const goToHome = () => {
-    viewModel.login(viewModel.user.email, password)
+    if (viewModel.comesFromSettings) {
+      nav.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            { name: ROUTES.Navigator.BottomTabNavigator.name },
+          ],
+        })
+      );
+    } else {
+      viewModel.login(viewModel.user.email, password)
+    }
   }
 
   reaction(
     () => viewModel.recoverPasswordSuccess,
     () => {
+      var title = "Contraseña reestablecida"
+      var message = "La contraseña ha sido restablecido con éxito, ya puedes acceder a tu cuenta."
+      var labelButtonPrimary = "Acceder a mi cuenta"
+      if (viewModel.comesFromSettings) {
+        title = "Contraseña cambiada"
+        message = "La contraseña se ha cambiado con éxito, recuerda usarla la próxima vez que ingreses a tu cuenta"
+        labelButtonPrimary = "Ir al inicio"
+      }
       showModal({
-        title: "Contraseña reestablecida",
-        message: "La contraseña ha sido restablecido con éxito, ya puedes acceder a tu cuenta.",
+        title: title,
+        message: message,
         image: ic_success_check_filled,
-        labelButtonPrimary: "Acceder a mi cuenta",
+        labelButtonPrimary: labelButtonPrimary,
         actionButtonPrimary() { goToHome() },
         actionCloseModal() { goToHome() },
         showIcoClose: true,
@@ -79,6 +98,7 @@ export const RecoverPasswordCreateScreen = observer(() => {
           ],
         })
       );
+      viewModel.clearComesFromSettings()
     }
   )
 

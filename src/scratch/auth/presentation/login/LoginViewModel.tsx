@@ -25,6 +25,7 @@ class LoginViewModel {
   @observable sendCodeSuccess: any;
   @observable recoverPasswordSuccess: any;
   @observable emailSuccess: any;
+  comesFromSettings: any;
   recoverPasswordEmail = ""
 
   constructor(
@@ -32,6 +33,14 @@ class LoginViewModel {
     private mPreferencesUseCase: PreferencesUseCase,
   ) {
     makeObservable(this)
+  }
+
+  setComesFromSettings() {
+    this.comesFromSettings = true
+  }
+
+  clearComesFromSettings() {
+    this.comesFromSettings = true
   }
 
   @action
@@ -43,7 +52,7 @@ class LoginViewModel {
       .then((response: User) => {
         runInAction(() => {
           this.user = response
-          this.loginSuccess = postEvent()
+          this.loginSuccess = response
         })
       })
       .catch((error: ErrorAPI) => {

@@ -9,6 +9,7 @@ import { LoginModel } from '../../presentation/login/model/LoginModel';
 import LoginRepository from '../repositories/LoginRepository';
 import LocalRepository from '../../../../core/domain/repository/LocalRepository';
 import { PasswordRecoveryStep2, PasswordRecoveryStep3 } from '../../../../core/data/models/PasswordRecoveryDto';
+import { setAuthorizationToken } from '../../../../core/data/sources/remote/Api';
 
 @injectable()
 class LoginUseCase {
@@ -37,6 +38,7 @@ class LoginUseCase {
       .login(dto)
       .then(async (user: User) => {
         await this.mLocalRepository.saveUser(user)
+        setAuthorizationToken(user.token)
         return Promise.resolve(user)
       })
   }

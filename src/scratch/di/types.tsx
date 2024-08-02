@@ -70,7 +70,7 @@ const TYPES = {
   RegisterViewModel: Symbol.for('RegisterViewModel'),
   MetaMapViewModel: Symbol.for('MetaMapViewModel'),
   PayQrViewModel: Symbol.for('PayQrViewModel'),
-  SettingViewModel: Symbol.for('SettingViewModel'),
+  SettingsViewModel: Symbol.for('SettingsViewModel'),
   HomeViewModel: Symbol.for('HomeViewModel'),
   PayUserViewModel: Symbol.for('PayUserViewModel'),
   UserOptionsViewModel: Symbol.for('UserOptionsViewModel'),

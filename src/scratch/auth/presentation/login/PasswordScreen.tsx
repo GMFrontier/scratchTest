@@ -72,49 +72,52 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
       })
   }
 
-  reaction(
-    () => viewModel.loginSuccess,
-    () => {
-      if (!viewModel.user.isCreateWallet) {
-        const registerViewModel = container.get<RegisterViewModel>(
-          TYPES.RegisterViewModel,
-        );
-        registerViewModel.setUser(viewModel.user, password)
+  React.useEffect(() => {
+    return reaction(
+      () => viewModel.loginSuccess,
+      () => {
+        if (!viewModel.user.isCreateWallet) {
+          const registerViewModel = container.get<RegisterViewModel>(
+            TYPES.RegisterViewModel,
+          );
+          registerViewModel.setUser(viewModel.user, password)
+          nav.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                { name: ROUTES.Auth.RegisterAddressScreen.name },
+              ],
+            })
+          );
+          return
+        }
+        if (!viewModel.user.isCreateFinancialInfo) {
+          const registerViewModel = container.get<RegisterViewModel>(
+            TYPES.RegisterViewModel,
+          );
+          registerViewModel.setUser(viewModel.user, password)
+          nav.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                { name: ROUTES.Auth.RegisterFinancial2Screen.name },
+              ],
+            })
+          );
+          return
+        }
         nav.dispatch(
           CommonActions.reset({
             index: 0,
             routes: [
-              { name: ROUTES.Auth.RegisterAddressScreen.name },
+              { name: ROUTES.Navigator.BottomTabNavigator.name },
             ],
           })
         );
-        return
       }
-      if (!viewModel.user.isCreateFinancialInfo) {
-        const registerViewModel = container.get<RegisterViewModel>(
-          TYPES.RegisterViewModel,
-        );
-        registerViewModel.setUser(viewModel.user)
-        nav.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [
-              { name: ROUTES.Auth.RegisterFinancial2Screen.name },
-            ],
-          })
-        );
-        return
-      }
-      nav.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [
-            { name: ROUTES.Navigator.BottomTabNavigator.name },
-          ],
-        })
-      );
-    }
-  )
+    )
+
+  })
 
   reaction(
     () => viewModel.showError,

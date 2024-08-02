@@ -19,8 +19,20 @@ import ic_settings_faq from '../../../../assets/svg/ic_settings_faq';
 import ic_settings_support from '../../../../assets/svg/ic_settings_support';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../navigation/routes';
+import SettingsViewModel from './SettingsViewModel';
+import container from '../../di/inversify.config';
+import { TYPES } from '../../di/types';
+import LoginViewModel from '../../auth/presentation/login/LoginViewModel';
 
 export const SettingsScreen = observer(() => {
+
+  const viewModel = container.get<SettingsViewModel>(
+    TYPES.SettingsViewModel,
+  );
+
+  const loginViewModel = container.get<LoginViewModel>(
+    TYPES.LoginViewModel,
+  );
 
   const {
     theme: { colors },
@@ -44,7 +56,10 @@ export const SettingsScreen = observer(() => {
         <SettingsButtonItem
           text={"Cambio de contraseña"}
           icon={ic_settings_pass}
-          onPress={() => { }} />
+          onPress={() => {
+            loginViewModel.setComesFromSettings()
+            navigation.navigate(ROUTES.Auth.PasswordScreen.name as never)
+          }} />
         <SettingsButtonItem
           text={"Acerca de nosotros"}
           icon={ic_settings_about}

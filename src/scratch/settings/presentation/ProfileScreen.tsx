@@ -28,12 +28,19 @@ import { useNavigation } from '@react-navigation/core';
 import { ROUTES } from '../../navigation/routes';
 import LinearGradient from 'react-native-linear-gradient';
 import { CommonActions } from '@react-navigation/native';
+import SettingsViewModel from './SettingsViewModel';
+import container from '../../di/inversify.config';
+import { TYPES } from '../../di/types';
 
 export const ProfileScreen = observer(() => {
 
   const {
     theme: { colors },
   } = useContext(ThemeContext);
+
+  const viewModel = container.get<SettingsViewModel>(
+    TYPES.SettingsViewModel,
+  );
 
   const statusBar = useStatusBar()
   const toastMessage = useToastContext().showMessageToast
@@ -190,7 +197,7 @@ export const ProfileScreen = observer(() => {
       }} >
 
         <CustomText
-          text='Luzbel Lucía Puga'
+          text={viewModel.user?.name + " " + viewModel.user?.lastName}
           textColor={colors.white}
           textAlign='center'
           textSize={FontsSize._20_SIZE}

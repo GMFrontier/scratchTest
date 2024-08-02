@@ -13,6 +13,10 @@ import Fonts from '../../../../core/constants/Fonts';
 import ProgressIndicator from '../../../../core/presentation/components/progress/ProgressIndicator';
 import BalanceProgress from './BalanceProgress';
 import ic_clock from '../../../../../assets/svg/ic_clock';
+import container from '../../../di/inversify.config';
+import HomeViewModel from '../HomeViewModel';
+import { TYPES } from '../../../di/types';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
 }
@@ -22,6 +26,11 @@ export const BalanceUserCard = ({
   const {
     theme: { colors },
   } = useContext(ThemeContext);
+
+  const viewModel = container.get<HomeViewModel>(
+    TYPES.HomeViewModel,
+  );
+
 
   return (
     <View
@@ -42,7 +51,7 @@ export const BalanceUserCard = ({
           <CustomText
             textSize={FontsSize._16_SIZE}
             textColor={colors.white}
-            text='Hola Gabriela' />
+            text={'Hola ' + viewModel.user?.name ?? ""} />
         </View>
         <CustomText
           marginTop={24}

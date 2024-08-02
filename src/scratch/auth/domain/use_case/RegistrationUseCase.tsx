@@ -5,6 +5,7 @@ import { AddressRegisterModel, FinancialRegisterModel, RegistrationModel, Regist
 import RegisterRepository from '../repositories/RegisterRepository';
 import { EmailValidationModel, RegisterEmailValidationModel, RegisterSMSValidationModel, SMSValidationModel } from '../../presentation/register/model/SMSValidationModel';
 import { ResponseAPI } from '../../../../core/data/models/ResponseApi';
+import { DEFAULT_COUNTRY } from '../../presentation/register/RegisterViewModel';
 
 @injectable()
 class RegistrationUseCase {
@@ -80,7 +81,7 @@ class RegistrationUseCase {
     address: AddressRegisterModel,
     financial: FinancialRegisterModel,
   ): Promise<ResponseAPI> {
-    address.country = "AR"
+    address.country = DEFAULT_COUNTRY
     const dto = {
       step: 4,
       id: user.id,
