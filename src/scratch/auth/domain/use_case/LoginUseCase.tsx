@@ -9,7 +9,7 @@ import { LoginModel } from '../../presentation/login/model/LoginModel';
 import LoginRepository from '../repositories/LoginRepository';
 import LocalRepository from '../../../../core/domain/repository/LocalRepository';
 import { PasswordRecoveryStep2, PasswordRecoveryStep3 } from '../../../../core/data/models/PasswordRecoveryDto';
-import { setAuthorizationToken } from '../../../../core/data/sources/remote/Api';
+import { HAS_BIOMETRIC_BEEN_SET, UserCredentials } from '../../../../core/data/models/UserCredentials';
 
 @injectable()
 class LoginUseCase {
@@ -19,6 +19,20 @@ class LoginUseCase {
     @inject(TYPES.LocalRepository)
     private mLocalRepository: LocalRepository,
   ) { }
+
+  async getUserCredentials(): Promise<UserCredentials | undefined> {
+    return this.mLocalRepository.getUserCredentials().catch((error) => {
+      throw Error("User credentials: " + error.message)
+    });
+  }
+
+  saveUserCredentials(userCredentials: UserCredentials): Promise<void> {
+    return this.mLocalRepository.saveUserCredentials(userCredentials)
+  }
+
+  async removeCurrentBiometricAccount(): Promise<void> {
+    await this.mLocalRepository.savePreferences(HAS_BIOMETRIC_BEEN_SET, JSON.stringify(false))
+  }
 
   async login(
     email: string,
@@ -38,7 +52,17 @@ class LoginUseCase {
       .login(dto)
       .then(async (user: User) => {
         await this.mLocalRepository.saveUser(user)
-        setAuthorizationToken(user.token)
+        //START manage user biometrics 
+        const savedCredentials = await this.getUserCredentials()
+        if (savedCredentials) {
+          const isSameUser = savedCredentials?.email === email &&
+            savedCredentials?.password === password;
+          if (!isSameUser) {
+            await this.removeCurrentBiometricAccount()
+          }
+        }
+        await this.saveUserCredentials({ email: email, password: password })
+        //END manage user biometrics 
         return Promise.resolve(user)
       })
   }

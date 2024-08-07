@@ -10,4 +10,4 @@
 # Add any project specific keep options here:
 -keep class com.reactnativeimageresizer.** { *; }
 -keep class com.reactnativecommunity.clipboard.ClipboardModule { *; }
--keep class com.payfacilbeta.BuildConfig { *; }
+-keep class com.zero.BuildConfig { *; }

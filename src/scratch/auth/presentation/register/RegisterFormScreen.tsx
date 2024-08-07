@@ -251,6 +251,7 @@ export const RegisterFormScreen = observer(() => {
             inputType='email'
             inputValue={email}
             onChangeText={setEmail}
+            autoCapitalize={"none"}
             labelTitleRequired={true}
             labelTitle={translation.file.email}
             placeholder={translation.file.email_placeholder} />

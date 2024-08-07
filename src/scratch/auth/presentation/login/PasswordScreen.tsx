@@ -9,12 +9,11 @@ import Fonts from '../../../../core/constants/Fonts';
 import FontsSize from '../../../../core/constants/FontsSize';
 import { ButtonLink } from '../../../../core/presentation/components/button/ButtonLink';
 import { AvatarImage } from '../../../../core/presentation/components/image/avatar';
-import { CommonActions, StackActions, useNavigation } from '@react-navigation/native';
+import { CommonActions, StackActions, useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../../navigation/routes';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { TextInputMain } from '../../../../core/presentation/components/input/TextInputMain';
 import { ButtonPrimary } from '../../../../core/presentation/components/button/ButtonPrimary';
-import { ButtonSecondary } from '../../../../core/presentation/components/button/ButtonSecondary';
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import { Translations } from '../../../../core/presentation/contexts/translations/Translations';
 import { useBiometrics } from '../../../../core/presentation/utils/biometric/BiometricUtils';
@@ -27,6 +26,7 @@ import { useNewModalContext } from '../../../../core/presentation/contexts/messa
 import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
 import SplashScreen from 'react-native-splash-screen';
 import RegisterViewModel from '../register/RegisterViewModel';
+import { useStatusBar } from '../../../../core/presentation/contexts/statusBar/StatusBarContext';
 
 export const PasswordScreen = observer(({ route }: NavigationProps) => {
   var email = undefined
@@ -41,6 +41,7 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
   } = useContext(ThemeContext);
   const { translation } = useTranslation();
   const nav = useNavigation()
+  const statusBar = useStatusBar()
 
   const { isBiometricAvailable, biometricPrompt } = useBiometrics()
   const showStateModal = useNewModalContext().showStateModal
@@ -54,8 +55,9 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
     // setBackendError("Contraseña inválida, inténtalo nuevamente")
   })
 
-  React.useEffect(() => {
+  useFocusEffect(() => {
     changeNavigationBarColor(colors.accent);
+    statusBar.setPrimaryStatusBar()
   })
 
   isBiometricAvailable(
@@ -65,10 +67,10 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
 
   const handleBiometricLogin = (translationFile: Translations) => {
     biometricPrompt(
-      "translationFile.file.biometric_unlocking",
-      "translationFile.file.your_biometric_is_not_associated_with_any_account",
+      "Acceso con biométrico",
+      "Tu biométrico no está asociado a ninguna cuenta",
       () => {
-        //  viewModel.biometricsLogin() 
+        viewModel.biometricsLogin()
       })
   }
 
@@ -91,7 +93,7 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
           );
           return
         }
-        if (!viewModel.user.isCreateFinancialInfo) {
+        if (!viewModel.user.isCompleteFinancialInfo) {
           const registerViewModel = container.get<RegisterViewModel>(
             TYPES.RegisterViewModel,
           );
@@ -124,7 +126,7 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
     () => {
       showStateModal({
         title: "Ha ocurrido un problema",
-        message: "Email o contraseña incorrectos.",
+        message: "Email o contraseña incorrectos",
         image: ic_exclamation_error_filled_48,
         showIcoClose: true,
         size: "30%"
@@ -135,7 +137,7 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
   return (
     <View style={style.containerMain}>
       {
-        viewModel.user &&
+        true &&
         <View style={{ alignSelf: "flex-end", top: 20, position: "absolute", right: 16 }} >
           <ButtonLink
             text={"Acceder a otra cuenta"}

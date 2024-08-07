@@ -89,20 +89,18 @@ export const StackNavigator = () => {
       ref={navigationRef}
       theme={MyTheme}
       onReady={() => { }} >
-      <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false, animationTypeForReplace: "pop",
-            // transitionSpec: {
-            //   open: config,
-            //   close: config,
-            // },
-          }}>
-          {Object.entries(handlers).map(([screen, component]) => (
-            <Stack.Screen name={screen} key={screen} component={component} />
-          ))}
-        </Stack.Navigator>
-      </SafeAreaView>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false, animationTypeForReplace: "pop",
+          // transitionSpec: {
+          //   open: config,
+          //   close: config,
+          // },
+        }}>
+        {Object.entries(handlers).map(([screen, component]) => (
+          <Stack.Screen name={screen} key={screen} component={component} />
+        ))}
+      </Stack.Navigator>
     </NavigationContainer>
 
   );

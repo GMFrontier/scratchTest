@@ -60,6 +60,7 @@ export const LoginScreen = observer(() => {
         inputValue={email}
         inputType='email'
         showError={true}
+        autoCapitalize={"none"}
         onChangeText={setEmail}
         labelTitleRequired={true}
         labelTitle={translation.file.email}

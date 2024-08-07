@@ -15,7 +15,7 @@ export class BiometricViewModel {
   }
 
   async setBiometricAccount(): Promise<void> {
-    await this.mPreferencesUseCase.save(JSON.stringify(true), HAS_BIOMETRIC_BEEN_SET)
+    await this.mPreferencesUseCase.save(HAS_BIOMETRIC_BEEN_SET, JSON.stringify(true))
   }
 }
 

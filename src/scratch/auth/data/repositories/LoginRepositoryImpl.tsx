@@ -5,7 +5,7 @@ import { User } from '../../../../core/data/models/User';
 import ApiService from '../../../../core/data/sources/remote/ApiService';
 import { ResponseAPI } from '../../../../core/data/models/ResponseApi';
 import EndPoints from '../../../../core/constants/EndPoints';
-import { api } from '../../../../core/data/sources/remote/Api';
+import { api, setAuthorizationToken } from '../../../../core/data/sources/remote/Api';
 import Config from 'react-native-config';
 import { SMSValidationModel, EmailValidationModel } from '../../presentation/register/model/SMSValidationModel';
 import LoginRepository from '../../domain/repositories/LoginRepository';
@@ -79,6 +79,7 @@ class LoginRepositoryImpl implements LoginRepository {
         .then((result: ResponseAPI) => {
           var user: User = result.data.user
           user.token = result.data.access_token
+          setAuthorizationToken(user.token)
           resolve(user as User);
         })
         .catch((error: any) => {

@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Platform } from 'react-native';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import { useTranslation } from '../../contexts/translations/LanguageProvider';
 import { CustomLabelText } from '../text/CustomLabelText';
@@ -45,20 +45,22 @@ export const FileInput = ({
 
   const selectPDF = async () => {
     try {
-      const result = await DocumentPicker.pick({
-        type: ['application/pdf'],
+      const result = await DocumentPicker.pickSingle({
+        type: ['application/pdf', DocumentPicker.types.pdf],
         // type: ['application/pdf', 'image/*'],
       });
-      console.log("JSON.stringify(result)")
       console.log(JSON.stringify(result))
-      if (result[0].type === "application/pdf") {
+      var fileUri = result.uri
+      fileUri = fileUri.replace("file://", "")
+      if (result.type === "application/pdf") {
         RNFetchBlob.fs
-          .readFile(result[0].uri, 'base64')
+          .readFile(fileUri, 'base64')
           .then((data) => {
             setFile(data)
           })
-          .catch((err) => { });
-        setURI((await PdfThumbnail.generate(result[0].uri, 0)).uri)
+          .catch((err) => {
+          });
+        setURI((await PdfThumbnail.generate(result.uri, 0)).uri)
       } else {
         setURI(result[0].uri)
       }

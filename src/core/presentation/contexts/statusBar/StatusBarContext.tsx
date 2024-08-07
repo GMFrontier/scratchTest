@@ -45,7 +45,7 @@ export const StatusBarProvider = ({ children }: any) => {
   return (
     <StatusBarContext.Provider value={{ setPrimaryStatusBar, setToolbarStatusBar, setHomeStatusBar }}>
       <View style={{ height: insets.top, backgroundColor: statusBarBackgroundColor }}>
-        <RNStatusBar {...statusBarProps} />
+        <RNStatusBar {...statusBarProps} animated={true} />
       </View>
       {children}
     </StatusBarContext.Provider>

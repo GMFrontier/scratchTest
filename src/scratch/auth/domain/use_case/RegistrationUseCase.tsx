@@ -27,7 +27,7 @@ class RegistrationUseCase {
       step: 1,
       name: name,
       lastName: lastname,
-      email: email,
+      email: email.toLocaleLowerCase(),
       password: password,
       phone_number: phone,
       livePanama: true,
@@ -95,34 +95,36 @@ class RegistrationUseCase {
 
   async registerStep5(
     user: User,
+    jobStatus?: string,
     jobPosition?: string,
     workplace?: string,
     company?: string,
     companyAge?: string,
     socialMedia?: string,
     website?: string,
-    jobExperience?: string,
+    jobExperience?: number,
     seguro?: string,
     movements?: string,
     operacion?: string,
     renta?: string,
   ): Promise<ResponseAPI> {
     const dto: RegistrationStep5Model = {
-      step: 5,
-      jobPosition,
-      workplace,
-      company,
-      companyAge,
-      socialMedia,
+      type_of_work: jobStatus,
+      position: jobPosition,
+      place_of_work: workplace,
+      name_of_company: company,
+      company_age: companyAge,
+      social_networks: socialMedia,
       website,
-      jobExperience,
-      seguro,
+      seniority: jobExperience,
+      social_security: seguro,
       movements,
-      operacion,
-      renta,
+      operation_notice: operacion,
+      tax_return: renta,
     }
+
     return this.registerRepository
-      .registerStep5(user.id, dto)
+      .registerStep5(user.financialInfoId, dto)
   }
 }
 

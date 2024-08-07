@@ -6,8 +6,6 @@ import { ThemeContext } from '../../../core/presentation/contexts/theme/ThemeCon
 import { useNewModalContext } from '../../../core/presentation/contexts/messages/useNewModalContext';
 import { useTranslation } from '../../../core/presentation/contexts/translations/LanguageProvider';
 import SettingsButtonItem from '../../../core/presentation/components/item/SettingsButtonItem';
-import ic_settings_star from '../../../../assets/svg/ic_settings_star';
-import FontsSize from '../../../core/constants/FontsSize';
 import ToolbarView from '../../../core/presentation/components/toolbar/ToolbarView';
 import Sizebox from '../../../core/presentation/components/item/Sizebox';
 import ic_settings_id from '../../../../assets/svg/ic_settings_id';

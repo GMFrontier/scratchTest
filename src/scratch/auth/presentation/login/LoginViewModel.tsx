@@ -6,6 +6,7 @@ import { User } from '../../../../core/data/models/User';
 import LoginUseCase from '../../domain/use_case/LoginUseCase';
 import PreferencesUseCase from '../../../../core/domain/use_case/PreferencesUseCase';
 import { PresentationErrorTypes } from '../../../../core/presentation/utils/PresentationErrors';
+import { HAS_BIOMETRIC_BEEN_SET, UserCredentials } from '../../../../core/data/models/UserCredentials';
 
 export const REMEMBER_USER = "REMEMBER_USER"
 
@@ -25,7 +26,7 @@ class LoginViewModel {
   @observable sendCodeSuccess: any;
   @observable recoverPasswordSuccess: any;
   @observable emailSuccess: any;
-  comesFromSettings: any;
+  comesFromSettings: boolean = false;
   recoverPasswordEmail = ""
 
   constructor(
@@ -35,12 +36,24 @@ class LoginViewModel {
     makeObservable(this)
   }
 
+
+  async biometricsLogin(): Promise<void> {
+    try {
+      const userCredentials = await this.mLoginUseCase.getUserCredentials()
+      console.log(JSON.stringify(userCredentials))
+      if (userCredentials) {
+        this.login(userCredentials.email, userCredentials.password)
+      }
+    } catch (error: any) {
+    }
+  }
+
   setComesFromSettings() {
     this.comesFromSettings = true
   }
 
   clearComesFromSettings() {
-    this.comesFromSettings = true
+    this.comesFromSettings = false
   }
 
   @action
@@ -50,14 +63,14 @@ class LoginViewModel {
   ) {
     this.mLoginUseCase.login(email, password)
       .then((response: User) => {
-        runInAction(() => {
+        runInAction(async () => {
           this.user = response
           this.loginSuccess = response
         })
       })
       .catch((error: ErrorAPI) => {
         runInAction(() => {
-          this.showError = postEvent()
+          this.showError = error
         })
       });
   }

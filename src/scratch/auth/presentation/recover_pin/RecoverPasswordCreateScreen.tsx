@@ -59,7 +59,7 @@ export const RecoverPasswordCreateScreen = observer(() => {
         })
       );
     } else {
-      viewModel.login(viewModel.user.email, password)
+      viewModel.login(viewModel.recoverPasswordEmail, password)
     }
   }
 

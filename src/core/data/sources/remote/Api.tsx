@@ -5,6 +5,7 @@ import Config from 'react-native-config';
 import { NativeModules } from 'react-native';
 import { getTimeZone } from "react-native-localize";
 
+
 // const { UtilsModule } = NativeModules;
 
 /* Más adelante utilizar el url correspondiente dependiendo del flavor de la app

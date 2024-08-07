@@ -17,11 +17,12 @@ export interface User {
   isVerifyPhone: boolean
   isVerifyEmail: boolean
   isCreateWallet: boolean
-  isCreateFinancialInfo: boolean
+  isCompleteFinancialInfo: boolean
   walletId: string
   kycUrl: string
   creationDate: string
   password?: string
+  financialInfoId?: string
 }
 export interface Address {
   addressLine1: string,

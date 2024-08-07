@@ -63,7 +63,17 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
     changeNavigationBarColor(colors.accent);
   })
 
-  const radioButtonsData: RadioButtonProps[] = React.useMemo(() => (
+  const [jobPlace, setJobPlace] = useState<JobPlace | undefined>(undefined);
+  const [salary, setSalary] = useState<Salary | undefined>(undefined);
+  const [occupation, setOccupation] = useState<string>("");
+  const [exposedPerson, setExposedPerson] = useState();
+  const [comprobante, setComprobante] = useState<string | undefined>();
+  const [apc, setAPC] = useState();
+  const [canVerify, setCanVerify] = useState();
+  const [isFormValid, setIsFormValid] = useState(false);
+
+
+  const pepData: RadioButtonProps[] = React.useMemo(() => (
     [
       {
         id: '1',
@@ -81,7 +91,47 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
         borderSize: exposedPerson === "2" ? 8 : 2.5,
         borderColor: exposedPerson === "2" ? colors.blue200 : colors.disableText
       }
-    ]), []);
+    ]), [exposedPerson]);
+
+  const apcData: RadioButtonProps[] = React.useMemo(() => (
+    [
+      {
+        id: '1',
+        label: 'Sí',
+        value: "true",
+        color: apc === "1" ? colors.white : undefined,
+        borderSize: apc === "1" ? 8 : 2.5,
+        borderColor: apc === "1" ? colors.blue200 : colors.disableText
+      },
+      {
+        id: '2',
+        label: 'No',
+        value: "false",
+        color: apc === "2" ? colors.white : undefined,
+        borderSize: apc === "2" ? 8 : 2.5,
+        borderColor: apc === "2" ? colors.blue200 : colors.disableText
+      }
+    ]), [apc]);
+
+  const verifyData: RadioButtonProps[] = React.useMemo(() => (
+    [
+      {
+        id: '1',
+        label: 'Sí',
+        value: "true",
+        color: canVerify === "1" ? colors.white : undefined,
+        borderSize: canVerify === "1" ? 8 : 2.5,
+        borderColor: canVerify === "1" ? colors.blue200 : colors.disableText
+      },
+      {
+        id: '2',
+        label: 'No',
+        value: "false",
+        color: canVerify === "2" ? colors.white : undefined,
+        borderSize: canVerify === "2" ? 8 : 2.5,
+        borderColor: canVerify === "2" ? colors.blue200 : colors.disableText
+      }
+    ]), [canVerify]);
 
   const salaryData = [
     { id: "0", title: "Entre $0 y $700", code: 700 },
@@ -91,48 +141,34 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
     { id: "2", title: "Más de $2500", code: 2501 }
   ]
 
-  const [jobStatus, setJobStatus] = useState<JobStatus | undefined>(undefined);
-  const [jobPlace, setJobPlace] = useState<JobPlace | undefined>(undefined);
-  const [salary, setSalary] = useState<Salary | undefined>(undefined);
-  const [occupation, setOccupation] = useState<string>("");
-  const [exposedPerson, setExposedPerson] = useState();
-  const [comprobante, setComprobante] = useState<string | undefined>();
-  const [apc, setAPC] = useState();
-  const [canVerify, setCanVerify] = useState();
-  const [isFormValid, setIsFormValid] = useState(false);
-
   React.useEffect(() => {
-    const isJobStatusValid = jobStatus !== undefined
     const isJobPlaceValid = jobPlace !== undefined
     const isSalaryValid = salary !== undefined
-    const isOccupationValid = occupation.length > 4
+    const isOccupationValid = occupation.length > 3
     const isExposedPersonValid = exposedPerson !== undefined
     const isFileValid = comprobante !== undefined
     const isAPCValid = apc !== undefined
     const isCanVerifyValid = canVerify !== undefined
 
     setIsFormValid(
-      isJobStatusValid &&
       isJobPlaceValid &&
       isSalaryValid &&
       isExposedPersonValid &&
-      isFileValid &&
+      //isFileValid &&
       isAPCValid &&
       isCanVerifyValid &&
       isOccupationValid
     )
     console.log(
-      isJobStatusValid + " " +
       isJobPlaceValid + " " +
       isSalaryValid + " " +
       isExposedPersonValid + " " +
       isFileValid + " " +
       isAPCValid + " " +
-      (radioButtonsData.find(item => item.id === canVerify)?.value ?? false) + " " +
+      (verifyData.find(item => item.id === canVerify)?.value ?? false) + " " +
       isOccupationValid + " "
     )
   }, [
-    jobStatus,
     jobPlace,
     salary,
     exposedPerson,
@@ -145,7 +181,7 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
   reaction(
     () => viewModel.step4Success,
     () => {
-      nav.navigate(ROUTES.Auth.RegisterIdValidationScreen.name as never)
+      nav.navigate(ROUTES.Auth.RegisterFinancial2Screen.name as never)
     }
   )
 
@@ -169,13 +205,6 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
             text='De donde vienen tus fuentes de ingresos.'
             textSize={FontsSize._16_SIZE}
             marginTop={8} />
-
-          <AutoCompleteView
-            setSelectedItem={setJobStatus}
-            data={[{ id: '0', title: "Tengo trabajo" }, { id: '1', title: "Tengo un emprendimiento o empresa" }]}
-            marginTop={16}
-            clearOnFocus={true}
-            labelTitle={"Estatus laboral"} />
 
           <AutoCompleteView
             setSelectedItem={setJobPlace}
@@ -206,7 +235,7 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
             showRequiredIcon={true} />
           <View style={{ flexDirection: "row" }} >
             <RadioGroup
-              radioButtons={radioButtonsData}
+              radioButtons={pepData}
               onPress={setExposedPerson}
               layout='row'
               selectedId={exposedPerson}
@@ -236,7 +265,7 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
             showRequiredIcon={true} />
           <View style={{ flexDirection: "row" }} >
             <RadioGroup
-              radioButtons={radioButtonsData}
+              radioButtons={apcData}
               onPress={setAPC}
               layout='row'
               selectedId={apc}
@@ -258,7 +287,7 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
             showRequiredIcon={true} />
           <View style={{ flexDirection: "row" }} >
             <RadioGroup
-              radioButtons={radioButtonsData}
+              radioButtons={verifyData}
               onPress={setCanVerify}
               layout='row'
               selectedId={canVerify}
@@ -280,13 +309,12 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
             disabled={!isFormValid}
             onPress={() => {
               const financialModel: FinancialRegisterModel = {
-                type_OfWork: jobStatus.title,
                 placeOfWork: jobPlace.title,
                 occupation: occupation,
                 salary: salary.code,
-                pep: stringToBoolean(radioButtonsData.find(item => item.id === exposedPerson)?.value) ?? false,
-                apc: stringToBoolean(radioButtonsData.find(item => item.id === apc)?.value) ?? false,
-                toVerify: stringToBoolean(radioButtonsData.find(item => item.id === canVerify)?.value) ?? false,
+                pep: stringToBoolean(pepData.find(item => item.id === exposedPerson)?.value) ?? false,
+                apc: stringToBoolean(apcData.find(item => item.id === apc)?.value) ?? false,
+                toVerify: stringToBoolean(verifyData.find(item => item.id === canVerify)?.value) ?? false,
                 pdfDocument: comprobante
               }
               viewModel.registerStep4(data, financialModel)

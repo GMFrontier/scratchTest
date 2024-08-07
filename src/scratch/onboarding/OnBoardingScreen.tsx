@@ -12,6 +12,9 @@ import OnboardingSlide from "./OnboardingSlide";
 import { ButtonLink } from "../../core/presentation/components/button/ButtonLink";
 import { ScalingDot } from "react-native-animated-pagination-dots";
 import React = require("react");
+import onboarding_1 from "../../../assets/svg/onboarding_1";
+import onboarding_2 from "../../../assets/svg/onboarding_2";
+import onboarding_3 from "../../../assets/svg/onboarding_3";
 
 export const OnBoardingScreen = () => {
   const statusBar = useStatusBar()
@@ -25,17 +28,17 @@ export const OnBoardingScreen = () => {
     {
       title: translation.file.title_onboarding_1,
       subtitle: translation.file.subtitle_onboarding_1,
-      image: require('../../../assets/onBoarding_1.png')
+      image: onboarding_1
     },
     {
       title: translation.file.title_onboarding_2,
       subtitle: translation.file.subtitle_onboarding_2,
-      image: require('../../../assets/onBoarding_2.png')
+      image: onboarding_2
     },
     {
       title: translation.file.title_onboarding_3,
       subtitle: translation.file.subtitle_onboarding_3,
-      image: require('../../../assets/onBoarding_3.png')
+      image: onboarding_3
     }
   ]
 
@@ -131,8 +134,9 @@ export const OnBoardingScreen = () => {
         //@ts-ignore
         scrollX={scrollX}
         activeDotColor={colors.secondary}
+        inActiveDotColor={colors.disableText}
         containerStyle={{
-          bottom: 130,
+          bottom: 160,
         }}
         activeDotScale={1}
       />

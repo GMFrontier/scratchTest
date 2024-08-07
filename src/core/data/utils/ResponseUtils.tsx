@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { ErrorAPI, ResponseAPI } from '../models/ResponseApi';
 import {
   APP_API_DEFAULT_DESCRIPTION,

@@ -17,6 +17,7 @@ interface Props {
   leftIcon?: any;
   inputValue?: string;
   onChangeText?: any;
+  autoCapitalize?: any;
   maxLength?: number;
   backendError?: string;
   showError?: boolean;
@@ -54,7 +55,8 @@ export const TextInputMain = ({
   returnKeyType = 'done',
   inputType,
   labelTitleRequired = false,
-  errorInfo
+  errorInfo,
+  autoCapitalize,
 }: Props) => {
   const [isInputValid, setIsValid] = useState(true);
   const [secureText, setSecureText] = useState(true);
@@ -197,6 +199,9 @@ export const TextInputMain = ({
 
   var keyboardType: KeyboardTypeOptions = "default"
   switch (inputType) {
+    case "number":
+      keyboardType = "numeric"
+      break;
     case "money":
       keyboardType = "numeric"
       break;
@@ -238,6 +243,7 @@ export const TextInputMain = ({
 
         <TextInput
           placeholder={placeholder}
+          autoCapitalize={autoCapitalize}
           keyboardType={keyboardType}
           returnKeyType={returnKeyType}
           style={{ ...styles.input, fontFamily: Fonts.DMSansRegular, height: heightInput, textAlignVertical: textAlign, paddingTop: multiline ? 12 : undefined }}

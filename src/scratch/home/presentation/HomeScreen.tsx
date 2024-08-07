@@ -19,6 +19,7 @@ import { useBiometrics } from '../../../core/presentation/utils/biometric/Biomet
 import container from '../../di/inversify.config';
 import HomeViewModel from './HomeViewModel';
 import { TYPES } from '../../di/types';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const HomeScreen = observer(() => {
 
@@ -33,12 +34,10 @@ export const HomeScreen = observer(() => {
     TYPES.HomeViewModel,
   );
 
-  useEffect(() => {
+  useFocusEffect(() => {
     statusBar.setHomeStatusBar()
-    return () => {
-      statusBar.setPrimaryStatusBar()
-    }
   })
+
 
   useEffect(() => {
     saveUserBiometrics(

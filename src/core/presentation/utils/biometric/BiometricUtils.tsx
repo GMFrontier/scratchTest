@@ -18,6 +18,8 @@ export function useBiometrics() {
       });
       const { success, error } = resultObject;
       const hasBiometricBeenSet = await viewModel.hasBiometricBeenSet();
+      console.log(hasBiometricBeenSet)
+      console.log(error)
       if (success && hasBiometricBeenSet) {
         onBiometricSuccess();
       } else if (error === "User cancellation") {

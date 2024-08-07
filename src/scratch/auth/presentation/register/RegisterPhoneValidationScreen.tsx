@@ -114,7 +114,7 @@ export const RegisterPhoneValidationScreen = observer(() => {
     cell: {
       width: 47,
       height: 56,
-      lineHeight: 38,
+      lineHeight: Platform.OS === "ios" ? 56 : 38,
       fontSize: 24,
       borderWidth: 1,
       borderRadius: 8,

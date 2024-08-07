@@ -14,6 +14,8 @@ import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
 import DocumentPicker from 'react-native-document-picker';
 import { ROUTES } from '../../../navigation/routes';
+import img_register_success from '../../../../../assets/svg/img_register_success';
+import { SvgXml } from 'react-native-svg';
 
 export const RegisterCompleteScreen = observer(() => {
 
@@ -43,17 +45,22 @@ export const RegisterCompleteScreen = observer(() => {
         <CustomText
           text='Este esta sujeto a revisión de nuestro equipo.'
           textSize={FontsSize._16_SIZE}
+          textColor={colors.disableText}
           marginTop={8} />
 
-        <Image
-          source={{ uri: "" }}
-          style={{ height: 259, width: "100%", marginTop: 16, backgroundColor: colors.darkGray02 }} />
+        <SvgXml
+          xml={img_register_success}
+          style={{
+            alignSelf: "center",
+            marginTop: 16
+          }} />
 
         <CustomText
           marginTop={24}
           applySubstringColor={true}
           text={'Nos complace informarte que has sido pre-aprobado para obtener una tarjeta de crédito con un límite <b>equivalente al 25% de tus ingresos.<b>\n\nEn un plazo máximo de 48 horas hábiles, recibirás una notificación con los detalles.'}
           textSize={FontsSize._16_SIZE}
+          textColor={colors.disableText}
           fontFamily={Fonts.DMSansMedium} />
 
         <Sizebox height={32} />

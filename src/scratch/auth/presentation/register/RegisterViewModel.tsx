@@ -150,13 +150,14 @@ class RegisterViewModel {
 
   @action
   registerStep5(
+    jobStatus?: string,
     jobPosition?: string,
     workplace?: string,
     company?: string,
     companyAge?: string,
     socialMedia?: string,
     website?: string,
-    jobExperience?: string,
+    jobExperience?: number,
     seguro?: string,
     movements?: string,
     operacion?: string,
@@ -166,6 +167,7 @@ class RegisterViewModel {
     this.mRegistrationUseCase
       .registerStep5(
         this.user,
+        jobStatus,
         jobPosition,
         workplace,
         company,

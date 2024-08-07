@@ -209,7 +209,7 @@ export const RegisterFinancial2Screen = observer(() => {
 
               <AutoCompleteView
                 setSelectedItem={setJobExperience}
-                data={[{ id: 0, title: "Pendiente a definir" }]}
+                data={[{ id: 1, title: "1 año" }]}
                 marginTop={16}
                 labelTitle={"Cuánto tiempo tienes en tu trabajo?"}
                 clearOnFocus={true} />
@@ -306,13 +306,14 @@ export const RegisterFinancial2Screen = observer(() => {
             disabled={false}
             onPress={() => {
               viewModel.registerStep5(
+                jobStatus.title,
                 jobPosition.title,
                 workplace,
                 company,
                 companyAge?.title,
                 socialMedia,
                 website,
-                jobExperience?.title,
+                jobExperience.id,
                 seguro,
                 movements,
                 operacion,

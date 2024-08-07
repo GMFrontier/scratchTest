@@ -4,6 +4,7 @@ import FontsSize from "../../core/constants/FontsSize";
 import Fonts from "../../core/constants/Fonts";
 import { ThemeContext } from "../../core/presentation/contexts/theme/ThemeContext";
 import { useContext } from "react";
+import { SvgXml } from "react-native-svg";
 
 
 interface Props {
@@ -21,7 +22,6 @@ const OnboardingSlide = ({ title, image, subtitle }: Props) => {
 
   return (
     <View style={{ paddingHorizontal: 16 }} >
-      <Image resizeMode="stretch" style={styles.imgStyle} source={image} />
       <View style={{ zIndex: 1, marginTop: 20 }} >
         <CustomText text={title} textColor={colors.secondary} fontFamily={Fonts.DMSansBold}
           textSize={FontsSize._32_SIZE} />
@@ -32,6 +32,7 @@ const OnboardingSlide = ({ title, image, subtitle }: Props) => {
         textColor={colors.secondaryText}
         fontFamily={Fonts.DMSansRegular}
         textSize={FontsSize._16_SIZE} />
+      <SvgXml xml={image} style={styles.imgStyle} />
     </View>
   )
 }
@@ -40,7 +41,7 @@ export default OnboardingSlide
 
 const styles = StyleSheet.create({
   imgStyle: {
-    height: '0%',
-    width: '0%'
+    alignSelf: "center",
+    marginTop: 49
   }
 });

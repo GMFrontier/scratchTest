@@ -23,7 +23,7 @@ export interface RegisterRepository {
     dto: any,
   ): Promise<ResponseAPI>;
   registerStep5(
-    userId: string,
+    id: string,
     dto: RegistrationStep5Model,
   ): Promise<ResponseAPI>;
 

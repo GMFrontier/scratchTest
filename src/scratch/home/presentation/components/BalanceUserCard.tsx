@@ -5,12 +5,9 @@ import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import FontsSize from '../../../../core/constants/FontsSize';
 import ic_avatar_empty_profile from '../../../../../assets/svg/ic_avatar_empty_profile';
 import { SvgXml } from 'react-native-svg';
-import ic_info_blue_dark_filled from '../../../../../assets/svg/ic_info_blue_dark_filled';
-import ic_eye_open_outline from '../../../../../assets/svg/ic_eye_open_outline';
 import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
 import { CustomText } from '../../../../core/presentation/components/text/CustomText';
 import Fonts from '../../../../core/constants/Fonts';
-import ProgressIndicator from '../../../../core/presentation/components/progress/ProgressIndicator';
 import BalanceProgress from './BalanceProgress';
 import ic_clock from '../../../../../assets/svg/ic_clock';
 import container from '../../../di/inversify.config';
@@ -21,7 +18,7 @@ import { observer } from 'mobx-react-lite';
 interface Props {
 }
 
-export const BalanceUserCard = ({
+export const BalanceUserCard = observer(({
 }: Props) => {
   const {
     theme: { colors },
@@ -101,4 +98,4 @@ export const BalanceUserCard = ({
       /> */}
     </View>
   )
-};
+});

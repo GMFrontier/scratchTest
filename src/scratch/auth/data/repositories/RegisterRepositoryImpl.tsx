@@ -116,14 +116,14 @@ class RegisterRepositoryImpl implements RegisterRepository {
   }
 
   registerStep5(
-    userId: string,
+    id: string,
     dto: RegistrationStep5Model,
   ): Promise<ResponseAPI> {
 
     return new Promise<ResponseAPI>((resolve, reject) => {
       ApiService.apiCallWithLoading(() => {
         return api.put<ResponseAPI>(
-          EndPoints.REGISTER_STEP_5 + userId,
+          EndPoints.REGISTER_STEP_5 + id,
           dto,
         )
       })

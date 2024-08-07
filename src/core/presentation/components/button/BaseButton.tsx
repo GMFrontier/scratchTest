@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, TouchableHighlight, Platform } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import Fonts from '../../../constants/Fonts';
 import FontsSize from '../../../constants/FontsSize';
@@ -37,6 +37,8 @@ export const BaseButton = ({
 
   var height = 56;
   var textSize = FontsSize._16_SIZE;
+
+  if (Platform.OS === "ios" && marginBottom === 16) marginBottom = 42
 
   var defaultStyles = StyleSheet.create({
     mainContainer: {

@@ -11,18 +11,18 @@ export interface RegistrationModel {
 }
 
 export interface RegistrationStep5Model {
-  step: 5,
-  jobPosition?: string,
-  workplace?: string,
-  company?: string,
-  companyAge?: string,
-  socialMedia?: string,
+  type_of_work?: string,
+  position?: string,
+  place_of_work?: string,
+  name_of_company?: string,
+  company_age?: string,
+  social_networks?: string,
   website?: string,
-  jobExperience?: string,
-  seguro?: string,
+  seniority?: number,
+  social_security?: string,
   movements?: string,
-  operacion?: string,
-  renta?: string,
+  operation_notice?: string,
+  tax_return?: string,
 }
 
 export interface AddressRegisterModel {
@@ -35,7 +35,6 @@ export interface AddressRegisterModel {
 }
 
 export interface FinancialRegisterModel {
-  type_OfWork: string;
   placeOfWork: string;
   occupation: string;
   salary: string;
