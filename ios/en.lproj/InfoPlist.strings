@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  paguelofacil
+
+  Created by Francisco Gabriel Montero on 22/11/2023.
+  
+*/
+"NSFaceIDUsageDescription" = "This application needs access to your Face ID feature in order to allow you to log in with this biometric option";
+"NSContactsUsageDescription" = "This application requests access to your contact list in order to show you the list of those people in your contacts who also use PagueloFacil.\n\nYour contacts will be synced with PagueloFacil’s cloud servers and won\&apos;t be neither stored in our servers nor shared to a third party.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "This application needs access to your location to assist you in selecting the nearest address for your PagueloFacil card delivery using Google Maps.";
