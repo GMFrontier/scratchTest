@@ -472,8 +472,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zerocredit.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ZeroApp;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = ZeroApp;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = zeroapp;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = zeroapp;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/scratchTest.app/scratchTest";
 			};
 			name = Debug;
@@ -503,8 +503,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zerocredit.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ZeroApp;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = ZeroApp;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = zeroapp;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = zeroapp;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/scratchTest.app/scratchTest";
 			};
 			name = Release;
@@ -538,7 +538,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zerocredit.app;
 				PRODUCT_NAME = scratchTest;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ZeroApp;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = zeroapp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -573,7 +573,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zerocredit.app;
 				PRODUCT_NAME = scratchTest;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ZeroApp;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = zeroapp;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

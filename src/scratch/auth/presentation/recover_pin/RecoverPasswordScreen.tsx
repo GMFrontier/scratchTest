@@ -66,7 +66,7 @@ export const RecoverPasswordScreen = observer(({ route }: NavigationProps) => {
 
   return (
     <ToolbarView
-      text='Restablecimiento de PIN'>
+      text='Restablecimiento de contraseña'>
       <View style={style.containerMain}>
         <CustomText
           marginTop={20}
@@ -76,7 +76,7 @@ export const RecoverPasswordScreen = observer(({ route }: NavigationProps) => {
           textSize={FontsSize._32_SIZE} />
 
         <CustomText
-          text={"Te enviaremos un código de verificación para reestablecer tu PIN"}
+          text={"Te enviaremos un código de verificación para reestablecer tu contraseña"}
           marginTop={8}
           fontFamily={Fonts.DMSansRegular}
           textSize={FontsSize._16_SIZE} />
