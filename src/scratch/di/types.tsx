@@ -33,7 +33,7 @@ const TYPES = {
   InternalNotificationsRepository: Symbol.for('InternalNotificationsRepository'),
 
   //Card
-  CardRepository: Symbol.for('CardRepository'),
+  ZeroCardRepository: Symbol.for('ZeroCardRepository'),
 
   //ExternalCard
   ExternalCardRepository: Symbol.for('ExternalCardRepository'),
@@ -95,6 +95,7 @@ const TYPES = {
   ExternalCardViewModel: Symbol.for('ExternalCardViewModel'),
   CommunicationViewModel: Symbol.for('CommunicationViewModel'),
   AccountLimitsViewModel: Symbol.for('AccountLimitsViewModel'),
+  CardsViewModel: Symbol.for('CardsViewModel'),
 
 };
 

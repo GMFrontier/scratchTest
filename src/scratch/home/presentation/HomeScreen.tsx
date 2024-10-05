@@ -45,15 +45,16 @@ export const HomeScreen = observer(() => {
       "Asociación completada" ?? ""
     )
     viewModel.getUser()
-  })
+    viewModel.getBalance()
+    viewModel.getMovements()
+    viewModel.getPeriods()
+  }, [])
 
-  const { translation } = useTranslation();
-
-  const movements: Movements[] = [
-    { id: "85412345", title: "Factura Claro Panamá", type: "none", status: "approved", amount: 23.31 },
-    { id: "854123435", title: "Luxery Shop Electrict", type: "shopping", status: "rejected", amount: -23.31 },
-    { id: "854123452", title: "Factura Claro Panamá", type: "none", status: "approved", amount: 23.31 },
-  ]
+  // const movements: Movements[] = [
+  //   { id: "85412345", title: "Factura Claro Panamá", type: "none", status: "approved", amount: 23.31 },
+  //   { id: "854123435", title: "Luxery Shop Electrict", type: "shopping", status: "rejected", amount: -23.31 },
+  //   { id: "854123452", title: "Factura Claro Panamá", type: "none", status: "approved", amount: 23.31 },
+  // ]
   return (
     <ScrollView style={style.containerMain} showsVerticalScrollIndicator={false}>
       <Image
@@ -68,9 +69,19 @@ export const HomeScreen = observer(() => {
           padding: 16
         }}>
         <BalanceUserCard />
-        <ExpirationPaymentCard />
-        <BannerCard />
-        <MovementsList items={movements} />
+        {
+          viewModel.periods.length > 0 &&
+          <ExpirationPaymentCard />
+        }
+        {
+          !viewModel.user?.isCardOrderInit &&
+          <BannerCard />
+        }
+
+        {/* PENDING = "pending"VERIFIED = "verified"REJECTED = "rejected"REVIEW_NEEDED = "reviewNeeded"VERIFICATION_INPUTS_COMPLETED = "verification_inputs_completed"NOT_REGISTER = "not_register" */}
+        {/*  pre_approve_credit previo a balance */}
+        <MovementsList items={viewModel.movements.slice(0, 4)} />
+        <Sizebox height={16} />
         <FAQCard />
         <Sizebox height={150} />
       </View>

@@ -15,12 +15,13 @@ import { useNavigation } from '@react-navigation/native';
 import ic_profile_focused from '../../../../../assets/svg/ic_profile_focused';
 import ic_profile from '../../../../../assets/svg/ic_profile';
 import { ROUTES } from '../../../../scratch/navigation/routes';
+import SplashScreen from 'react-native-splash-screen';
 
 const BottomTabNavigator = () => {
   const Tab = createBottomTabNavigator();
   const { theme: { colors } } = useContext(ThemeContext);
   const { translation } = useTranslation();
-  const barYAxisSpace = (Dimensions.get('window').width) * .16
+  const barYAxisSpace = (Dimensions.get('window').width) * (Platform.OS === "android" ? .16 : .22)
   var screenHeight = Dimensions.get('screen').height + (StatusBar.currentHeight || 24) + Dimensions.get('window').height;
   if (Platform.OS === "android") {
     screenHeight *= .075

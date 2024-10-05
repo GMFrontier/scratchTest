@@ -31,6 +31,8 @@ import { CommonActions } from '@react-navigation/native';
 import SettingsViewModel from './SettingsViewModel';
 import container from '../../di/inversify.config';
 import { TYPES } from '../../di/types';
+import ic_default_avatar from '../../../../assets/svg/ic_default_avatar';
+import HomeViewModel from '../../home/presentation/HomeViewModel';
 
 export const ProfileScreen = observer(() => {
 
@@ -38,12 +40,14 @@ export const ProfileScreen = observer(() => {
     theme: { colors },
   } = useContext(ThemeContext);
 
-  const viewModel = container.get<SettingsViewModel>(
-    TYPES.SettingsViewModel,
+  const viewModel = container.get<HomeViewModel>(
+    TYPES.HomeViewModel,
   );
 
   const statusBar = useStatusBar()
   const toastMessage = useToastContext().showMessageToast
+  const [name, setName] = React.useState('');
+  const [lastname, setLastname] = React.useState('');
   const [phone, setPhone] = React.useState('');
   const [selectedOption, setSelectedOption] = React.useState(
     '\ud83c\uddf5\ud83c\udde6*+507*PA',
@@ -57,6 +61,12 @@ export const ProfileScreen = observer(() => {
       statusBar.setPrimaryStatusBar()
     }
   })
+
+
+  React.useEffect(() => {
+    setName(viewModel.user.name)
+    setLastname(viewModel.user.lastName)
+  }, [])
 
   const checkAndRequestCameraPermission = async () => {
     const result = await check(PERMISSIONS.ANDROID.CAMERA);
@@ -90,7 +100,7 @@ export const ProfileScreen = observer(() => {
   }
 
   const size = 88
-  const uri = "https://img.freepik.com/foto-gratis/colores-arremolinados-interactuan-danza-fluida-sobre-lienzo-que-muestra-tonos-vibrantes-patrones-dinamicos-que-capturan-caos-belleza-arte-abstracto_157027-2892.jpg?w=2000&t=st=1715983346~exp=1715983946~hmac=7dbb319bf1e44315e8c43853f017c5cea35f8a970d66fb232c4213352dccba59"
+  // const uri = "https://img.freepik.com/foto-gratis/colores-arremolinados-interactuan-danza-fluida-sobre-lienzo-que-muestra-tonos-vibrantes-patrones-dinamicos-que-capturan-caos-belleza-arte-abstracto_157027-2892.jpg?w=2000&t=st=1715983346~exp=1715983946~hmac=7dbb319bf1e44315e8c43853f017c5cea35f8a970d66fb232c4213352dccba59"
 
   const nav = useNavigation()
 
@@ -165,11 +175,12 @@ export const ProfileScreen = observer(() => {
           borderWidth: 2,
           borderColor: colors.white
         }}>
-          <FastImage
+          {/* <FastImage
             source={{ uri }}
             resizeMode={FastImage.resizeMode.cover}
             style={styles.image}
-            onError={() => { }} />
+            onError={() => { }} /> */}
+          <SvgXml xml={ic_default_avatar} />
           <View style={{
             position: "absolute",
             backgroundColor: colors.white,
@@ -207,14 +218,18 @@ export const ProfileScreen = observer(() => {
 
         <TextInputMain
           marginTop={16}
-          onChangeText={() => { }}
+          onChangeText={setName}
           labelTitleRequired={true}
+          inputValue={name}
+          editable={false}
           labelTitle={"Nombre"}
           placeholder={"Nombre"} />
 
         <TextInputMain
           marginTop={16}
-          onChangeText={() => { }}
+          onChangeText={setLastname}
+          inputValue={lastname}
+          editable={false}
           labelTitleRequired={true}
           labelTitle={"Apellido"}
           placeholder={"Apellido"} />
@@ -224,14 +239,14 @@ export const ProfileScreen = observer(() => {
           onChangeText={() => { }}
           editable={false}
           labelTitleRequired={true}
-          inputValue={translation.file.email_placeholder}
+          inputValue={viewModel.user?.email ?? ""}
           labelTitle={translation.file.email}
           placeholder={translation.file.email_placeholder} />
 
         <Sizebox height={16} />
 
         <FlagInput
-          phone={phone}
+          phone={viewModel.user.phoneNumber.replace("+507", "").replace("+54", "")}
           setPhone={setPhone}
           isEnabled={false}
           selectedOption={selectedOption}

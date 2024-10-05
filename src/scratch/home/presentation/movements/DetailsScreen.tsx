@@ -12,19 +12,22 @@ import ToolbarView from '../../../../core/presentation/components/toolbar/Toolba
 import FontsSize from '../../../../core/constants/FontsSize';
 import Fonts from '../../../../core/constants/Fonts';
 import { SvgXml } from 'react-native-svg';
-import { Movements, getCategory, getColor, getIcon } from '../components/MovementsItem';
+import { getCategory, getColor, getIcon, getStatus } from '../components/MovementsItem';
 import ic_share from '../../../../../assets/svg/ic_share';
 import ic_edit_outline_blue from '../../../../../assets/svg/ic_edit_outline_blue';
 import { ButtonLink } from '../../../../core/presentation/components/button/ButtonLink';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../../navigation/routes';
+import HomeViewModel from '../HomeViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
+import { toMoneyFormat, toMoneyNoSymbol } from '../../../../core/data/utils/Utils';
 
 export const DetailsScreen = observer(() => {
 
-  const item: Movements = { id: "854123452", title: "Factura Claro Panamá", type: "none", status: "approved", amount: 23.31 }
-
-
-  const { title, status, type, amount } = item
+  const viewModel = container.get<HomeViewModel>(
+    TYPES.HomeViewModel,
+  );
 
   const {
     theme: { colors },
@@ -39,7 +42,7 @@ export const DetailsScreen = observer(() => {
     }
   })
 
-  const { translation } = useTranslation();
+  const date = new Date(viewModel.movement.created_at)
 
   const DetailRow = ({ title, text, textColor }: any) => {
     return (
@@ -74,7 +77,7 @@ export const DetailsScreen = observer(() => {
           textColor={colors.white}
           textSize={FontsSize._20_SIZE}
           textAlign='center'
-          text='Factura Claro Panamá' />
+          text={viewModel.movement.detail ?? viewModel.movement.messageSys} />
         <View style={{ flexDirection: "row", alignItems: "center", marginTop: 8, alignSelf: "center" }} >
           <CustomText
             textSize={FontsSize._24_SIZE}
@@ -86,7 +89,7 @@ export const DetailsScreen = observer(() => {
             fontFamily={Fonts.DMSansBold}
             textSize={FontsSize._48_SIZE}
             textColor={colors.white}
-            text='200.00' />
+            text={toMoneyNoSymbol(viewModel.movement.amount)} />
         </View>
         <View
           style={{
@@ -99,8 +102,8 @@ export const DetailsScreen = observer(() => {
           <View
             style={{ flexDirection: "row", alignItems: "center", alignContent: "center" }}
           >
-            <View style={{ backgroundColor: getColor(type, colors), borderRadius: 8, padding: 8, }}>
-              <SvgXml xml={getIcon(type)} />
+            <View style={{ backgroundColor: getColor(viewModel.movement.category_id, colors), borderRadius: 8, padding: 8, }}>
+              <SvgXml xml={getIcon(viewModel.movement.category_id)} />
             </View>
             <View
               style={{ marginStart: 8 }}>
@@ -110,7 +113,7 @@ export const DetailsScreen = observer(() => {
               <CustomText
                 textSize={FontsSize._12_SIZE}
                 marginTop={4}
-                text={getCategory(type)} />
+                text={getCategory(viewModel.movement.category_id)} />
             </View>
             <TouchableOpacity
               activeOpacity={.8}
@@ -123,23 +126,42 @@ export const DetailsScreen = observer(() => {
           </View>
           <View style={{ marginTop: 24, backgroundColor: "#D7DAE0", height: 1, borderRadius: 1, width: "100%", }} />
           <View>
-            <DetailRow title="Fecha:" text="DD/MM/AAAA" />
-            <DetailRow title="Hora:" text="00:15 AM" />
-            <DetailRow title="Tipo:" text="Compra" />
-            <DetailRow title="Estado:" text="Aprobado" textColor={colors.green400} />
-            <DetailRow title="Puntos ganados:" text="45 pts" />
+            <DetailRow title="Fecha:" text={date.toLocaleDateString()} />
+            <DetailRow title="Hora:" text={date.toLocaleTimeString()} />
+            <DetailRow title="Tipo:" text={viewModel.movement.type ?? "--"} />
+            <DetailRow title="Estado:" text={getStatus(viewModel.movement.status)} textColor={getColor(viewModel.movement.status, colors)} />
+            <DetailRow title="Puntos ganados:" text={"--"} />
           </View>
           <View style={{ marginTop: 24, backgroundColor: "#D7DAE0", height: 1, borderRadius: 1, width: "100%", }} />
-          <DetailRow title="ID del movimiento:" text="85412345" />
+          <DetailRow title="ID del movimiento:" text={viewModel.movement.codOper ?? viewModel.movement._id} />
         </View>
-        <View
-          style={{ alignSelf: "center", marginTop: 24 }}>
-          <ButtonLink
-            text='Agregar un comentario'
-            onPress={() => {
-              navigation.navigate(ROUTES.Home.AddCommentScreen.name as never)
-            }} />
-        </View>
+        {
+          !viewModel.movement.comment &&
+          <View
+            style={{ alignSelf: "center", marginTop: 24 }}>
+            <ButtonLink
+              text='Agregar un comentario'
+              onPress={() => {
+                navigation.navigate(ROUTES.Home.AddCommentScreen.name as never)
+              }} />
+          </View>
+        }
+        {
+          viewModel.movement.comment &&
+          <View
+            style={{ marginTop: 24, justifyContent: "space-between", flexDirection: "row", marginHorizontal: 8 }}>
+            <CustomText
+              text={viewModel.movement.comment}
+              textSize={FontsSize._14_SIZE}
+              textColor={colors.white}
+            />
+            <ButtonLink
+              text='Editar comentario'
+              onPress={() => {
+                navigation.navigate(ROUTES.Home.AddCommentScreen.name as never)
+              }} />
+          </View>
+        }
         <Sizebox height={150} />
         <Sizebox height={150} />
         <Sizebox height={150} />

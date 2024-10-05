@@ -33,7 +33,10 @@ interface Props {
   labelTitleRequired?: boolean,
   allowSpaces?: boolean
   returnKeyType?: ReturnKeyTypeOptions
-  inputType?: "name" | "password" | "email" | "money" | "alphanumeric" | "all" | "number"
+  inputType?: "name" | "password" | "email" | "money" | "alphanumeric" | "all" | "number" | "cardDate"
+  optional?: boolean
+  counter?: boolean
+  flex?: number
 }
 
 export const TextInputMain = ({
@@ -57,6 +60,9 @@ export const TextInputMain = ({
   labelTitleRequired = false,
   errorInfo,
   autoCapitalize,
+  optional,
+  counter,
+  flex,
 }: Props) => {
   const [isInputValid, setIsValid] = useState(true);
   const [secureText, setSecureText] = useState(true);
@@ -77,6 +83,9 @@ export const TextInputMain = ({
       break;
     case "alphanumeric":
       regex = /[^a-zA-Z 0-9]/g
+      break;
+    case "cardDate":
+      regex = /^(0[1-9]|1[0-2])\/[0-9]{2}$/
       break;
     default:
       regex = /.*/
@@ -118,6 +127,16 @@ export const TextInputMain = ({
 
     // const normalizedText = text.replace(/\s{2,}/g, ' ');
     onChangeText(text);
+
+    if (inputType === "cardDate") {
+      if (text.length === 2 && text.charAt(1) !== '/' && text > inputValue) {
+        text = text.substring(0, 2) + '/' + text.substring(2);
+      }
+      if (text.length <= 5)
+        onChangeText(text);
+      else
+        onChangeText(inputValue);
+    }
 
     if (inputType === "name") {
       // const newText = text.replace(/[^a-zA-Z ]/g, '');
@@ -216,18 +235,23 @@ export const TextInputMain = ({
   }
 
   return (
-    <View style={{ width: '100%', marginTop: marginTop }}>
+    <View style={{ width: '100%', marginTop: marginTop, flex }}>
 
 
-      {labelTitle ? <View style={{ flexDirection: 'row' }}>
-        <CustomText
-          text={labelTitle}
-          fontFamily={Fonts.DMSansMedium}
-          textSize={FontsSize._14_SIZE}
-          textColor={colors.white}
-          marginBottom={4}></CustomText>
-        <Sizebox width={5}></Sizebox>
-        {labelTitleRequired ? <CustomText text={"*"} fontFamily={Fonts.DMSansMedium} textSize={FontsSize._14_SIZE} textColor={colors.alertColor} marginBottom={4}></CustomText> : null}
+      {labelTitle ? <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
+        <View style={{ flexDirection: 'row' }}>
+          <CustomText
+            text={labelTitle}
+            fontFamily={Fonts.DMSansMedium}
+            textSize={FontsSize._14_SIZE}
+            textColor={colors.white}
+            marginBottom={4}></CustomText>
+          <Sizebox width={5}></Sizebox>
+          {labelTitleRequired ? <CustomText text={"*"} fontFamily={Fonts.DMSansMedium} textSize={FontsSize._14_SIZE} textColor={colors.alertColor} marginBottom={4}></CustomText> : null}
+          {optional ? <CustomText text={"(Opcional)"} textColor={colors.disableText}></CustomText> : null}
+        </View>
+        {counter ? <CustomText text={inputValue.length + "/" + maxLength} textColor={colors.disableText}></CustomText>
+          : null}
       </View> : null}
       <View
         style={[

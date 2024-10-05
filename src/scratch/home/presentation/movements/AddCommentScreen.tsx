@@ -15,6 +15,10 @@ import Constants from '../../../../core/constants/Constants';
 import { ButtonPrimary } from '../../../../core/presentation/components/button/ButtonPrimary';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
 import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
+import HomeViewModel from '../HomeViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
+import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
 
 export const AddCommentScreen = observer(() => {
 
@@ -26,7 +30,48 @@ export const AddCommentScreen = observer(() => {
   const navigation = useNavigation()
   const showStateModal = useNewModalContext().showStateModal
 
-  const { translation } = useTranslation();
+  const viewModel = container.get<HomeViewModel>(
+    TYPES.HomeViewModel,
+  );
+
+  useEffect(() => {
+    if (viewModel.movement.comment) setComment(viewModel.movement.comment)
+  }, [])
+
+  useEffect(() => {
+    return reaction(
+      () => viewModel.successResponse,
+      () => {
+        showStateModal({
+          title: "Comentario guardado",
+          message: "Se ha guardado el comentario con éxito.",
+          image: ic_success_check_filled,
+          showIcoClose: true,
+          enableOverlayTap: "none",
+          actionCloseModal() {
+            navigation.goBack()
+          },
+          size: "30%",
+        })
+      }
+    )
+  }, [])
+
+  useEffect(() => {
+    return reaction(
+      () => viewModel.errorResponse,
+      () => {
+        showStateModal({
+          title: "Ha ocurrido un problema",
+          message: "No se ha guardado el comentario, aguarda unos minutos he inténtalo nuevamente.",
+          image: ic_exclamation_error_filled_48,
+          showIcoClose: true,
+          size: "30%"
+        })
+      }
+    )
+  }, [])
+
 
   return (
     <ToolbarView
@@ -62,17 +107,7 @@ export const AddCommentScreen = observer(() => {
         text='Guardar'
         marginHorizontal={16}
         onPress={() => {
-          showStateModal({
-            title: "Comentario guardado",
-            message: "Se ha guardado el comentario con éxito.",
-            image: ic_success_check_filled,
-            showIcoClose: true,
-            enableOverlayTap: "none",
-            actionCloseModal() {
-              navigation.goBack()
-            },
-            size: "30%",
-          })
+          viewModel.saveComment(comment)
         }} />
     </ToolbarView>
   );

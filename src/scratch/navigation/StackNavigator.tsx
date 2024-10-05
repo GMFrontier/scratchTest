@@ -45,6 +45,24 @@ const handlers = {
   SupportScreen: () => <ROUTES.Settings.SupportScreen.screen />,
 
   CardsScreen: () => <ROUTES.Cards.CardsScreen.screen />,
+  CardScreen: () => <ROUTES.Cards.CardScreen.screen />,
+  CardDetailsScreen: () => <ROUTES.Cards.CardDetailsScreen.screen />,
+  ChangePinScreen: () => <ROUTES.Cards.ChangePinScreen.screen />,
+  NewPinScreen: () => <ROUTES.Cards.NewPinScreen.screen />,
+  // solicitud
+  CardsTyCScreen: () => <ROUTES.Cards.CardsTyCScreen.screen />,
+  AchDataScreen: () => <ROUTES.Cards.AchDataScreen.screen />,
+  AchReceiptScreen: () => <ROUTES.Cards.AchReceiptScreen.screen />,
+  AchTransferScreen: () => <ROUTES.Cards.AchTransferScreen.screen />,
+  PaymentDataScreen: () => <ROUTES.Cards.PaymentDataScreen.screen />,
+  PaymentMethodScreen: () => <ROUTES.Cards.PaymentMethodScreen.screen />,
+  // delivery
+  DeliveryScreen: () => <ROUTES.Cards.Delivery.DeliveryScreen.screen />,
+  EditScreen: () => <ROUTES.Cards.Delivery.EditScreen.screen />,
+  MapScreen: () => <ROUTES.Cards.Delivery.MapScreen.screen />,
+  // activation
+  ActivationScreen: () => <ROUTES.Cards.Activation.ActivationScreen.screen />,
+  PinInputScreen: () => <ROUTES.Cards.Activation.PinInputScreen.screen />,
 
   PointsScreen: () => <ROUTES.Points.PointsScreen.screen />,
 

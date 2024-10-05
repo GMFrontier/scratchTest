@@ -34,14 +34,14 @@ export const ModalContent = ({ title, subtitle, labelButtonPrimary, icoModal, ac
   return (
     <View style={style.contentBottomSheetContainer}>
       {showIconClose ?
-        <TouchableOpacity onPress={actionCloseModal} style={{ position: 'absolute', right: 16, top: 32 }}>
+        <TouchableOpacity onPress={actionCloseModal} style={{ position: 'absolute', right: 0, top: 0, zIndex: 1, padding: 32, paddingRight: 16 }}>
           <SvgXml xml={ic_close_outline} />
         </TouchableOpacity>
         :
         null
       }
       {content && <View>
-        {content}
+        {content(actionCloseModal)}
       </View>
       }
       {!content && <View>
@@ -86,7 +86,8 @@ export const ModalContent = ({ title, subtitle, labelButtonPrimary, icoModal, ac
 
         {
           labelButtonSecondary ?
-            <ButtonSecondary
+            <ButtonPrimary
+              buttonType="secondary"
               text={labelButtonSecondary}
               onPress={actionButtonSecondary}
               position='relative' />

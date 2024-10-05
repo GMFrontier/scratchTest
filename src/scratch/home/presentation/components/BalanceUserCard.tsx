@@ -14,6 +14,7 @@ import container from '../../../di/inversify.config';
 import HomeViewModel from '../HomeViewModel';
 import { TYPES } from '../../../di/types';
 import { observer } from 'mobx-react-lite';
+import { toMoneyNoSymbol } from '../../../../core/data/utils/Utils';
 
 interface Props {
 }
@@ -63,7 +64,7 @@ export const BalanceUserCard = observer(({
           textColor={colors.white}
           textAlign='center'
           fontFamily={Fonts.DMSansMedium}
-          text='Fecha de cierre: 28/04/2024' />
+          text={viewModel.userBalance.dateEndPeriod ?? "ASD"} />
         <View style={{ flexDirection: "row", alignItems: "center", marginTop: 8, alignSelf: "center" }} >
           <CustomText
             textSize={FontsSize._24_SIZE}
@@ -75,10 +76,10 @@ export const BalanceUserCard = observer(({
             fontFamily={Fonts.DMSansBold}
             textSize={FontsSize._48_SIZE}
             textColor={colors.white}
-            text='200.00' />
+            text={toMoneyNoSymbol(viewModel.userBalance.balance)} />
         </View>
         <Sizebox height={20} />
-        <BalanceProgress total={200} spent={155} />
+        <BalanceProgress total={viewModel.userBalance.totalCredit} spent={viewModel.userBalance.spent} />
         <Sizebox height={20} />
 
         <View style={{ flexDirection: "row", paddingEnd: 16 }} >

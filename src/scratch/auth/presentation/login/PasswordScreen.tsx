@@ -27,6 +27,7 @@ import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclama
 import SplashScreen from 'react-native-splash-screen';
 import RegisterViewModel from '../register/RegisterViewModel';
 import { useStatusBar } from '../../../../core/presentation/contexts/statusBar/StatusBarContext';
+import ic_default_avatar from '../../../../../assets/svg/ic_default_avatar';
 
 export const PasswordScreen = observer(({ route }: NavigationProps) => {
   var email = undefined
@@ -160,7 +161,7 @@ export const PasswordScreen = observer(({ route }: NavigationProps) => {
           alignSelf: "center",
           alignItems: "center",
         }} >
-          <AvatarImage size={56} />
+          <AvatarImage size={56} svg={ic_default_avatar} />
 
           <CustomText
             text={"Hola, " + viewModel.user.name + " " + viewModel.user.lastName}

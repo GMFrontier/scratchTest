@@ -1,5 +1,14 @@
 import { isValidPhoneNumber } from "libphonenumber-js";
 
+export const formatCardNumber = (input: string) => {
+  const cardNumber = input.replace(/[^\d]/g, '');
+  const formattedCardNumber = cardNumber
+    .replace(/\s+/g, '')
+    .replace(/(\d{4})/g, '$1 ')
+    .trim();
+  return formattedCardNumber;
+};
+
 export function stringToBoolean(s?: string): boolean {
   return s?.toLowerCase() === 'true';
 }
@@ -47,9 +56,11 @@ export function isValidPhoneCheck(phone: string, selectedOption: string): boolea
     return false;
   }
 };
-interface Number {
-  toMoneyFormat(): string;
-}
+
+export const toMoneyNoSymbol = (number: number) => {
+  if (number >= 0) return number.toFixed(2);
+  else return "-" + Math.abs(number).toFixed(2);
+};
 
 export const toMoneyFormat = (number: number) => {
   if (number > 0) return "$" + number.toFixed(2);

@@ -11,7 +11,6 @@ import { ButtonLink } from '../../../../core/presentation/components/button/Butt
 import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ToolbarView from '../../../../core/presentation/components/toolbar/ToolbarView';
-import { PinView } from '../../../../core/presentation/components/input/PinView';
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
 import FontsSize from '../../../../core/constants/FontsSize';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';

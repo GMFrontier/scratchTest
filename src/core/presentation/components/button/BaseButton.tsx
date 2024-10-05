@@ -30,7 +30,7 @@ export const BaseButton = ({
   marginHorizontal,
   position,
   marginBottom = 16,
-  buttonType,
+  buttonType = "primary",
 }: BaseButtonProps) => {
   const { theme: { colors } } = useContext(ThemeContext);
   const [isPressed, setIsPressed] = useState(false);
@@ -50,7 +50,7 @@ export const BaseButton = ({
       backgroundColor: 'rgba(0, 0, 0, 0)',
       marginBottom: position === "relative" ? 8 : 0,
       borderRadius: 2,
-      borderColor: colors.disableText,
+      borderColor: colors.disableText
     },
     buttonContainer: {
       flexDirection: 'row',
@@ -107,9 +107,9 @@ export const BaseButton = ({
           ...defaultStyles.buttonContainer,
           backgroundColor: "transparent",
           borderWidth: 2,
-          borderColor: colors.disableText,
+          borderColor: colors.blu100,
         },
-        textStyle: { ...defaultStyles.textStyle, color: colors.disableText },
+        textStyle: { ...defaultStyles.textStyle, color: colors.blu100 },
         mainContainer: {
           ...defaultStyles.mainContainer,
         }

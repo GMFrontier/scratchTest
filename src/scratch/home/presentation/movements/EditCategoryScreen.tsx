@@ -10,7 +10,7 @@ import ToolbarView from '../../../../core/presentation/components/toolbar/Toolba
 import FontsSize from '../../../../core/constants/FontsSize';
 import Fonts from '../../../../core/constants/Fonts';
 import { SvgXml } from 'react-native-svg';
-import { Movements, getCategory, getColor, getIcon, } from '../components/MovementsItem';
+import { categories, Categories, getCategory, getColor, getIcon, } from '../components/MovementsItem';
 import { Checkbox } from '../../../../core/presentation/components/checkbox/Checkbox';
 import ic_unchecked_circle from '../../../../../assets/svg/ic_unchecked_circle';
 import ic_checked_circle from '../../../../../assets/svg/ic_checked_circle';
@@ -18,6 +18,10 @@ import { ButtonPrimary } from '../../../../core/presentation/components/button/B
 import { useNavigation } from '@react-navigation/native';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
 import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
+import HomeViewModel from '../HomeViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
+import ic_exclamation_error_filled_48 from '../../../../../assets/svg/ic_exclamation_error_filled_48';
 
 export const EditCategoryScreen = observer(() => {
 
@@ -29,15 +33,56 @@ export const EditCategoryScreen = observer(() => {
   const navigation = useNavigation()
   const showStateModal = useNewModalContext().showStateModal
 
-  const [selectedOption, setSelectedOption] = useState('');
+  const viewModel = container.get<HomeViewModel>(
+    TYPES.HomeViewModel,
+  );
 
-  const categories: Array<"shopping" | "food" | "bills" | "services" | "market" | "transport" | "trips" | "none"> = [
-    "none", "shopping", "food", "bills", "services", "market", "transport", "trips"
-  ]
+  const [selectedOption, setSelectedOption] = useState<Categories>(categories[0]);
 
-  const isOptionSelected = (option: string) => {
-    return selectedOption === option;
+
+  const isOptionSelected = (option: Categories) => {
+    return selectedOption.name === option.name;
   };
+
+
+  useEffect(() => {
+    if (viewModel.movement.category_id) setSelectedOption(categories.find(item => item.id === viewModel.movement.category_id))
+  }, [])
+
+  useEffect(() => {
+    return reaction(
+      () => viewModel.successResponse,
+      () => {
+        showStateModal({
+          title: "Cambio guardado",
+          message: "Se ha realizado el cambio la categoría con éxito.",
+          image: ic_success_check_filled,
+          showIcoClose: true,
+          enableOverlayTap: "none",
+          actionCloseModal() {
+            navigation.goBack()
+          },
+          size: "30%",
+        })
+      }
+    )
+  }, [])
+
+  useEffect(() => {
+    return reaction(
+      () => viewModel.errorResponse,
+      () => {
+        showStateModal({
+          title: "Ha ocurrido un problema",
+          message: "No se ha realizado el cambio la categoría, aguarda unos minutos he inténtalo nuevamente.",
+          image: ic_exclamation_error_filled_48,
+          showIcoClose: true,
+          size: "30%"
+        })
+      }
+    )
+  }, [])
+
 
   return (
     <ToolbarView
@@ -48,14 +93,14 @@ export const EditCategoryScreen = observer(() => {
             activeOpacity={.8}
             onPress={() => setSelectedOption(item)}
             style={{ flexDirection: "row", marginTop: 24, paddingHorizontal: 16 }}>
-            <View style={{ backgroundColor: getColor(item, colors), borderRadius: 8, padding: 8, }}>
-              <SvgXml xml={getIcon(item)} />
+            <View style={{ backgroundColor: getColor(item.id, colors), borderRadius: 8, padding: 8, }}>
+              <SvgXml xml={getIcon(item.id)} />
             </View>
             <View style={{ marginStart: 8, alignSelf: "center" }}>
 
               <CustomText
                 textSize={FontsSize._16_SIZE}
-                text={getCategory(item)} />
+                text={getCategory(item.id)} />
             </View>
             <View style={{ flex: 1, alignContent: "flex-end", alignItems: "flex-end" }}>
 
@@ -77,17 +122,7 @@ export const EditCategoryScreen = observer(() => {
         text='Guardar'
         marginHorizontal={16}
         onPress={() => {
-          showStateModal({
-            title: "Cambio guardado",
-            message: "Se ha realizado el cambio la categoría con éxito.",
-            image: ic_success_check_filled,
-            showIcoClose: true,
-            enableOverlayTap: "none",
-            actionCloseModal() {
-              navigation.goBack()
-            },
-            size: "30%",
-          })
+          viewModel.saveCategory(selectedOption.id)
         }} />
 
     </ToolbarView>

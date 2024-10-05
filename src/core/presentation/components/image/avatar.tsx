@@ -48,7 +48,7 @@ export const AvatarImage = ({ uri, name, size = 80, svg, stroke = 0, strokeColor
 
       {uri && !errorOccurred && <FastImage resizeMode={FastImage.resizeMode.contain} source={{ uri }} style={styles.image} onError={handleImageError} />}
 
-      {!uri && svg && <SvgXml xml={svg} width="100%" height="100%" />}
+      {!uri && svg && <SvgXml xml={svg} width="100%" height="100%" style={{ backgroundColor: "red" }} />}
 
       {!uri && !svg && (
         <View style={styles.icon}>
@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-
   },
   icon: {
     width: '100%',
@@ -78,6 +77,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   iconText: {
     fontSize: 20,

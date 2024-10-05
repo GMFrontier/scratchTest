@@ -18,38 +18,84 @@ import ic_bills from '../../../../../assets/svg/ic_bills';
 import ic_trips from '../../../../../assets/svg/ic_trips';
 import ic_transport from '../../../../../assets/svg/ic_transport';
 import ic_food from '../../../../../assets/svg/ic_food';
+import HomeViewModel from '../HomeViewModel';
+import container from '../../../di/inversify.config';
+import { TYPES } from '../../../di/types';
 
-export interface Movements {
-  id: string,
-  title: string,
-  status: "approved" | "rejected" | "pending" | "cancelled",
-  amount: number,
-  type: "none" | "shopping" | "food" | "bills" | "services" | "market" | "transport" | "trips",
-  date?: string
+
+export interface Categories {
+  name: "none" | "shopping" | "food" | "bills" | "services" | "market" | "transport" | "trips"
+  image: string
+  id: string
 }
+
+
+export const categories: Array<Categories> = [
+  {
+    name: "none",
+    image: "category_0",
+    id: "66f209274e9fb3982b9c5c1b"
+  },
+  {
+    name: "shopping",
+    image: "category_1",
+    id: "66f2099645705115b99edc1c"
+  },
+  {
+    name: "food",
+    image: "category_2",
+    id: "66f209c94e9fb3982b9c5c1c"
+  },
+  {
+    name: "bills",
+    image: "category_3",
+    id: "66f209cf4e9fb3982b9c5c1d"
+  },
+  {
+    name: "services",
+    image: "category_4",
+    id: "66f209d745705115b99edc1d"
+  },
+  {
+    name: "market",
+    image: "category_5",
+    id: "66f209dd00420af231e977c0"
+  },
+  {
+    name: "transport",
+    image: "category_6",
+    id: "66f209e300420af231e977c1"
+  },
+  {
+    name: "trips",
+    image: "category_7",
+    id: "66f209ec00420af231e977c2"
+  },
+]
 
 export interface DateGroup {
   monthYear: string
-  dataList: Movements[]
+  dataList: Movement[]
 }
 
 export const getIcon = (
-  type: "shopping" | "food" | "bills" | "services" | "market" | "transport" | "trips" | "none"
+  id: string
 ): string => {
-  switch (type) {
-    case "shopping":
+  const category = categories.find(item => item.id === id)
+  switch (category?.image ?? "") {
+    case "category_1":
       return ic_shopping
-    case "food":
+    case "category_2":
       return ic_food
-    case "bills":
+    case "category_3":
       return ic_bills
-    case "services":
+    case "category_4":
       return ic_phone
-    case "market":
+    case "category_5":
       return ic_market
-    case "transport":
+    case "category_6":
       return ic_transport
-    case "trips":
+    case "category_7":
       return ic_trips
     default:
       return ic_movements_none
@@ -57,10 +103,11 @@ export const getIcon = (
 }
 
 export const getColor = (
-  type: "shopping" | "food" | "bills" | "services" | "market" | "transport" | "trips" | "none",
+  id: string,
   colors: any
 ): string => {
-  switch (type) {
+  const category = categories.find(item => item.id === id)
+  switch (category?.name ?? "") {
     case "shopping":
       return colors.cyan400
     case "food":
@@ -81,9 +128,10 @@ export const getColor = (
 }
 
 export const getCategory = (
-  type: "shopping" | "food" | "bills" | "services" | "market" | "transport" | "trips" | "none",
+  id: string,
 ): string => {
-  switch (type) {
+  const category = categories.find(item => item.id === id)
+  switch (category?.name ?? "asdasdas") {
     case "shopping":
       return "Compras"
     case "food":
@@ -103,32 +151,42 @@ export const getCategory = (
   }
 }
 
+export const getStatus = (
+  status: any,
+): string => {
+  switch (status) {
+    case "rejected":
+      return "Rechazado"
+    case "approved":
+      return "Aprobado"
+    case "cancelled":
+      return "Anulado"
+    case "PENDING":
+    case "PeticionAutorizacion":
+      return "Pendiente"
+    default:
+      return ""
+  }
+}
+
 interface Props {
-  item: Movements
+  item: Movement
 }
 
 export const MovementsItem = ({ item
 }: Props) => {
+
+  const viewModel = container.get<HomeViewModel>(
+    TYPES.HomeViewModel,
+  );
 
   const {
     theme: { colors },
   } = useContext(ThemeContext);
   const navigation = useNavigation()
 
-  const { title, status, type, amount } = item
+  const { detail, status, messageSys, type, amount, category_id } = item
 
-  const getStatus = (): string => {
-    switch (status) {
-      case "rejected":
-        return "Rechazado"
-      case "approved":
-        return "Aprobado"
-      case "cancelled":
-        return "Anulado"
-      case "pending":
-        return "Pendiente"
-    }
-  }
   const getStatusColor = (): string => {
     switch (status) {
       case "rejected":
@@ -137,7 +195,8 @@ export const MovementsItem = ({ item
         return colors.green400
       case "cancelled":
         return colors.orange300
-      case "pending":
+      case "PENDING":
+      case "PeticionAutorizacion":
         return colors.yellow500
     }
   }
@@ -155,6 +214,7 @@ export const MovementsItem = ({ item
     <TouchableOpacity
       activeOpacity={.8}
       onPress={() => {
+        viewModel.setMovement(item)
         navigation.navigate(ROUTES.Home.DetailsScreen.name as never)
       }}
       style={{
@@ -163,19 +223,19 @@ export const MovementsItem = ({ item
         paddingVertical: 8,
         alignItems: "center"
       }} >
-      <View style={{ backgroundColor: getColor(type, colors), borderRadius: 8, padding: 8, }}>
-        <SvgXml xml={getIcon(type)} />
+      <View style={{ backgroundColor: getColor(category_id, colors), borderRadius: 8, padding: 8, }}>
+        <SvgXml xml={getIcon(category_id)} />
       </View>
       <Sizebox width={4} />
       <View>
         <CustomText
           textSize={FontsSize._16_SIZE}
-          text={title} />
+          text={detail ?? messageSys} />
         <CustomText
           textSize={FontsSize._12_SIZE}
           textColor={getStatusColor()}
           marginTop={4}
-          text={getStatus()} />
+          text={getStatus(status)} />
       </View>
       <View style={{ flex: 1, alignItems: "flex-end" }} >
         <CustomText

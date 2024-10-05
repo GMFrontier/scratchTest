@@ -6,12 +6,12 @@ import FontsSize from "../../../../core/constants/FontsSize";
 import Fonts from "../../../../core/constants/Fonts";
 import { ButtonLink } from "../../../../core/presentation/components/button/ButtonLink";
 import ic_arrow_right from "../../../../../assets/svg/ic_arrow_right";
-import { Movements, MovementsItem } from "./MovementsItem";
+import { MovementsItem } from "./MovementsItem";
 import { ROUTES } from "../../../navigation/routes";
 import { useNavigation } from "@react-navigation/native";
 
 interface Props {
-  items: Movements[]
+  items: Movement[]
 }
 
 export const MovementsList = ({
@@ -39,27 +39,33 @@ export const MovementsList = ({
             navigation.navigate(ROUTES.Home.MovementsScreen.name as never)
           }} />
       </View>
-      <View
-        style={{
-          backgroundColor: colors.accentSecondary,
-          height: 51,
-          borderRadius: 8,
-          padding: 16,
-          marginTop: 6,
-        }}
-      >
-        <CustomText
-          text='Aún no tienes movimientos disponibles'
-          textSize={FontsSize._16_SIZE}
-          textColor={colors.white}
-          textAlign="center" />
-      </View>
-      <FlatList
-        data={items}
-        renderItem={(item) => <MovementsItem item={item.item} />}
-        scrollEnabled={false}
-        keyExtractor={(item, index) => item.id}
-        showsVerticalScrollIndicator={false} />
+
+      {items.length > 0 ?
+
+        <FlatList
+          data={items}
+          style={{ marginTop: 8 }}
+          renderItem={(item) => <MovementsItem item={item.item} />}
+          scrollEnabled={false}
+          keyExtractor={(item, index) => item._id}
+          showsVerticalScrollIndicator={false} />
+        :
+        <View
+          style={{
+            backgroundColor: colors.accentSecondary,
+            height: 51,
+            borderRadius: 8,
+            padding: 16,
+            marginTop: 6,
+          }}
+        >
+          <CustomText
+            text='Aún no tienes movimientos disponibles'
+            textSize={FontsSize._16_SIZE}
+            textColor={colors.white}
+            textAlign="center" />
+        </View>
+      }
     </View>
   )
 };

@@ -14,6 +14,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import DocumentPicker from 'react-native-document-picker';
 import PdfThumbnail from 'react-native-pdf-thumbnail';
 import RNFetchBlob from 'rn-fetch-blob';
+import ic_exclamation_error_filled from '../../../../../assets/svg/ic_exclamation_error_filled';
+import Sizebox from '../item/Sizebox';
+import ic_success_check_filled from '../../../../../assets/svg/ic_success_check_filled';
 
 interface Props {
   label: string;
@@ -22,6 +25,8 @@ interface Props {
   infoText?: string
   showInfoModal?: boolean
   setFile: any
+  flex?: number
+  showError?: boolean
 }
 
 export const FileInput = ({
@@ -30,7 +35,9 @@ export const FileInput = ({
   marginTop,
   infoText,
   showInfoModal,
-  setFile
+  setFile,
+  flex,
+  showError
 }: Props) => {
 
   const {
@@ -41,6 +48,7 @@ export const FileInput = ({
 
   const showStateModal = useNewModalContext().showStateModal
   const [uri, setURI] = useState<string | undefined>();
+  const [status, setStatus] = useState<"error" | "success" | "none">("none");
 
 
   const selectPDF = async () => {
@@ -64,7 +72,10 @@ export const FileInput = ({
       } else {
         setURI(result[0].uri)
       }
+      setStatus("success")
+
     } catch (err) {
+      setStatus("error")
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker
       } else {
@@ -75,7 +86,7 @@ export const FileInput = ({
 
   const styles = StyleSheet.create({
     rectangleContainer: {
-      flex: 1,
+      flex: flex ?? 1,
       justifyContent: 'center',
       alignItems: 'center',
       borderStyle: "dashed",
@@ -122,6 +133,32 @@ export const FileInput = ({
           </View>
         }
       </TouchableOpacity>
+
+      {
+        (status === "error" && showError) &&
+        <View>
+          <View style={{ flexDirection: "row", marginTop: 4, width: "100%" }} >
+            <SvgXml xml={ic_exclamation_error_filled} />
+            <Sizebox width={4} />
+            <CustomText
+              textColor={colors.red500}
+              text={"Error de carga de documento, inténtelo nuevamente"} />
+          </View>
+        </View>
+      }
+
+      {
+        (status === "success" && showError) &&
+        <View>
+          <View style={{ flexDirection: "row", marginTop: 4, width: "100%" }} >
+            <SvgXml xml={ic_success_check_filled} height={18} width={18} />
+            <Sizebox width={4} />
+            <CustomText
+              textColor={colors.green400}
+              text={"Documento adjuntado con éxito."} />
+          </View>
+        </View>
+      }
 
       {infoText &&
         <CustomText

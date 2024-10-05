@@ -1,23 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { View } from 'react-native';
-import { AvatarImage } from '../../../../core/presentation/components/image/avatar';
-import Sizebox from '../../../../core/presentation/components/item/Sizebox';
 import FontsSize from '../../../../core/constants/FontsSize';
-import ic_avatar_empty_profile from '../../../../../assets/svg/ic_avatar_empty_profile';
-import { SvgXml } from 'react-native-svg';
-import ic_info_blue_dark_filled from '../../../../../assets/svg/ic_info_blue_dark_filled';
-import ic_eye_open_outline from '../../../../../assets/svg/ic_eye_open_outline';
 import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
 import { CustomText } from '../../../../core/presentation/components/text/CustomText';
 import Fonts from '../../../../core/constants/Fonts';
-import { ButtonLink } from '../../../../core/presentation/components/button/ButtonLink';
-import ic_card_outline from '../../../../../assets/svg/ic_card_outline';
-import ic_banner_card from '../../../../../assets/svg/ic_banner_card';
 import { ButtonPrimary } from '../../../../core/presentation/components/button/ButtonPrimary';
 import { useNewModalContext } from '../../../../core/presentation/contexts/messages/useNewModalContext';
-import ic_alert_white_content from '../../../../../assets/svg/ic_alert_white_content';
-import alert_ico_yellow_content from '../../../../../assets/svg/alert_ico_yellow_content';
-import ic_alert_triangle_filled from '../../../../../assets/svg/ic_alert_triangle_filled';
+import container from '../../../di/inversify.config';
+import HomeViewModel from '../HomeViewModel';
+import { TYPES } from '../../../di/types';
+import { toMoneyFormat } from '../../../../core/data/utils/Utils';
 
 interface Props {
 }
@@ -28,6 +20,15 @@ export const ExpirationPaymentCard = ({
     theme: { colors },
   } = useContext(ThemeContext);
   const showModal = useNewModalContext().showStateModal
+
+  const viewModel = container.get<HomeViewModel>(
+    TYPES.HomeViewModel,
+  );
+
+  const month = viewModel.periods[0]?.month ?? 0
+  const date = new Date()
+  date.setMonth(month - 1)
+  const stringMonth = date.toLocaleDateString(undefined, { month: "long" }).charAt(0).toUpperCase() + date.toLocaleDateString(undefined, { month: "long" }).slice(1)
 
   return (
     <View
@@ -53,13 +54,13 @@ export const ExpirationPaymentCard = ({
           }}>
           <View>
             <CustomText
-              text='Mayo 2024'
+              text={stringMonth + ' ' + viewModel.periods[0]?.year}
               textSize={FontsSize._16_SIZE}
               fontFamily={Fonts.DMSansMedium} />
             <CustomText
               textColor={colors.white}
               marginTop={4}
-              text='Vencimiento: 30/05/2024'
+              text={'Vencimiento: ' + date.toLocaleDateString()}
               textSize={FontsSize._12_SIZE} />
           </View>
           <ButtonPrimary
@@ -81,7 +82,7 @@ export const ExpirationPaymentCard = ({
             textSize={FontsSize._20_SIZE}
             fontFamily={Fonts.DMSansMedium} />
           <CustomText
-            text='$180.00'
+            text={toMoneyFormat(viewModel.periods[0]?.amountPay ?? 0)}
             textSize={FontsSize._16_SIZE}
             fontFamily={Fonts.DMSansMedium} />
 

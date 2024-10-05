@@ -449,6 +449,7 @@
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-scratchTest-scratchTestTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9E3RQD35JM;
@@ -472,7 +473,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zerocredit.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = zeroapp;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "ZeroApp Live";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = zeroapp;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/scratchTest.app/scratchTest";
 			};
@@ -483,6 +484,7 @@
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-scratchTest-scratchTestTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = "";
@@ -503,7 +505,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zerocredit.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = zeroapp;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "ZeroApp Live";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = zeroapp;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/scratchTest.app/scratchTest";
 			};
@@ -529,7 +531,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.5;
+				MARKETING_VERSION = 0.0.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -564,7 +566,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.5;
+				MARKETING_VERSION = 0.0.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

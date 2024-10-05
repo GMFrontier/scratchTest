@@ -84,10 +84,13 @@ class LoginViewModel {
     await this.mPreferencesUseCase.save(REMEMBER_USER, data)
   }
 
+  @action
   async handleFirstLoginScreen(
     handleNav: (data: SplashLoginNav) => void
   ) {
-    this.user = await this.mPreferencesUseCase.getUser()
+    runInAction(async () => {
+      this.user = await this.mPreferencesUseCase.getUser()
+    })
     const rememberUser = await this.mPreferencesUseCase.getPreference(REMEMBER_USER) ?? false
 
     if (rememberUser === "1") {

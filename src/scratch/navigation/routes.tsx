@@ -1,4 +1,3 @@
-
 import BottomTabNavigator from '../../core/presentation/components/navigation/BottomTabNavigator';
 import { LoginScreen } from '../auth/presentation/login/LoginScreen';
 import { PasswordScreen } from '../auth/presentation/login/PasswordScreen';
@@ -32,17 +31,21 @@ import { TyCScreen } from '../settings/presentation/TyCScreen';
 import { FAQScreen } from '../settings/presentation/FAQScreen';
 import { SupportScreen } from '../settings/presentation/SupportScreen';
 import { PointsScreen } from '../points/presentation/PointsScreen';
-
-interface NavRouteModel {
-  [key: string]: {
-    [key: string]: {
-      screen: (() => JSX.Element) | ((() => JSX.Element) & {
-        displayName: string;
-      })
-      name: string;
-    };
-  };
-}
+import { CardsTyCScreen } from '../cards/presentation/request/CardsTyCScreen';
+import { AchDataScreen } from '../cards/presentation/request/AchDataScreen';
+import { AchTransferScreen } from '../cards/presentation/request/AchTransferScreen';
+import { AchReceiptScreen } from '../cards/presentation/request/AchReceiptScreen';
+import { PaymentDataScreen } from '../cards/presentation/request/PaymentDataScreen';
+import { PaymentMethodScreen } from '../cards/presentation/request/PaymentMethodScreen';
+import { CardScreen } from '../cards/presentation/CardScreen';
+import { CardDetailsScreen } from '../cards/presentation/CardDetailsScreen';
+import { DeliveryScreen } from '../cards/presentation/delivery/DeliveryScreen';
+import { EditScreen } from '../cards/presentation/delivery/EditScreen';
+import { MapScreen } from '../cards/presentation/delivery/MapScreen';
+import { ActivationScreen } from '../cards/presentation/activation/ActivationScreen';
+import { PinInputScreen } from '../cards/presentation/activation/PinInputScreen';
+import { ChangePinScreen } from '../cards/presentation/ChangePinScreen';
+import { NewPinScreen } from '../cards/presentation/NewPinScreen';
 
 export const ROUTES = {
   Navigator: {
@@ -90,6 +93,29 @@ export const ROUTES = {
   },
   Cards: {
     CardsScreen: { screen: CardsScreen, name: 'CardsScreen' },
+    CardScreen: { screen: CardScreen, name: 'CardScreen' },
+    CardDetailsScreen: { screen: CardDetailsScreen, name: 'CardDetailsScreen' },
+    ChangePinScreen: { screen: ChangePinScreen, name: 'ChangePinScreen' },
+    NewPinScreen: { screen: NewPinScreen, name: 'NewPinScreen' },
+    // solicitud
+    CardsTyCScreen: { screen: CardsTyCScreen, name: 'CardsTyCScreen' },
+    PaymentMethodScreen: { screen: PaymentMethodScreen, name: 'PaymentMethodScreen' },
+    // por ach
+    AchDataScreen: { screen: AchDataScreen, name: 'AchDataScreen' },
+    AchTransferScreen: { screen: AchTransferScreen, name: 'AchTransferScreen' },
+    AchReceiptScreen: { screen: AchReceiptScreen, name: 'AchReceiptScreen' },
+    // por tarjeta
+    PaymentDataScreen: { screen: PaymentDataScreen, name: 'PaymentDataScreen' },
+    //delivery
+    Delivery: {
+      DeliveryScreen: { screen: DeliveryScreen, name: 'DeliveryScreen' },
+      EditScreen: { screen: EditScreen, name: 'EditScreen' },
+      MapScreen: { screen: MapScreen, name: 'MapScreen' },
+    },
+    Activation: {
+      ActivationScreen: { screen: ActivationScreen, name: 'ActivationScreen' },
+      PinInputScreen: { screen: PinInputScreen, name: 'PinInputScreen' },
+    }
   },
   Points: {
     PointsScreen: { screen: PointsScreen, name: 'PointsScreen' },

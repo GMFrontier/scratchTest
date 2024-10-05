@@ -19,21 +19,25 @@ export const SplashScreen = () => {
 
   const handleNav = (data: SplashLoginNav) => {
     console.log(JSON.stringify(data))
-    switch (data) {
-      case SplashLoginNav.EmptyUser:
-        navigation.navigate(ROUTES.OnBoarding.OnBoardingScreen.screen.name as never)
-        break;
-      case SplashLoginNav.SavedUser:
-        navigation.navigate(ROUTES.Auth.LoginScreen.name as never)
-        break;
-      case SplashLoginNav.RememberUser:
-        navigation.navigate(ROUTES.Auth.PasswordScreen.name as never)
-        break;
-    }
+    setTimeout(() => {
+
+      switch (data) {
+        case SplashLoginNav.EmptyUser:
+          navigation.navigate(ROUTES.OnBoarding.OnBoardingScreen.screen.name as never)
+          break;
+        case SplashLoginNav.SavedUser:
+          navigation.navigate(ROUTES.Auth.LoginScreen.name as never)
+          break;
+        case SplashLoginNav.RememberUser:
+          navigation.navigate(ROUTES.Auth.PasswordScreen.name as never)
+          break;
+      }
+    }, 1000)
   }
   useEffect(() => {
     viewModel.handleFirstLoginScreen(handleNav)
   }, []);
+
   return (
     <View />
   );

@@ -7,7 +7,6 @@ export interface User {
   verifiedStatus: any
   nationality: string | null
   phoneNumber: string
-  hasPfCardActivated: boolean
   token: string
   role: string
   phoneVerifiedDate?: any | undefined;
@@ -22,7 +21,11 @@ export interface User {
   kycUrl: string
   creationDate: string
   password?: string
+  kycStatus?: "not_register" | "verified"
   financialInfoId?: string
+  isApproveCredit?: boolean
+  isCardOrderInit?: boolean
+  payOrderComplete?: boolean
 }
 export interface Address {
   addressLine1: string,
