@@ -42,4 +42,5 @@ export enum UserVerifiedStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   NOT_VERIFIED = 'NOT_VERIFIED',
   PENDING = 'PENDING',
+  NULL = 'NULL',
 }

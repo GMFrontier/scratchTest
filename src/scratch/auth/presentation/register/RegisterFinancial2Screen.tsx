@@ -37,9 +37,6 @@ export const RegisterFinancial2Screen = observer(() => {
   const viewModel = container.get<RegisterViewModel>(
     TYPES.RegisterViewModel,
   );
-  const loginViewModel = container.get<LoginViewModel>(
-    TYPES.LoginViewModel,
-  );
 
   const {
     theme: { colors },
@@ -50,16 +47,6 @@ export const RegisterFinancial2Screen = observer(() => {
   React.useEffect(() => {
     return reaction(
       () => viewModel.step5Success,
-      () => {
-        loginViewModel.login(viewModel.user.email, viewModel.user.password)
-
-      }
-    )
-  })
-
-  React.useEffect(() => {
-    return reaction(
-      () => loginViewModel.loginSuccess,
       () => {
         nav.navigate(ROUTES.Auth.RegisterCompleteScreen.name as never)
       }

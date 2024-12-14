@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, NativeEventEmitter, NativeModules } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import React = require('react');
 import { ThemeContext } from '../../../../core/presentation/contexts/theme/ThemeContext';
@@ -18,11 +18,17 @@ import { reaction } from 'mobx'
 import RegisterViewModel from './RegisterViewModel';
 import container from '../../../di/inversify.config';
 import { TYPES } from '../../../di/types';
+import { MetaMapRNSdk } from 'react-native-metamap-sdk';
+import LoginViewModel from '../login/LoginViewModel';
 
 export const RegisterIdValidationScreen = observer(() => {
 
   const viewModel = container.get<RegisterViewModel>(
     TYPES.RegisterViewModel,
+  );
+
+  const loginViewModel = container.get<LoginViewModel>(
+    TYPES.LoginViewModel,
   );
 
   const {
@@ -31,32 +37,60 @@ export const RegisterIdValidationScreen = observer(() => {
   const { translation } = useTranslation();
   const nav = useNavigation()
 
+  // React.useEffect(() => {
+  //   changeNavigationBarColor(colors.accent);
+  // })
+
   React.useEffect(() => {
-    changeNavigationBarColor(colors.accent);
+    return reaction(
+      () => viewModel.step4Success,
+      () => {
+        loginViewModel.login(viewModel.user.email, viewModel.user.password)
+
+      }
+    )
+  }, [])
+
+  React.useEffect(() => {
+    return reaction(
+      () => loginViewModel.loginSuccess,
+      () => {
+        nav.navigate(ROUTES.Auth.RegisterFinancial2Screen.name as never)
+      }
+    )
   })
 
-  const [selectedId, setSelectedId] = useState();
-  const selectPDF = async () => {
-    try {
-      const result = await DocumentPicker.pick({
-        type: 'application/pdf',
-      });
-      console.log(
-        JSON.stringify(result),
-        result.uri,
-        result.type, // mime type
-        result.name,
-        result.size
-      );
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the picker
-      } else {
-        throw err;
-      }
+
+  React.useEffect(() => {
+    const MetaMapVerifyResult = new NativeEventEmitter(NativeModules.MetaMapRNSdk)
+    const successListener = MetaMapVerifyResult.addListener('verificationSuccess', () => {
+      // viewModel.logIn();
+      successListener.remove()
+    })
+
+    const canceledListener = MetaMapVerifyResult.addListener('verificationCanceled', (data) => {
+      console.log(data)
+      canceledListener.remove()
     }
+    )
+  }, [])
+
+
+  const handleMetaMapClickButton = () => {
+    var metadata = viewModel.getSDKMetadata()
+    MetaMapRNSdk.showFlow(viewModel.getClientId(), viewModel.getFlowId(), metadata);
   }
 
+
+
+  React.useEffect(() => {
+    return reaction(
+      () => loginViewModel.loginSuccess,
+      () => {
+        nav.navigate(ROUTES.Auth.RegisterCompleteScreen.name as never)
+      }
+    )
+  })
 
   return (
     <ToolbarView

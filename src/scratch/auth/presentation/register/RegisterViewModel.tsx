@@ -138,7 +138,7 @@ class RegisterViewModel {
       .registerStep4(this.user, address, financial)
       .then((response: ResponseAPI) => {
         runInAction(() => {
-          this.step4Success = postEvent()
+          this.step4Success = response.data
         })
       })
       .catch((error: ErrorAPI) => {

@@ -178,12 +178,14 @@ export const RegisterFinancialScreen = observer(({ route }: NavigationProps) => 
     occupation
   ])
 
-  reaction(
-    () => viewModel.step4Success,
-    () => {
-      nav.navigate(ROUTES.Auth.RegisterFinancial2Screen.name as never)
-    }
-  )
+  React.useEffect(() => {
+    return reaction(
+      () => viewModel.step4Success,
+      () => {
+        nav.navigate(ROUTES.Auth.RegisterIdValidationScreen.name as never)
+      }
+    )
+  }, [])
 
   return (
     <ToolbarView

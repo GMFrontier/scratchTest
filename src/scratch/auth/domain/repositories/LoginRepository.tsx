@@ -8,6 +8,7 @@ export interface LoginRepository {
   sendRecoveryEmail(email: EmailValidationModel): Promise<any>;
   sendRecoveryCode(dto: PasswordRecoveryStep2): Promise<any>;
   sendNewPassword(dto: PasswordRecoveryStep3): Promise<any>;
+  refreshLogin(data: string): Promise<any>;
 }
 
 export default LoginRepository;

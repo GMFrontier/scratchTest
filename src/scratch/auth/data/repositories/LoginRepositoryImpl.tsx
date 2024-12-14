@@ -14,6 +14,22 @@ import { PasswordRecoveryStep2, PasswordRecoveryStep3 } from '../../../../core/d
 
 @injectable()
 class LoginRepositoryImpl implements LoginRepository {
+  refreshLogin(data: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      ApiService.apiCallWithLoading(() => {
+        return api.post<ResponseAPI>(
+          EndPoints.REFRESH_LOGIN,
+          data,
+        )
+      })
+        .then((result: ResponseAPI) => {
+          resolve(result);
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
+    });
+  }
   sendNewPassword(dto: PasswordRecoveryStep3): Promise<any> {
 
     return new Promise<any>((resolve, reject) => {
